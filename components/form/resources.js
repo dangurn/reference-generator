@@ -1,3 +1,4 @@
+//Get React:
 var React = require('react');
 
 //FormBox SVGs:
@@ -74,62 +75,35 @@ var DeleteSVG = React.createClass ({
   }
 })
 
-
-//PreviewBox SVGs
-var EditSVG = React.createClass ({
-  render: function() {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.44 25.17">
-      <rect x="9.57" y="2.74" width="9.84" height="16.76" transform="translate(1.48 -6.84) rotate(27.47)"/>
-      <polygon points="1.17 25.17 0 16.75 8.73 21.29 1.17 25.17"/></svg>
-    )
-  }
-})
-
-var CopySVG = React.createClass ({
-  render: function() {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.91 25.55">
-        <polygon points="3.21 2.78 14.75 2.78 14.75 0 0 0 0 20.99 3.21 20.99 3.21 2.78"/>
-        <rect x="5.16" y="4.56" width="14.75" height="20.99"/>
-      </svg>
-    )
-  }
-})
-
-var EmailSVG = React.createClass ({
-  render: function() {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.72 15.9">
-        <polygon points="11.53 10.48 0 2.34 0 15.89 23.72 15.89 23.72 2.17 23.52 2.17 11.53 10.48"/>
-        <polygon points="11.74 8.31 23.72 0 0.21 0 0.21 0.17 11.74 8.31"/>
-      </svg>
-    )
-  }
-})
-
-var RefreshSVG = React.createClass ({
-  render: function() {
-    return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.31 21.33">
-        <path d="M12.4,1.8c-4.1,0-7.5,2.6-8.8,6.3H0.2l4.9,6.1L10,8.1h-4c1.1-2.4,3.6-4.1,6.4-4.1c2.9,0,5.4,1.8,6.5,4.3h2.3
-          C20,4.5,16.5,1.8,12.4,1.8z"/>
-        <path d="M12.6,23.2c4.1,0,7.5-2.6,8.8-6.3h3.4l-4.9-6.1L15,16.9h4c-1.1,2.4-3.6,4.1-6.4,4.1c-2.9,0-5.4-1.8-6.5-4.3H3.8
-          C5,20.5,8.5,23.2,12.6,23.2z"/>
-      </svg>
-    )
-  }
-})
-
-
 module.exports = {
     generateSVG: GenerateSVG,
     addSVG: AddSVG,
     deleteSVG: DeleteSVG,
     starSVG: StarSVG,
-    editSVG: EditSVG,
-    copySVG: CopySVG,
-    emailSVG: EmailSVG,
-    refreshSVG: RefreshSVG
 };
 
+//Utiliies
+
+//Copy array function:
+
+function copy(thing){
+
+  if(typeof thing !== "object" || thing === null){
+    return thing;
+  }
+
+  if(Array.isArray(thing)) {
+    var out = [];
+    for(var i = 0; i < thing.length; i++){
+      out.push( copy(thing[i]) );
+    }
+    return out;
+  }
+
+  var out = {};
+  for(var key in thing){
+    out[key] = copy(thing[key]);
+  }
+  return out;
+
+}

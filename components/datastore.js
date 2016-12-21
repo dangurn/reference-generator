@@ -116,7 +116,7 @@ var Compiler = React.createClass ({
         />
 
         <PreviewBox
-          randomNumbers={this.props.randomNumbers}
+          randomNo={this.props.randomNo}
           currentTime={currentTime}
           applicant={this.props.applicant}
           applicantName={applicantName}
@@ -143,9 +143,23 @@ var Compiler = React.createClass ({
 //This is the component where all of our data (state) lives:
 var DataStore = React.createClass ({
 
+  generateRandomNo: function(max) {
+    return Math.floor(Math.random() * max) + 1
+  },
+
   getInitialState: function() {
 
     return {
+
+      randomNo: {
+        date: this.generateRandomNo(3),
+        greeting: this.generateRandomNo(3),
+        paragraph1: this.generateRandomNo(3),
+        paragraph2: this.generateRandomNo(3),
+        paragraph3: this.generateRandomNo(3),
+        paragraph3: this.generateRandomNo(3),
+        signature: this.generateRandomNo(3),
+      },
 
       refType: [
         {name: "academic", selected: true},
@@ -247,6 +261,7 @@ var DataStore = React.createClass ({
     return (
       <Compiler
         refType={this.state.refType}
+        randomNo={this.state.randomNo}
         applicant={this.state.applicant}
         datePeriod={this.state.datePeriod}
         referee={this.state.referee}

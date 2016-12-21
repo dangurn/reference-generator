@@ -2,11 +2,20 @@ var React = require('react');
 
 //Reference Generator
 
+//The Form component components:
+
+//SVG Files:
+
+var GenerateSVG = require('./resources.js').generateSVG;
+var AddSVG = require('./resources.js').addSVG;
+var DeleteSVG = require('./resources.js').deleteSVG;
+var StarSVG = require('./resources.js').starSVG;
 
 var RatingStars = React.createClass({
   render: function() {
 
     function getClass(selected) {
+
       if (selected == true) {
         return "rating-star-container"
       } else {
@@ -24,16 +33,6 @@ var RatingStars = React.createClass({
     )
   }
 })
-
-
-//The Form component components:
-
-//SVG Files:
-
-var GenerateSVG = require('../resources/svg.js').generateSVG;
-var AddSVG = require('../resources/svg.js').addSVG;
-var DeleteSVG = require('../resources/svg.js').deleteSVG;
-var StarSVG = require('../resources/svg.js').starSVG;
 
 
 //Applicant Componenet:
