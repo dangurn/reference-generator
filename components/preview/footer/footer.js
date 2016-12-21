@@ -41,7 +41,9 @@ var Signature = React.createClass ({
             {referee.workPlace}
           </span>
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+        />
       </div>
     )
   }

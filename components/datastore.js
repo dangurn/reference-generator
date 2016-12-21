@@ -20,6 +20,7 @@ var Compiler = React.createClass ({
     var year = today.getFullYear();
     var month = today.getMonth();
     var day = today.getDate();
+    var dayWeek = today.getDay();
 
     var monthList = [
       "January",
@@ -36,7 +37,17 @@ var Compiler = React.createClass ({
       "December"
     ]
 
-    var currentTime = {year: year, month: month, day: day, monthList: monthList}
+    var dayList = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ]
+
+    var currentTime = {year: year, month: month, day: day, monthList: monthList, dayWeek: dayWeek, dayList: dayList}
 
     //Get the placeholders for the Form:
     var refType = this.props.refType;
@@ -112,11 +123,11 @@ var Compiler = React.createClass ({
           competencies={this.props.competencies}
           newInfo={this.props.newInfo}
           addressee={this.props.addressee}
-          changeValue={this.props.changeValue} 
+          changeValue={this.props.changeValue}
         />
 
         <PreviewBox
-          randomNo={this.props.randomNo}
+          randomNos={this.props.randomNos}
           currentTime={currentTime}
           applicant={this.props.applicant}
           applicantName={applicantName}
@@ -133,6 +144,7 @@ var Compiler = React.createClass ({
           competencies={this.props.competencies}
           newInfo={this.props.newInfo}
           addressee={this.props.addressee}
+          changeValue={this.props.changeValue} 
         />
         
       </div>
@@ -151,14 +163,15 @@ var DataStore = React.createClass ({
 
     return {
 
-      randomNo: {
-        date: this.generateRandomNo(3),
-        greeting: this.generateRandomNo(3),
-        paragraph1: this.generateRandomNo(3),
-        paragraph2: this.generateRandomNo(3),
-        paragraph3: this.generateRandomNo(3),
-        paragraph3: this.generateRandomNo(3),
-        signature: this.generateRandomNo(3),
+      randomNos: {
+        date: {current: this.generateRandomNo(3), max: 3},
+        greeting: {current: this.generateRandomNo(3), max: 3},
+        subject: {current: this.generateRandomNo(1), max: 1},
+        paragraph1: {current: this.generateRandomNo(3), max: 3},
+        paragraph2: {current: this.generateRandomNo(3), max: 3},
+        paragraph3: {current: this.generateRandomNo(3), max: 3},
+        paragraph4: {current: this.generateRandomNo(3), max: 3},
+        signature: {current: this.generateRandomNo(3), max: 3},
       },
 
       refType: [
@@ -261,7 +274,7 @@ var DataStore = React.createClass ({
     return (
       <Compiler
         refType={this.state.refType}
-        randomNo={this.state.randomNo}
+        randomNos={this.state.randomNos}
         applicant={this.state.applicant}
         datePeriod={this.state.datePeriod}
         referee={this.state.referee}

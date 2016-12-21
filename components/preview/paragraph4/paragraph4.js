@@ -195,7 +195,9 @@ var Paragraph4 = React.createClass ({
             newInfo={this.props.newInfo}
           />
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+        />
       </div>
     )
   }

@@ -71,7 +71,9 @@ var Banner = React.createClass({
         <div className="social-media-container">
           <TwitterSVG />
           <FacebookSVG />
-          <GitHubSVG />
+          <a href="https://github.com/dangurn/reference-generator">
+            <GitHubSVG />
+          </a>
         </div>
         <WhoMadeThis />
       </div>

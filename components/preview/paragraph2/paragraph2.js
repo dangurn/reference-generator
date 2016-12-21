@@ -453,7 +453,9 @@ var Paragraph2 = React.createClass ({
             workArray={workArray}
           />
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+        />
       </div>
     )
   }

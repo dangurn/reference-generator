@@ -29,18 +29,30 @@ var DateStamp = React.createClass({
         };
     };
 
-    function writeSentence() {
-      return currentTime.day + dateSuffix(currentTime.day) + " " 
-      + currentTime.monthList[currentTime.month] + " " + currentTime.year
+    function writeSentence(randomNo) {
+      switch (randomNo) {
+        case 1:
+          return currentTime.day + dateSuffix(currentTime.day) + " " 
+            + currentTime.monthList[currentTime.month] + " " + currentTime.year;
+        case 2:
+          return currentTime.dayList[currentTime.dayWeek] + " " + currentTime.day + dateSuffix(currentTime.day) + " " 
+            + currentTime.monthList[currentTime.month] + " " + currentTime.year;
+        case 3:
+          return currentTime.monthList[currentTime.month] + " " + currentTime.day + dateSuffix(currentTime.day) + " " + currentTime.year;
+      }  
     }
 
     return (
 
       <div className="preview-block">
         <div className="preview-text">
-          {writeSentence()}
+          {writeSentence(this.props.randomNos.date.current)}
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+          name="date"
+          changeValue={this.props.changeValue}
+        />
       </div>
     )
   }
@@ -76,7 +88,11 @@ var Greeting = React.createClass ({
         <div className="preview-text" id="rendered-greeting">
           {writeSentence()}
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+          name="greeting"
+          changeValue={this.props.changeValue}
+        />
       </div>
     )
   }
@@ -106,7 +122,11 @@ var SubjectHeading = React.createClass ({
         <div className="preview-text" id="rendered-subject">
           <b>{writeSentence()}</b>
         </div>
-        <PreviewTextTools />
+        <PreviewTextTools 
+          randomNos={this.props.randomNos}
+          name="subject"
+          changeValue={this.props.changeValue}
+        />
       </div>
     )
   }

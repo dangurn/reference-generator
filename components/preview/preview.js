@@ -40,12 +40,18 @@ var PreviewPage = React.createClass ({
 
         <DateStamp 
           currentTime={this.props.currentTime}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Greeting 
           addressee={this.props.addressee}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <SubjectHeading
           applicant={this.props.applicant}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Paragraph1 
           applicantPronouns={this.props.applicantPronouns}
@@ -57,12 +63,16 @@ var PreviewPage = React.createClass ({
           newInfo={this.props.newInfo}
           currentTime={this.props.currentTime}
           datePeriod={this.props.datePeriod}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Paragraph2
           work={this.props.work}
           applicantPronouns={this.props.applicantPronouns}
           applicantName={this.props.applicantName}
           referee={this.props.referee}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Paragraph3
           skillsCommunication={this.props.skillsCommunication}
@@ -72,6 +82,8 @@ var PreviewPage = React.createClass ({
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           referee={this.props.referee}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Paragraph4
           applicantName={this.props.applicantName}
@@ -81,9 +93,13 @@ var PreviewPage = React.createClass ({
           skillsAttitude={this.props.skillsAttitude}
           skillsOther={this.props.skillsOther}
           work={this.props.work}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <Signature
           referee={this.props.referee}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
       </div>
     )
@@ -125,6 +141,8 @@ var PreviewBox = React.createClass ({
           competencies={this.props.competencies}
           newInfo={this.props.newInfo}
           addressee={this.props.addressee}
+          randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
         <PreviewToolbar />
       </div>

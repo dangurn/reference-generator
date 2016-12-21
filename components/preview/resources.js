@@ -49,10 +49,34 @@ var RefreshSVG = React.createClass ({
 
 //Make a generic toolbar to appear against every paragraph:
 var PreviewTextTools = React.createClass ({
+
+  generateRandomNo(name, randomNos) {
+
+    var current = randomNos[name].current;
+    var max = randomNos[name].max;
+
+    //Copy RandomNos object:
+    var newObject = copy(this.props.randomNos);
+
+    //Generate a new random number:
+    var newNo = Math.floor(Math.random() * max) + 1;
+
+    //Put this into the Object
+    newObject[name] = {current: newNo, max: max}
+
+    //Send back to state:
+    var newState={}
+    newState["randomNos"] = newObject;
+    this.props.changeValue(newState)
+  },
+
   render: function() {
+
     return (
       <div className="preview-tools">
-        <RefreshSVG />
+        <div onClick={this.generateRandomNo.bind(this, this.props.name, this.props.randomNos)}>
+          <RefreshSVG/>
+        </div>
       </div>
     )
   }
@@ -196,6 +220,30 @@ module.exports = {
 }
 
 //Utiliies
+
+//Copy array function:
+
+function copy(thing){
+
+  if(typeof thing !== "object" || thing === null){
+    return thing;
+  }
+
+  if(Array.isArray(thing)) {
+    var out = [];
+    for(var i = 0; i < thing.length; i++){
+      out.push( copy(thing[i]) );
+    }
+    return out;
+  }
+
+  var out = {};
+  for(var key in thing){
+    out[key] = copy(thing[key]);
+  }
+  return out;
+
+}
 
 
 //Copy to clipboard function:
