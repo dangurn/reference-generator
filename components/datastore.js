@@ -63,6 +63,7 @@ var Compiler = React.createClass ({
       case "academic":
         var placeholders = {
           relationshipPosition: "Course studied (E.g. BSc (Hons) Psychology)",
+          relationshipPlace: "Place studied (E.g. University of...)",
           refereeWorkPlace: "Place of work (E.g. the University of...)",
           refereePosition: "Job Title (E.g. Senior Lecturer)",
           newInfoPosition: "Position applied for (E.g. Research Assistant)",
@@ -72,6 +73,7 @@ var Compiler = React.createClass ({
       default:
         var placeholders = {
           relationshipPosition: "CodfgBSc (Hons) Psychology)",
+          relationshipPlace: "Coursasdasde studied (E.g. BSc (Hons) Psychology)",
           refereeWorkPlace: "Place dfgdfgUniversity of...)",
           refereePosition: "Job Tidfgdfgior Lecturer)",
           newInfoPosition: "Positiondfgdfgdfgsearch Assistant)",
@@ -116,6 +118,7 @@ var Compiler = React.createClass ({
           relationshipLength={this.props.relationshipLength}
           relationshipCapacity={this.props.relationshipCapacity}
           relationshipPosition={this.props.relationshipPosition}
+          relationshipPlace={this.props.relationshipPlace}
           work={this.props.work}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
@@ -137,6 +140,7 @@ var Compiler = React.createClass ({
           relationshipLength={this.props.relationshipLength}
           relationshipCapacity={this.props.relationshipCapacity}
           relationshipPosition={this.props.relationshipPosition}
+          relationshipPlace={this.props.relationshipPlace}
           work={this.props.work}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
@@ -177,6 +181,7 @@ var DataStore = React.createClass ({
       refType: [
         {name: "academic", selected: true},
         {name: "professional", selected: false},
+        {name: "tenancy", selected: false},
         {name: "personal", selected: false}
       ],
 
@@ -209,6 +214,7 @@ var DataStore = React.createClass ({
 
       relationshipLength: 0,
       relationshipPosition: "",
+      relationshipPlace: "",
       relationshipCapacity: [
         {name: "tutor", selected: false},
         {name: "lecturer", selected: false},
@@ -281,6 +287,7 @@ var DataStore = React.createClass ({
         relationshipLength={this.state.relationshipLength}
         relationshipCapacity={this.state.relationshipCapacity}
         relationshipPosition={this.state.relationshipPosition}
+        relationshipPlace={this.state.relationshipPlace}
         work={this.state.work}
         skillsCommunication={this.state.skillsCommunication}
         skillsAttitude={this.state.skillsAttitude}

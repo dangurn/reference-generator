@@ -23,7 +23,7 @@ var SubjectHeading = require('./header/header.js').subjectheading;
 var Paragraph1 = require('./paragraph1/paragraph1.js');
 var Paragraph2 = require('./paragraph2/paragraph2.js');
 var Paragraph3 = require('./paragraph3/paragraph3.js');
-var Paragraph4 = require('./paragraph4/paragraph4.js');
+var Paragraph4Compiler = require('./paragraph4/paragraph4.js');
 
 var Signature = require('./footer/footer.js');
 
@@ -85,9 +85,10 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        <Paragraph4
+        <Paragraph4Compiler 
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
+          relationshipPlace={this.props.relationshipPlace}
           newInfo={this.props.newInfo}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
@@ -134,6 +135,7 @@ var PreviewBox = React.createClass ({
           relationshipLength={this.props.relationshipLength}
           relationshipCapacity={this.props.relationshipCapacity}
           relationshipPosition={this.props.relationshipPosition}
+          relationshipPlace={this.props.relationshipPlace}
           work={this.props.work}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}

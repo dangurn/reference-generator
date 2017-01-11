@@ -55,11 +55,18 @@ var PreviewTextTools = React.createClass ({
     var current = randomNos[name].current;
     var max = randomNos[name].max;
 
+    console.log(name, randomNos)
+
     //Copy RandomNos object:
     var newObject = copy(this.props.randomNos);
 
-    //Generate a new random number:
-    var newNo = Math.floor(Math.random() * max) + 1;
+    //Generate a new random number
+    //And cycle through numbers, returning to 1 if needed:
+    var newNo = current + 1;
+
+    if (newNo > max) {
+      newNo = 1;
+    }
 
     //Put this into the Object
     newObject[name] = {current: newNo, max: max}

@@ -359,8 +359,10 @@ var Paragraph3 = React.createClass ({
             skillsCount={this.props.skillsCount}
           />
         </div>
-        <PreviewTextTools 
+        <PreviewTextTools
+          name="paragraph3"
           randomNos={this.props.randomNos}
+          changeValue={this.props.changeValue}
         />
       </div>
     )

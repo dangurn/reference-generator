@@ -345,6 +345,10 @@ input[type=range]:focus::-ms-fill-upper {
     background: #f2fcfc;
     color: darkslategray;
     overflow-y: scroll;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .preview-block {
@@ -358,8 +362,7 @@ input[type=range]:focus::-ms-fill-upper {
     flex: 1 1 auto;
     padding: 10px;
     margin-left: 20px;
-    font-family: 'Times New Roman', Times, serif
-
+    font-family: 'Times New Roman', Times, serif;   
 }
 
 .preview-block:hover {
@@ -374,8 +377,8 @@ input[type=range]:focus::-ms-fill-upper {
 .preview-tools {
     display: flex;
     flex: 0 0 40px;
-    align-items: center;
     justify-content: center;
+    padding: 8px;
 }
 
 .preview-tools svg {

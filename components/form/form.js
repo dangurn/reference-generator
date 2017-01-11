@@ -367,6 +367,29 @@ var RelationshipPosition = React.createClass ({
   }
 })
 
+//relationshipPlace Component:
+var RelationshipPlace = React.createClass ({
+
+  handleChange: function(e) {
+
+    var attributeName = e.target.name
+    var newValue = e.target.value
+
+    var newState={}
+    newState[attributeName] = newValue
+    this.props.changeValue(newState)
+
+  },
+
+  render: function() {
+    return (
+      <div className="form-row">
+        <input type="text" name="relationshipPlace" placeholder={this.props.placeholders.relationshipPlace} onBlur={this.handleChange} />
+      </div>
+  )
+  }
+})
+
 //Work Component:
 var Work = React.createClass ({
 
@@ -819,6 +842,10 @@ var FormContent = React.createClass ({
             changeValue={this.props.changeValue}
             placeholders={this.props.placeholders}
           />
+          <RelationshipPlace
+            changeValue={this.props.changeValue}
+            placeholders={this.props.placeholders}
+          />
           <DatePeriod
             currentTime={this.props.currentTime}
             datePeriod={this.props.datePeriod}
@@ -919,6 +946,7 @@ var FormBox = React.createClass ({
             relationshipLength={this.props.relationshipLength}
             relationshipCapacity={this.props.relationshipCapacity}
             relationshipPosition={this.props.relationshipPosition}
+            relationshipPlace={this.props.relationshipPlace}
             work={this.props.work}
             skillsCommunication={this.props.skillsCommunication}
             skillsAttitude={this.props.skillsAttitude}
