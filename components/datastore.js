@@ -13,6 +13,7 @@ var PreviewBox = require('./preview/preview.js');
 
 //Compile all of the data first of all:
 var Compiler = React.createClass ({
+  
   render: function() {
 
     //Get the dates
@@ -49,39 +50,90 @@ var Compiler = React.createClass ({
 
     var currentTime = {year: year, month: month, day: day, monthList: monthList, dayWeek: dayWeek, dayList: dayList}
 
-    //Get the placeholders for the Form:
-    var refType = this.props.refType;
-    var refTypeSelected;
+    //We need to get different information depending on what type of reference has been selected:
+    var refTypeSelected = this.props.referenceType.selected
 
-    for (var i = 0; i < refType.length; i++) {
-      if (refType[i].selected == true) {
-        var refTypeSelected = refType[i].name
-      }
-    }
-
+    //Now let's get the placeholders for the Form:
     switch (refTypeSelected) {
       case "academic":
         var placeholders = {
           relationshipPosition: "Course studied (E.g. BSc (Hons) Psychology)",
-          relationshipPlace: "Place studied (E.g. University of...)",
-          refereeWorkPlace: "Place of work (E.g. the University of...)",
+          relationshipPlace: "Place studied (E.g. the University of...)",
+          refereeWorkPlace: "Current place of work (If different from above)",
           refereePosition: "Job Title (E.g. Senior Lecturer)",
           newInfoPosition: "Position applied for (E.g. Research Assistant)",
           newInfoPlace: "Institution applied for (E.g. the University of...)",
         }
         break;
-      default:
+      case "professional":
         var placeholders = {
-          relationshipPosition: "CodfgBSc (Hons) Psychology)",
-          relationshipPlace: "Coursasdasde studied (E.g. BSc (Hons) Psychology)",
-          refereeWorkPlace: "Place dfgdfgUniversity of...)",
-          refereePosition: "Job Tidfgdfgior Lecturer)",
-          newInfoPosition: "Positiondfgdfgdfgsearch Assistant)",
-          newInfoPlace: "Institudfgdfgdfg University of...)",
+          relationshipPosition: "Position held (E.g. Office Assistant)",
+          relationshipPlace: "Place of work (E.g. Company name)",
+          refereeWorkPlace: "Your current place of work (E.g. Company name)",
+          refereePosition: "Job Title (E.g. Manager)",
+          newInfoPosition: "Position applied for (E.g. Team leader)",
+          newInfoPlace: "Institution applied for (E.g. Company name)",
         }
+        break;
+      case "tenancy":
+        var placeholders = {
+          relationshipPosition: "---",
+          relationshipPlace: "The property the applicant lived",
+          refereeWorkPlace: "---",
+          refereePosition: "---",
+          newInfoPosition: "---",
+          newInfoPlace: "The property the applicant wishes to reside in",
+        }
+        break;
     }
-    
 
+    //Get the Relationship capacities:
+    switch(refTypeSelected) {
+      case "academic":
+        var relationshipCapacityNames = ["tutor", "lecturer", "module leader", "year leader", "programme leader"]
+        break;
+      case "professional":
+        var relationshipCapacityNames = ["manager", "supervisor", "team leader", "colleague"]
+        break;
+      case "tenancy":
+        var relationshipCapacityNames = ["property owner", "letting agent", "house mate"]
+        break;
+    }
+
+    //And convert them into an array of objects (using information from state):
+    var relationshipCapacityFinal = [];
+
+    for (var i = 0; i < relationshipCapacityNames.length; i++) {
+      relationshipCapacityFinal.push({
+        name: relationshipCapacityNames[i], 
+        selected: this.props.relationshipCapacity[i].selected
+      }) 
+    }
+
+
+    //Get the type of Work completed:
+    switch(refTypeSelected) {
+      case "academic":
+        var workCompletedNames = ["essay", "lab report", "project", "presentation"]
+        break;
+      default:
+        var workCompletedNames = ["report", "project", "presentation"]
+    }
+
+    //And convert them into an array of objects (using information from state):
+    var workCompleted = [];
+
+    for (var i = 0; i < workCompletedNames.length; i++) {
+      workCompleted.push({
+        name: workCompletedNames[i], 
+        count: this.props.work[i].count, 
+        topic: this.props.work[i].topic, 
+        performance: this.props.work[i].performance, 
+        selected: this.props.work[i].selected, 
+      }) 
+    }
+
+    //Now some more general stuff:
     //Get the name (and possessive 's') for the applicant:
     var appName = this.props.applicant.firstName
     var appNameLastLetter = appName.charAt(appName.length - 1)
@@ -109,17 +161,17 @@ var Compiler = React.createClass ({
     return (
       <div className="main-container">
         <FormBox
-          refType={this.props.refType}
+          referenceType={this.props.referenceType}
           currentTime={currentTime}
           placeholders={placeholders}
           applicant={this.props.applicant}
           datePeriod={this.props.datePeriod}
           referee={this.props.referee}
           relationshipLength={this.props.relationshipLength}
-          relationshipCapacity={this.props.relationshipCapacity}
+          relationshipCapacity={relationshipCapacityFinal}
           relationshipPosition={this.props.relationshipPosition}
           relationshipPlace={this.props.relationshipPlace}
-          work={this.props.work}
+          work={workCompleted}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
           skillsOther={this.props.skillsOther}
@@ -138,7 +190,7 @@ var Compiler = React.createClass ({
           datePeriod={this.props.datePeriod}
           referee={this.props.referee}
           relationshipLength={this.props.relationshipLength}
-          relationshipCapacity={this.props.relationshipCapacity}
+          relationshipCapacity={relationshipCapacityFinal}
           relationshipPosition={this.props.relationshipPosition}
           relationshipPlace={this.props.relationshipPlace}
           work={this.props.work}
@@ -167,6 +219,8 @@ var DataStore = React.createClass ({
 
     return {
 
+      testVariable: "",
+
       randomNos: {
         date: {current: this.generateRandomNo(3), max: 3},
         greeting: {current: this.generateRandomNo(3), max: 3},
@@ -178,12 +232,10 @@ var DataStore = React.createClass ({
         signature: {current: this.generateRandomNo(3), max: 3},
       },
 
-      refType: [
-        {name: "academic", selected: true},
-        {name: "professional", selected: false},
-        {name: "tenancy", selected: false},
-        {name: "personal", selected: false}
-      ],
+      referenceType: {
+        type: ["academic", "professional", "tenancy"],
+        selected: "academic"
+      },
 
       anonymousName: false,
       anonymousGender: false,
@@ -279,7 +331,7 @@ var DataStore = React.createClass ({
 
     return (
       <Compiler
-        refType={this.state.refType}
+        referenceType={this.state.referenceType}
         randomNos={this.state.randomNos}
         applicant={this.state.applicant}
         datePeriod={this.state.datePeriod}

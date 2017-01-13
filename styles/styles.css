@@ -332,6 +332,77 @@ input[type=range]:focus::-ms-fill-upper {
     display: none;
 }
 
+.pane-header {
+    font-size: 14px;
+    display: flex;
+    background: white;
+    flex: 0 0 55px;
+    border-bottom: 1px solid lightgray;
+    align-items: center;
+    justify-content: center;
+    color: dimgray;
+}
+
+    .pane-header span {
+        padding: 0px 20px;
+    }
+
+    .type-button-container {
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+    flex-wrap: wrap;
+    margin: 10px;
+    }
+
+        .type-button-container label {
+            display: flex;
+            flex: 0 0 31%;
+            margin-left: 2%; 
+        }
+
+        .type-button-container span:hover {
+            background: #EEE;
+        }
+
+        .type-button-container span {
+            display: flex;
+            flex: 1 0 32%;
+            text-transform: capitalize;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border: 1px solid lightgray;
+            transition: 0.2s all;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            fill: dimgray;
+        }
+
+            .type-button-container span svg {
+                height: 18px;
+                width: auto;
+                margin-right: 8px;
+                fill: inherit;
+            }
+
+        .type-button-container label .delete-button {
+            padding: 0px;
+            margin-left: auto;
+            display: flex;
+        }
+
+        .type-button-container :checked + span {
+        color: white;
+        background:#43cbcb;
+        border: 1px solid #40bfbf;
+        fill: white;
+        }
+
 .pane-container {
     flex: 0 0 600px;
     flex-flow: column;
@@ -395,8 +466,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .pane-toolbar {
     display: flex;
-    flex: 0 0 80px;
     background: white;
+    flex: 0 0 80px;
     border-top: 1px solid lightgray;
     align-items: center;
     justify-content: center;

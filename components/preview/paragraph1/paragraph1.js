@@ -21,10 +21,10 @@ var IntroductionOverview = React.createClass ({
     }
 
     //Name the referee's institution:
-    if (this.props.referee.workPlace == "" ) {
-      var refereeWorkPlace = "my institution"
+    if (this.props.relationshipPlace == "" ) {
+      var oldWorkPlace = "my institution"
     } else {
-      var refereeWorkPlace = this.props.referee.workPlace
+      var oldWorkPlace = this.props.relationshipPlace
     }
 
     //Write the 'Capacity' sentence
@@ -113,7 +113,7 @@ var IntroductionOverview = React.createClass ({
     function writeSentence() {
       return "I am writing to you today" + capacitySentence(referee.jobTitle) + " to support " 
         + applicantName[1] + " application " + getPosition(newInfo.position) + "at " 
-        + newPlace + ". " + applicantName[2] + " enrolled at " + refereeWorkPlace + " to study"
+        + newPlace + ". " + applicantName[2] + " enrolled at " + oldWorkPlace + " to study"
         + relationshipPosition + getStartingWords(datePeriod.startMonth, datePeriod.startYear)
         + getEndingWords(datePeriod.endMonth, datePeriod.endYear) + ". "
     }
@@ -305,6 +305,7 @@ var Paragraph1 = React.createClass({
           newInfo={this.props.newInfo}
           newPlace={newPlace}
           relationshipPosition={this.props.relationshipPosition}
+          relationshipPlace={this.props.relationshipPlace}
           currentTime={this.props.currentTime}
           datePeriod={this.props.datePeriod}
           />

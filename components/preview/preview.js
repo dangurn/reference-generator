@@ -57,6 +57,7 @@ var PreviewPage = React.createClass ({
           applicantPronouns={this.props.applicantPronouns}
           applicantName={this.props.applicantName}
           referee={this.props.referee}
+          relationshipPlace={this.props.relationshipPlace}
           relationshipLength={this.props.relationshipLength}
           relationshipCapacity={this.props.relationshipCapacity}
           relationshipPosition={this.props.relationshipPosition}

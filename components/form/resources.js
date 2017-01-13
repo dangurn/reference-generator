@@ -45,6 +45,48 @@ var StarSVG = React.createClass({
   }
 })
 
+
+//Reference Type Icons
+
+var AcademicSVG = React.createClass ({
+  render: function() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.75 17.04">
+        <path d="M10,1.9l9.37,4.2L10,10.3,0.63,6.1Z" transform="translate(-0.63 -1.9)"/>
+        <path d="M5.41,9.77v2.77A6.28,6.28,0,0,0,10,14.25a6.77,6.77,0,0,0,4.72-1.71V9.77L10,11.88Z" transform="translate(-0.63 -1.9)"/>
+        <circle cx="1.95" cy="15.55" r="1.5"/>
+        <polygon points="2.58 16.14 2.58 7.12 1.32 6.58 1.32 16.14 2.58 16.14"/>
+      </svg>
+    )
+  }
+})
+
+var ProfessionalSVG = React.createClass ({
+  render: function() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.47 27.81">
+        <ellipse cx="10.88" cy="5.05" rx="5.09" ry="5.05"/>
+        <path d="M15,11.19C3.74,11.19,3.77,28.91,3.77,28.91H26.23S26.23,11.19,15,11.19Zm0.1,16.47-3.36-4.07,2.39-11.15h1.28l2.85,11.31Z" transform="translate(-3.77 -1.09)"/>
+      </svg>
+    )
+  }
+})
+
+var TenancySVG = React.createClass ({
+  render: function() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.17 18.67">
+        <polygon points="8.58 4.36 2.52 10.61 2.52 10.61 2.52 19.35 7.03 19.35 7.03 15.43 10.14 15.43 10.14 19.35 14.65 19.35 14.65 10.61 14.65 10.61 8.58 4.36"/>
+        <polygon points="13.6 4.98 13.6 1.09 11.51 1.09 11.51 2.9 8.61 0 8.58 0.03 8.55 0 0 8.55 1.22 9.77 8.58 2.41 15.95 9.77 17.17 8.55 13.6 4.98"/>
+      </svg>
+    )
+  }
+})
+
+
+
+
+//Form Icons:
 var GenerateSVG = React.createClass ({
   render: function() {
     return (
@@ -76,6 +118,9 @@ var DeleteSVG = React.createClass ({
 })
 
 module.exports = {
+    academicSVG: AcademicSVG,
+    professionalSVG: ProfessionalSVG,
+    tenancySVG: TenancySVG,
     generateSVG: GenerateSVG,
     addSVG: AddSVG,
     deleteSVG: DeleteSVG,

@@ -6,6 +6,9 @@ var React = require('react');
 
 //SVG Files:
 
+var AcademicSVG = require('./resources.js').academicSVG;
+var ProfessionalSVG = require('./resources.js').professionalSVG;
+var TenancySVG = require('./resources.js').tenancySVG;
 var GenerateSVG = require('./resources.js').generateSVG;
 var AddSVG = require('./resources.js').addSVG;
 var DeleteSVG = require('./resources.js').deleteSVG;
@@ -34,6 +37,70 @@ var RatingStars = React.createClass({
   }
 })
 
+//Form Header:
+var FormHeader = React.createClass ({
+
+  handleChange: function(e) {
+
+    //Find which button has been selected:
+    var newValue = e.target.value;
+
+    //Copy the ReferenceType attribute:
+    var initialObject = this.props.referenceType;
+    var newObject = copy(initialObject);
+
+    //Change the reference selected:
+    newObject.selected = newValue;
+
+    //Commit new value(s) to state:
+    var newState={}
+    newState.referenceType = newObject
+
+    this.props.changeValue(newState)
+
+  },
+
+  render: function() {
+    return (
+      <div className="pane-header">
+
+        <span>
+          Reference Type:
+        </span>
+
+        <div className="type-button-container">
+
+          <label>
+            <input type="radio" name="referenceType" value="academic" onChange={this.handleChange}/>
+            <span>
+              <AcademicSVG />
+              academic
+            </span>
+          </label>
+
+          <label>
+            <input type="radio" name="referenceType" value="professional" onChange={this.handleChange}/>
+            <span>
+              <ProfessionalSVG />
+              professional
+            </span>
+          </label>
+
+          <label>
+            <input type="radio" name="referenceType" value="tenancy" onChange={this.handleChange}/>
+            <span>
+              <TenancySVG />
+              tenancy
+            </span>
+          </label>
+
+        </div>
+
+      </div>
+    )
+  }
+})
+
 
 //Applicant Componenet:
 var Applicant = React.createClass ({
@@ -55,10 +122,12 @@ var Applicant = React.createClass ({
   render: function() {
     return (
       <div className="form-block">
+
         <div className="form-row">
           <input name="firstName" type="text" placeholder="First Name (E.g. John)" onBlur={this.handleChange}/>
           <input name="lastName" type="text" placeholder="Last Name (E.g. Smith)" onBlur={this.handleChange}/>
         </div>
+        
         <div className="form-row">
           <div className="radio-container">
             <label>
@@ -258,12 +327,19 @@ var Referee = React.createClass ({
           <input name="firstName" type="text" placeholder="First Name (E.g. John)" onBlur={this.handleChange}/>
           <input name="lastName" type="text" placeholder="Last Name (E.g. Smith)" onBlur={this.handleChange}/>
         </div>
-        <div className="form-row">
-          <input name="workPlace" type="text" placeholder={this.props.placeholders.refereeWorkPlace} onBlur={this.handleChange}/>
-        </div>
-        <div className="form-row">
-          <input name="jobTitle" type="text" placeholder={this.props.placeholders.refereePosition} onBlur={this.handleChange}/>
-        </div>
+
+        {this.props.referenceType.selected !== "tenancy" &&
+          <div className="form-row">
+            <input name="workPlace" type="text" placeholder={this.props.placeholders.refereeWorkPlace} onBlur={this.handleChange}/>
+          </div>
+        }
+
+        {this.props.referenceType.selected !== "tenancy" &&
+          <div className="form-row">
+            <input name="jobTitle" type="text" placeholder={this.props.placeholders.refereePosition} onBlur={this.handleChange}/>
+          </div>
+        }
+
       </div>
     )
   }
@@ -333,7 +409,7 @@ var RelationshipCapacity = React.createClass ({
       <div className="form-row">
         <div className="element-container">
           {this.props.relationshipCapacity.map((item, index) => (
-            <label>
+            <label key={index}>
               <input type="checkbox" value={item.name} onChange={this.modifyRelationship.bind(this, "relationshipCapacity", item, index)} checked={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -349,21 +425,21 @@ var RelationshipPosition = React.createClass ({
 
   handleChange: function(e) {
 
-    var attributeName = e.target.name
     var newValue = e.target.value
 
     var newState={}
-    newState[attributeName] = newValue
+    newState.relationshipPosition = newValue
     this.props.changeValue(newState)
 
   },
 
   render: function() {
     return (
+      
       <div className="form-row">
-        <input type="text" name="relationshipPosition" placeholder={this.props.placeholders.relationshipPosition} onBlur={this.handleChange} />
+        <input type="text" placeholder={this.props.placeholders.relationshipPosition} onBlur={this.handleChange} />
       </div>
-  )
+    )
   }
 })
 
@@ -372,11 +448,10 @@ var RelationshipPlace = React.createClass ({
 
   handleChange: function(e) {
 
-    var attributeName = e.target.name
     var newValue = e.target.value
 
     var newState={}
-    newState[attributeName] = newValue
+    newState.relationshipPlace = newValue
     this.props.changeValue(newState)
 
   },
@@ -384,7 +459,7 @@ var RelationshipPlace = React.createClass ({
   render: function() {
     return (
       <div className="form-row">
-        <input type="text" name="relationshipPlace" placeholder={this.props.placeholders.relationshipPlace} onBlur={this.handleChange} />
+        <input type="text" placeholder={this.props.placeholders.relationshipPlace} onBlur={this.handleChange} />
       </div>
   )
   }
@@ -497,8 +572,8 @@ var Work = React.createClass ({
     return (
       <div className="form-block">
         {this.props.work.map((item, index) => (
-          <div className="form-row">
-            <div key={index} className="radio-container">
+          <div key={index} className="form-row">
+            <div className="radio-container">
               <label id={'work-button-' + index}>
                 <input type="checkbox" id={'work-name-' + index} value={item.name} onChange={this.modifyWorkName.bind(this, item, index)}/>
                 <span>{item.name}</span>
@@ -553,7 +628,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsCommunication.map((item, index) => (
-            <label>
+            <label key={index}>
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsCommunication", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -564,7 +639,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsAttitude.map((item, index) => (
-            <label>
+            <label key={index}>
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsAttitude", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -575,7 +650,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsOther.map((item, index) => (
-            <label>
+            <label key={index}>
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsOther", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -680,7 +755,7 @@ var Competencies = React.createClass ({
         <div className="form-row">
           <div className="element-container">
             {this.props.competencies.map((item, index) => (
-              <label>
+              <label key={index}>
                 <input type="checkbox" value={item.name} onChange={this.modifyCompetency.bind(this, "competencies", item, index)} checked={item.selected}/>
                 <span>
                   {item.name}
@@ -792,9 +867,13 @@ var NewInfo = React.createClass ({
     return (
       <div>
         <div className="form-block">
-          <div className="form-row">
-            <input type="text" name="position" placeholder={this.props.placeholders.newInfoPosition} onBlur={this.handleChange} />
-          </div>
+
+          {this.props.referenceType.selected !== "tenancy" &&
+            <div className="form-row">
+              <input type="text" name="position" placeholder={this.props.placeholders.newInfoPosition} onBlur={this.handleChange} />
+            </div>
+          }
+
           <div className="form-row">
             <input type="text" name="place" placeholder={this.props.placeholders.newInfoPlace} onBlur={this.handleChange} />
           </div>
@@ -827,21 +906,18 @@ var FormContent = React.createClass ({
         <Applicant
           applicant={this.props.applicant}
           changeValue={this.props.changeValue}
-        />
-
-        <h2>About you</h2>
-        <Referee
-          referee={this.props.referee}
-          changeValue={this.props.changeValue}
-          placeholders={this.props.placeholders}
         />       
 
         <h2>The applicant's background</h2>
         <div className="form-block">
-          <RelationshipPosition
+          
+          {this.props.referenceType.selected !== "tenancy" &&
+            <RelationshipPosition
             changeValue={this.props.changeValue}
             placeholders={this.props.placeholders}
-          />
+            />
+          }
+          
           <RelationshipPlace
             changeValue={this.props.changeValue}
             placeholders={this.props.placeholders}
@@ -852,6 +928,14 @@ var FormContent = React.createClass ({
             changeValue={this.props.changeValue}
           />
         </div>
+
+        <h2>About you</h2>
+        <Referee
+          referenceType={this.props.referenceType}
+          referee={this.props.referee}
+          changeValue={this.props.changeValue}
+          placeholders={this.props.placeholders}
+        />
 
         <h2>Your relationship with the applicant</h2>
         <div className="form-block">
@@ -864,12 +948,16 @@ var FormContent = React.createClass ({
             changeValue={this.props.changeValue}
           />
         </div>
-        
-        <h2>The applicant's performance</h2>
-        <Work 
-          work={this.props.work}
-          changeValue={this.props.changeValue}
-        />
+
+        {this.props.referenceType.selected == "academic" &&
+          <h2>The applicant's performance</h2>
+        }
+        {this.props.referenceType.selected == "academic" &&
+          <Work 
+            work={this.props.work}
+            changeValue={this.props.changeValue}
+          />
+        }
 
         <h2>The applicant's competencies</h2>
         <Skills 
@@ -892,6 +980,7 @@ var FormContent = React.createClass ({
 
         <h2>About the new Job</h2>
         <NewInfo 
+          referenceType={this.props.referenceType}
           newInfo={this.props.newInfo}
           placeholders={this.props.placeholders}
           changeValue={this.props.changeValue}
@@ -937,7 +1026,12 @@ var FormBox = React.createClass ({
   render: function() {
     return (
       <div id="form-container" className="pane-container">
+        <FormHeader 
+          referenceType={this.props.referenceType}
+          changeValue={this.props.changeValue}
+        />
         <FormContent
+            referenceType={this.props.referenceType}
             currentTime={this.props.currentTime}
             placeholders={this.props.placeholders}
             applicant={this.props.applicant}
