@@ -12,13 +12,14 @@ var SkillsIntroduction = React.createClass ({
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var referee = this.props.referee;
+    var relationshipPlace = this.props.relationshipPlace;
     var skillsCount = this.props.skillsCount;
 
     function getrefereeWorkPlace(workplace) {
       if (workplace == "" ) {
         return "my institution"
       } else {
-        return referee.workPlace;
+        return relationshipPlace;
       }
     }
 
@@ -42,7 +43,7 @@ var SkillsIntroduction = React.createClass ({
     }
 
     function writeSentence() {
-      return "Studying at " + getrefereeWorkPlace(referee.workPlace) + " has required " + applicantName[0] 
+      return "Studying at " + getrefereeWorkPlace(relationshipPlace) + " has required " + applicantName[0] 
         + " to exercise a variety of skills" + getSkills(skillsCount)
     }
 
@@ -334,6 +335,7 @@ var Paragraph3 = React.createClass ({
           <SkillsIntroduction 
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
+          relationshipPlace={this.props.relationshipPlace}
           referee={this.props.referee}
           skillsCount={skillsCount}
           />

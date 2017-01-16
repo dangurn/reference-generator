@@ -5,39 +5,275 @@ var React = require('react');
 var PreviewTextTools = require('../resources.js').previewTextTools;
 
 
-//Paragraph 1A (Introduction Overview)
-var IntroductionOverview = React.createClass ({
+//Paragraph1 version 1
+var Paragraph1v1 = React.createClass ({
   render: function() {
 
+    //Get the information:
+    var applicantPronouns=this.props.applicantPronouns;
+    var datePeriod = this.props.datePeriod;
     var applicantName = this.props.applicantName;
-    var referee = this.props.referee;
-    var newInfo = this.props.newInfo;
+    var oldPlace = this.props.oldPlace;
+    var oldPosition = this.props.oldPosition;
+    var newPosition = this.props.newPosition;
     var newPlace = this.props.newPlace;
+    var startPhrase = this.props.startPhrase;
+    var endPhrase = this.props.endPhrase;
+    var yearsKnownPhrase = this.props.yearsKnownPhrase;
+    var rolesPhrase = this.props.rolesPhrase;
+    var capacityPhrase = this.props.capacityPhrase;
+    var duringThisTime = this.props.duringThisTime;
+    var acrossTheseRoles = this.props.acrossTheseRoles;
 
-    if (this.props.relationshipPosition == "") {
-      var relationshipPosition = "";
-    } else {
-      var relationshipPosition = " " + this.props.relationshipPosition;
+    //Write the sentences:
+    function writeSentence1() {
+      return "I am writing to you today " + capacityPhrase + "to support "
+      + applicantName[1] + " application " + newPosition + "at " + newPlace + ". "
     }
 
-    //Name the referee's institution:
-    if (this.props.relationshipPlace == "" ) {
-      var oldWorkPlace = "my institution"
-    } else {
-      var oldWorkPlace = this.props.relationshipPlace
+    function writeSentence2() {
+      if (oldPosition !== "" || startPhrase !== "" || endPhrase !== "") {
+        return applicantName[2] + " enrolled at " + oldPlace + " to study" + oldPosition
+      + startPhrase + endPhrase + ". ";
+      } else {
+        return "";
+      } 
     }
 
-    //Write the 'Capacity' sentence
-    function capacitySentence(jobTitle) {
-      if (jobTitle !== "") {
-        return " in my capacity as a " + jobTitle;
+    function writeSentence3(yearsKnownPhrase, rolesPhrase) {
+      if (yearsKnownPhrase !== "" || rolesPhrase !== "") {
+        return duringThisTime + "I have known " + applicantName[0] + yearsKnownPhrase + rolesPhrase + ". "
       } else {
         return "";
       }
     }
 
+    function writeSentence4() {
+      return acrossTheseRoles + "I believe I have had a good opportunity to assess " + applicantName[1]
+      + " performance and their suitability " + newPosition + "at " + newPlace + ". "
+    }
+
+    function writeSentence5() {
+      return "Please find this reference below. "
+    }
+
+    var finalParagraph = 
+      writeSentence1() + writeSentence2() + writeSentence3(yearsKnownPhrase, rolesPhrase)
+      + writeSentence4() + writeSentence5()
+
+    return (
+      <span>{finalParagraph}</span>
+    )
+  }
+})
+
+
+//Paragraph1 version 2
+var Paragraph1v2 = React.createClass ({
+  render: function() {
+    //Get the information:
+    var applicantPronouns=this.props.applicantPronouns;
+    var datePeriod = this.props.datePeriod;
+    var applicantName = this.props.applicantName;
+    var oldPlace = this.props.oldPlace;
+    var oldPosition = this.props.oldPosition;
+    var newPosition = this.props.newPosition;
+    var newPlace = this.props.newPlace;
+    var startPhrase = this.props.startPhrase;
+    var endPhrase = this.props.endPhrase;
+    var yearsKnownPhrase = this.props.yearsKnownPhrase;
+    var rolesPhrase = this.props.rolesPhrase;
+    var capacityPhrase = this.props.capacityPhrase;
+    var duringThisTime = this.props.duringThisTime;
+    var acrossTheseRoles = this.props.acrossTheseRoles;
+
+    //Write the 'position' phrase:
+    if (oldPosition == "my institution") {
+
+    }
+
+
+    //Write the sentences:
+    function writeSentence1() {
+      return "This is a letter to support " + applicantName[1] + " application " + newPosition 
+      + "at " + newPlace + ". "
+    }
+
+    function writeSentence2() {
+      return "I have known " + applicantName[0] + yearsKnownPhrase + " while " + applicantPronouns[0] 
+      + " enrolled to study" + oldPosition + " at " + oldPlace + startPhrase + ". "
+    }
+
+    function writeSentence3(yearsKnownPhrase, rolesPhrase) {
+      if (yearsKnownPhrase !== "" || rolesPhrase !== "") {
+        return duringThisTime + "I acted " + rolesPhrase + ". "
+      } else {
+        return "";
+      }
+    }
+
+    function writeSentence4() {
+      if (endPhrase !== "") {
+        return applicantName[2] + " has been studying here since then " + endPhrase + ". ";
+      } else {
+        return "";
+      }
+      
+    }
+
+    function writeSentence5() {
+      return "In light of this, I believe I am well positioned to offer a reference for " 
+      + applicantName[1] + " application " + newPosition + " and inform you of " + applicantPronouns[1] 
+      + " suitability for this role. This reference follows below. "
+    }
+
+    
+
+    var finalParagraph = 
+      writeSentence1() + writeSentence2() + writeSentence3(yearsKnownPhrase, rolesPhrase)
+      + writeSentence4() + writeSentence5()
+
+    return (
+      <span>{finalParagraph}</span>
+    )
+  }
+})
+
+
+//Paragraph1 version 3
+var Paragraph1v3 = React.createClass ({
+  render: function() {
+    //Get the information:
+    var applicantPronouns=this.props.applicantPronouns;
+    var datePeriod = this.props.datePeriod;
+    var applicantName = this.props.applicantName;
+    var referee = this.props.referee;
+    var oldPlace = this.props.oldPlace;
+    var oldPosition = this.props.oldPosition;
+    var newPosition = this.props.newPosition;
+    var newPlace = this.props.newPlace;
+    var startPhrase = this.props.startPhrase;
+    var endPhrase = this.props.endPhrase;
+    var yearsKnownPhrase = this.props.yearsKnownPhrase;
+    var rolesPhrase = this.props.rolesPhrase;
+    var capacityPhrase = this.props.capacityPhrase;
+    var duringThisTime = this.props.duringThisTime;
+    var acrossTheseRoles = this.props.acrossTheseRoles;
+    var currentlyWorking = this.props.currentlyWorking;
+
+    //get member text
+    function getMemberPhrase (jobTitle) {
+      if (jobTitle !== "") {
+        switch (jobTitle.charAt(0)) {
+          case "A":
+          case "E":
+          case "I":
+          case "O":
+          case "U":
+            return "an " + jobTitle + " at ";
+          default:
+            return "a " + jobTitle + " at ";
+        }
+      } else {
+        return "a member of "
+      }
+    }
+
+    //Get currently working text:
+    function currentlyWorkingPhrase (currentlyWorking) {
+      if (currentlyWorking == false) {
+        return " was";
+      } else {
+        return " is currently";
+      }
+    }
+
+    //Write the sentences:
+    function writeSentence1() {
+      return "As " + getMemberPhrase(referee.jobTitle) + oldPlace + ", I have known " + applicantName[0] 
+      + yearsKnownPhrase + rolesPhrase + " since " + applicantPronouns[0] + " enrolled to study here" 
+      + startPhrase + ". "
+    }
+
+    function writeSentence2() {
+      if (oldPosition !== "" || endPhrase !== "") {
+        return applicantName[2] + currentlyWorkingPhrase(currentlyWorking) + " enrolled to study" 
+      + oldPosition + endPhrase + ". "
+      } else {
+        return "";
+      }
+      
+    }
+
+    function writeSentence3() {
+      return "I understand " + applicantName[0] + " is now applying " + newPosition
+      + "at " + newPlace + " and has named me as a reference to support " + applicantPronouns[1] 
+      + " application. "
+    }
+
+    function writeSentence4() {
+      return "I am happy to do so and have provided this reference for you below. "
+    }
+
+    var finalParagraph = 
+      writeSentence1() + writeSentence2() + writeSentence3() + writeSentence4()
+
+    return (
+      <span>{finalParagraph}</span>
+    )
+  }
+})
+
+
+
+//Paragraph 1 Compiler
+//In this component, we take a load of information from state then
+//put it in a format such that it can be rendered by the Paragraph 1 components:
+
+var Paragraph1Compiler = React.createClass ({
+  render: function() {
+
+    //Get information:
+    var referenceOptions=this.props.referenceOptions
+    var applicantPronouns=this.props.applicantPronouns
+    var applicantName=this.props.applicantName
+    var referee=this.props.referee
+    var relationshipPlace=this.props.relationshipPlace
+    var relationshipLength=this.props.relationshipLength
+    var relationshipCapacity=this.props.relationshipCapacity
+    var relationshipPosition=this.props.relationshipPosition
+    var newInfo=this.props.newInfo
+    var currentTime=this.props.currentTime
+    var datePeriod=this.props.datePeriod
+    var randomNos=this.props.randomNos
+    var changeValue=this.props.changeValue
+
+    //And then transform this so it can be passed down to the Writing Components:
+
+    //Name the referee's institution:
+    if (this.props.relationshipPlace == "" ) {
+      var oldPlace = "my institution"
+    } else {
+      var oldPlace = this.props.relationshipPlace
+    }
+
+    //Add space to Relationship Position ready for rendering
+    if (relationshipPosition !== "") {
+      var oldPosition = " " + relationshipPosition;
+    } else {
+      var oldPosition = relationshipPosition;
+    }
+
+    //Name the new institution:
+    if (this.props.newInfo.place == "" ) {
+      var newPlace = "your institution"
+    } else {
+      var newPlace = this.props.newInfo.place
+    }
+
+
     //Write the position sentence
-    function getPosition(position) {
+    function getNewPosition(position) {
 
       if (position == "") {
         return "for a position ";
@@ -56,6 +292,20 @@ var IntroductionOverview = React.createClass ({
         }
       }
     }
+
+    var newPosition = getNewPosition(newInfo.position)
+
+    //Write the 'Capacity' sentence
+    function getCapacityPhrase(jobTitle) {
+      if (jobTitle !== "") {
+        return "in my capacity as a " + jobTitle + " ";
+      } else {
+        return "";
+      }
+    }
+
+    var capacityPhrase = getCapacityPhrase(referee.jobTitle)
+
 
     //Write the 'start' phrase
     var currentTime = this.props.currentTime;
@@ -82,6 +332,9 @@ var IntroductionOverview = React.createClass ({
         return "";
       }
     }
+
+    var startPhrase = getStartingWords(datePeriod.startMonth, datePeriod.startYear)
+
 
     //Write the 'end' phrase:
     function getEndingWords(month, year) {
@@ -110,42 +363,30 @@ var IntroductionOverview = React.createClass ({
       }
     }
 
-    function writeSentence() {
-      return "I am writing to you today" + capacitySentence(referee.jobTitle) + " to support " 
-        + applicantName[1] + " application " + getPosition(newInfo.position) + "at " 
-        + newPlace + ". " + applicantName[2] + " enrolled at " + oldWorkPlace + " to study"
-        + relationshipPosition + getStartingWords(datePeriod.startMonth, datePeriod.startYear)
-        + getEndingWords(datePeriod.endMonth, datePeriod.endYear) + ". "
+    var endPhrase = getEndingWords(datePeriod.endMonth, datePeriod.endYear)
+
+
+    //Find out if they are currently working or not:
+    function currentlyWorking (endMonth, endYear) {
+      if (endYear !== "" && endYear < currentTime.year) {
+        return false;
+      } else if (endYear == currentTime.year) {
+        if (endMonth < currentTime.month) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return true;
+      }
+      
     }
 
-    return (
-      <span>
-        {writeSentence()}
-      </span>
-    )
-  }
-})
+    var currentlyWorking = currentlyWorking(datePeriod.endMonth, datePeriod.endYear)
 
-//Paragraph 1B (Introduction Background)
-var IntroductionBackground = React.createClass ({
-
-  render: function() {
-
-    var applicantName = this.props.applicantName;
-    var applicantPronouns = this.props.applicantPronouns;
-    var datePeriod = this.props.datePeriod;
-    var relationshipLength = this.props.relationshipLength;
-    var rolesArray = this.props.rolesArray;
-   
-    //Write 'During this time' phrase:
-    if (datePeriod.startYear !== "" && datePeriod.endYear !== "") {
-      var duringThisTime = "During this time, "
-    } else {
-      var duringThisTime = "";
-    }
 
     //Write the 'Years' phrase:
-    function yearsPhrase(numberYears) {
+    function getYearsKnown(numberYears) {
       
       var numberArray = ["","","two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
 
@@ -160,8 +401,18 @@ var IntroductionBackground = React.createClass ({
       }
     }
 
+    var yearsKnownPhrase = getYearsKnown(relationshipLength)
+
+
     //Write the 'Roles' sentence:
-    function rolesPhrase(rolesArray) {
+    //Get an array of relationship capacities based on those selected:
+    var rolesArray = [];
+    for (var i = 0; i < relationshipCapacity.length; i++) {
+      if (relationshipCapacity[i].selected == true)
+        rolesArray.push(relationshipCapacity[i].name)
+    }
+
+    function getRolesPhrase(rolesArray) {
 
       if (rolesArray.length == 0) {
         var prefix = "";
@@ -188,152 +439,107 @@ var IntroductionBackground = React.createClass ({
       return prefix + roles;
 
     }
-   
-    function writeSentence() {
-      return duringThisTime + "I have known " + applicantName[0] + yearsPhrase(relationshipLength)
-      + rolesPhrase(rolesArray) + ". "
-    }
-    
-    return (
 
-      <span>
-        {writeSentence()}  
-      </span>
-      
-    )
-  }
-})
+    var rolesPhrase = getRolesPhrase(rolesArray)
 
-//Paragraph 1C (Introduction Relationship)
-var IntroductionRelationship = React.createClass ({
-  render: function() {
-
-    var applicantName = this.props.applicantName;
-    var applicantPronouns = this.props.applicantPronouns;
-    var newInfo = this.props.newInfo;
-    var newPlace = this.props.newPlace;
-    var rolesArray = this.props.rolesArray;
-
-    function rolesPrefix(numRoles) {
-      if (numRoles == 1) {
-        return "Across this role, "
-      } else if (numRoles > 1) {
-        return "Across these roles, "
-      } else {
-        return "";
-      }
-    }
-
-    //Write the position phrase:
-    function getPosition(position) {
-
-      if (position == "") {
-        return "for a position ";
-
-      } else {
-
-        switch (position.charAt(0)) {
-          case "a":
-          case "e":
-          case "i":
-          case "o":
-          case "u":
-            return "for an " + position + " position ";
-          default:
-            return "for a " + position + " position ";
-        }
-      }
-    }
-
-    function writeSentence() {
-      return rolesPrefix(rolesArray.length) + "I believe I have had a good opportunity to assess " + applicantName[1] 
-        + " performance and " + applicantPronouns[1] + " suitability " + getPosition(newInfo.position)
-        + "at " + newPlace + ". "
-    }
-    
-    return (
-      <span>
-        {writeSentence()}  
-      </span>
-    )
-  }
-})
-
-//Paragraph 1D (Introduction Setup)
-var IntroductionSetup = React.createClass ({
-  render: function() {
-
-    function writeSentence() {
-      return "Please find this reference below."
-    }
-    
-    return (
-      <span>
-        {writeSentence()}  
-      </span>
-    )
-  }
-})
-
-
-//Paragraph 1 (Introduction)
-var Paragraph1 = React.createClass({
-  render: function() {
-
-    //Name the new institution:
-    if (this.props.newInfo.place == "" ) {
-      var newPlace = "your institution"
+    //Write 'During this time' phrase:
+    if (datePeriod.startYear !== "" && datePeriod.endYear !== "") {
+      var duringThisTime = "During this time, "
     } else {
-      var newPlace = this.props.newInfo.place
+      var duringThisTime = "During " + applicantPronouns[1] + " time here, ";
     }
 
-    //Get an array of relationship capacities based on those selected:
-    var rolesArray = [];
-    for (var i = 0; i < this.props.relationshipCapacity.length; i++) {
-      if (this.props.relationshipCapacity[i].selected == true)
-        rolesArray.push(this.props.relationshipCapacity[i].name)
-    } 
-   
-    return (
+    //Write 'Across this/these roles phrase:
+    if (rolesArray.length == 1) {
+      var acrossTheseRoles = "Across this role, "
+    } else if (rolesArray.length > 1) {
+      var acrossTheseRoles = "Across these roles, "
+    } else {
+      var acrossTheseRoles = "";
+    }
 
-      <div className="preview-block">
-        <div className="preview-text" id="rendered-paragraph1">
-          <IntroductionOverview
-          applicantName={this.props.applicantName}
-          applicantPronouns={this.props.applicantPronouns}
-          referee={this.props.referee}
-          newInfo={this.props.newInfo}
-          newPlace={newPlace}
-          relationshipPosition={this.props.relationshipPosition}
-          relationshipPlace={this.props.relationshipPlace}
-          currentTime={this.props.currentTime}
-          datePeriod={this.props.datePeriod}
-          />
-          <IntroductionBackground
+    //Now decide which paragraph will be written based on the random number selected:
+
+    switch (randomNos.paragraph1.current) {
+      case 1:
+        var writtenParagraph = 
+        <Paragraph1v1
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             datePeriod={this.props.datePeriod}
-            relationshipLength={this.props.relationshipLength}
-            rolesArray={rolesArray}
+            referee={this.props.referee}
+            oldPosition={oldPosition}
+            oldPlace={oldPlace}
+            newPlace={newPlace}
+            newPosition={newPosition}
+            startPhrase={startPhrase}
+            endPhrase={endPhrase}
+            yearsKnownPhrase={yearsKnownPhrase}
+            rolesPhrase={rolesPhrase}
+            duringThisTime={duringThisTime}
+            acrossTheseRoles={acrossTheseRoles}
+            capacityPhrase={capacityPhrase}
           />
-          <IntroductionRelationship 
+        break;
+      case 2:
+        var writtenParagraph = 
+        <Paragraph1v2
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
-            newInfo={this.props.newInfo}
+            datePeriod={this.props.datePeriod}
+            referee={this.props.referee}
+            oldPosition={oldPosition}
+            oldPlace={oldPlace}
             newPlace={newPlace}
-            rolesArray={rolesArray}
+            newPosition={newPosition}
+            startPhrase={startPhrase}
+            endPhrase={endPhrase}
+            yearsKnownPhrase={yearsKnownPhrase}
+            rolesPhrase={rolesPhrase}
+            duringThisTime={duringThisTime}
+            acrossTheseRoles={acrossTheseRoles}
+            capacityPhrase={capacityPhrase}
           />
-          <IntroductionSetup
+        break;
+      case 3:
+        var writtenParagraph = 
+        <Paragraph1v3
+            applicantName={this.props.applicantName}
+            applicantPronouns={this.props.applicantPronouns}
+            datePeriod={this.props.datePeriod}
+            referee={this.props.referee}
+            oldPosition={oldPosition}
+            oldPlace={oldPlace}
+            newPlace={newPlace}
+            newPosition={newPosition}
+            startPhrase={startPhrase}
+            endPhrase={endPhrase}
+            yearsKnownPhrase={yearsKnownPhrase}
+            rolesPhrase={rolesPhrase}
+            duringThisTime={duringThisTime}
+            acrossTheseRoles={acrossTheseRoles}
+            capacityPhrase={capacityPhrase}
+            currentlyWorking={currentlyWorking}
           />
+        break;
+    }
+
+
+    return (
+      <div className="preview-block">
+        <div className="preview-text" id="rendered-paragraph1">
+          {writtenParagraph}
         </div>
         <PreviewTextTools
           name="paragraph1"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-      </div>
+      </div>      
     )
   }
 })
 
-module.exports = Paragraph1;
+
+
+module.exports = Paragraph1Compiler;

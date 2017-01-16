@@ -62,8 +62,6 @@ var Paragraph4v1 = React.createClass({
 })
 
 
-
-
 //Written Paragraph 4 - version 2:
 var Paragraph4v2 = React.createClass({
   render: function() {
@@ -206,7 +204,7 @@ var Paragraph4v3 = React.createClass({
 
 //Paragraph 4 Compiler
 //In this component, we take a load of information from state then
-//put it in a format such that it can be rendered by the Writing components below:
+//put it in a format such that it can be rendered by the Paragraph 4 components:
 
 var Paragraph4Compiler = React.createClass({
   render: function() {

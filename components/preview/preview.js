@@ -20,7 +20,7 @@ var DateStamp = require('./header/header.js').dateStamp;
 var Greeting = require('./header/header.js').greeting;
 var SubjectHeading = require('./header/header.js').subjectheading;
 
-var Paragraph1 = require('./paragraph1/paragraph1.js');
+var Paragraph1Compiler = require('./paragraph1/paragraph1.js');
 var Paragraph2 = require('./paragraph2/paragraph2.js');
 var Paragraph3 = require('./paragraph3/paragraph3.js');
 var Paragraph4Compiler = require('./paragraph4/paragraph4.js');
@@ -29,6 +29,38 @@ var Signature = require('./footer/footer.js');
 
 
 //Now let's compile everything in the Preview Container:
+
+//Options to allow users to select how formal and concise they want the reference to be:
+var PreviewOptions = React.createClass ({
+
+  handleChange: function(e) {
+
+    //Get Object from props:
+    var initialObject = this.props.referenceOptions;
+    var newObject = copy(initialObject);
+
+    var attributeName = e.target.name;
+    var newValue = e.target.value;
+
+    newObject[attributeName] = newValue;
+
+    var newState={}
+    newState.referenceOptions = newObject
+    this.props.changeValue(newState)
+
+  },
+
+  render: function() {
+    return (
+      <div className="pane-header">
+        <span>Formal</span>
+        <input name="formal" type="range" min="1" max="5" value={this.props.referenceOptions.formal} onChange={this.handleChange}/>
+        <span>Length</span>
+        <input name="length" type="range" min="1" max="5" value={this.props.referenceOptions.length} onChange={this.handleChange}/>
+      </div>
+    )
+  }
+})
 
 //The Preview Page:
 var PreviewPage = React.createClass ({
@@ -44,16 +76,19 @@ var PreviewPage = React.createClass ({
           changeValue={this.props.changeValue}
         />
         <Greeting 
+          referenceOptions={this.props.referenceOptions}
           addressee={this.props.addressee}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
         <SubjectHeading
+          referenceOptions={this.props.referenceOptions}
           applicant={this.props.applicant}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        <Paragraph1 
+        <Paragraph1Compiler 
+          referenceOptions={this.props.referenceOptions}
           applicantPronouns={this.props.applicantPronouns}
           applicantName={this.props.applicantName}
           referee={this.props.referee}
@@ -68,6 +103,7 @@ var PreviewPage = React.createClass ({
           changeValue={this.props.changeValue}
         />
         <Paragraph2
+          referenceOptions={this.props.referenceOptions}
           work={this.props.work}
           applicantPronouns={this.props.applicantPronouns}
           applicantName={this.props.applicantName}
@@ -76,17 +112,20 @@ var PreviewPage = React.createClass ({
           changeValue={this.props.changeValue}
         />
         <Paragraph3
+          referenceOptions={this.props.referenceOptions}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
           skillsOther={this.props.skillsOther}
           competencies={this.props.competencies}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
+          relationshipPlace={this.props.relationshipPlace}
           referee={this.props.referee}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
         <Paragraph4Compiler 
+          referenceOptions={this.props.referenceOptions}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           relationshipPlace={this.props.relationshipPlace}
@@ -99,6 +138,7 @@ var PreviewPage = React.createClass ({
           changeValue={this.props.changeValue}
         />
         <Signature
+          referenceOptions={this.props.referenceOptions}
           referee={this.props.referee}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
@@ -126,7 +166,12 @@ var PreviewBox = React.createClass ({
   render: function() {
     return (
       <div id="preview-container" className="pane-container">
+        <PreviewOptions
+          referenceOptions={this.props.referenceOptions}
+          changeValue={this.props.changeValue}
+        />
         <PreviewPage 
+          referenceOptions={this.props.referenceOptions}
           currentTime={this.props.currentTime}
           applicant={this.props.applicant}
           applicantName={this.props.applicantName}
@@ -155,3 +200,29 @@ var PreviewBox = React.createClass ({
 
 
 module.exports = PreviewBox;
+
+//Utiliies
+
+//Copy array function:
+
+function copy(thing){
+
+  if(typeof thing !== "object" || thing === null){
+    return thing;
+  }
+
+  if(Array.isArray(thing)) {
+    var out = [];
+    for(var i = 0; i < thing.length; i++){
+      out.push( copy(thing[i]) );
+    }
+    return out;
+  }
+
+  var out = {};
+  for(var key in thing){
+    out[key] = copy(thing[key]);
+  }
+  return out;
+
+}

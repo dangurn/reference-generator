@@ -53,10 +53,24 @@ var Compiler = React.createClass ({
     //We need to get different information depending on what type of reference has been selected:
     var refTypeSelected = this.props.referenceType.selected
 
-    //Now let's get the placeholders for the Form:
+    //Now let's get the titles and placeholders for the Form:
     switch (refTypeSelected) {
+
       case "academic":
+
+        var formHeadings = {
+            aboutApplicant: "About the applicant",
+            applicantBackground: "The applicant's background",
+            aboutReferee: "About you",
+            relationship: "Your relationship with the applicant",
+            performance: "The applicant's performance",
+            competencies: "The applicant's competencies",
+            aboutAddressee: "About the addressee",
+            aboutJob: "About the new job"
+          }
+
         var placeholders = {
+          person: "applicant",
           relationshipPosition: "Course studied (E.g. BSc (Hons) Psychology)",
           relationshipPlace: "Place studied (E.g. the University of...)",
           refereeWorkPlace: "Current place of work (If different from above)",
@@ -64,9 +78,24 @@ var Compiler = React.createClass ({
           newInfoPosition: "Position applied for (E.g. Research Assistant)",
           newInfoPlace: "Institution applied for (E.g. the University of...)",
         }
+        
         break;
+
       case "professional":
+
+        var formHeadings = {
+          aboutApplicant: "About the applicant",
+          applicantBackground: "The applicant's background",
+          aboutReferee: "About you",
+          relationship: "Your relationship with the applicant",
+          performance: "The applicant's performance",
+          competencies: "The applicant's competencies",
+          aboutAddressee: "About the addressee",
+          aboutJob: "About the new job"
+        }
+
         var placeholders = {
+          person: "applicant",
           relationshipPosition: "Position held (E.g. Office Assistant)",
           relationshipPlace: "Place of work (E.g. Company name)",
           refereeWorkPlace: "Your current place of work (E.g. Company name)",
@@ -74,15 +103,30 @@ var Compiler = React.createClass ({
           newInfoPosition: "Position applied for (E.g. Team leader)",
           newInfoPlace: "Institution applied for (E.g. Company name)",
         }
+
         break;
+
       case "tenancy":
+
+        var formHeadings = {
+          aboutApplicant: "About the tenant",
+          applicantBackground: "The previous or current tenancy",
+          aboutReferee: "About you",
+          relationship: "Your relationship with the tenant",
+          performance: "The applicant's performance",
+          competencies: "The tenant's competencies",
+          aboutAddressee: "About the addressee",
+          aboutJob: "About the new tenency"
+        }
+
         var placeholders = {
+          person: "tenant",
           relationshipPosition: "---",
-          relationshipPlace: "The property the applicant lived",
+          relationshipPlace: "The property the tenant resides/resided (E.g. 123 Fake Street)",
           refereeWorkPlace: "---",
           refereePosition: "---",
           newInfoPosition: "---",
-          newInfoPlace: "The property the applicant wishes to reside in",
+          newInfoPlace: "The property the tenant wishes to reside in (E.g. 123 Fake Street)",
         }
         break;
     }
@@ -102,6 +146,8 @@ var Compiler = React.createClass ({
 
     //And convert them into an array of objects (using information from state):
     var relationshipCapacityFinal = [];
+
+    //If statement here. If 
 
     for (var i = 0; i < relationshipCapacityNames.length; i++) {
       relationshipCapacityFinal.push({
@@ -163,6 +209,7 @@ var Compiler = React.createClass ({
         <FormBox
           referenceType={this.props.referenceType}
           currentTime={currentTime}
+          formHeadings={formHeadings}
           placeholders={placeholders}
           applicant={this.props.applicant}
           datePeriod={this.props.datePeriod}
@@ -183,6 +230,7 @@ var Compiler = React.createClass ({
 
         <PreviewBox
           randomNos={this.props.randomNos}
+          referenceOptions={this.props.referenceOptions}
           currentTime={currentTime}
           applicant={this.props.applicant}
           applicantName={applicantName}
@@ -219,8 +267,6 @@ var DataStore = React.createClass ({
 
     return {
 
-      testVariable: "",
-
       randomNos: {
         date: {current: this.generateRandomNo(3), max: 3},
         greeting: {current: this.generateRandomNo(3), max: 3},
@@ -230,6 +276,11 @@ var DataStore = React.createClass ({
         paragraph3: {current: this.generateRandomNo(3), max: 3},
         paragraph4: {current: this.generateRandomNo(3), max: 3},
         signature: {current: this.generateRandomNo(3), max: 3},
+      },
+
+      referenceOptions: {
+        formal: 3,
+        length: 3,
       },
 
       referenceType: {
@@ -268,11 +319,11 @@ var DataStore = React.createClass ({
       relationshipPosition: "",
       relationshipPlace: "",
       relationshipCapacity: [
-        {name: "tutor", selected: false},
-        {name: "lecturer", selected: false},
-        {name: "module leader", selected: false},
-        {name: "year leader", selected: false},
-        {name: "programme leader", selected: false}
+        {selected: false},
+        {selected: false},
+        {selected: false},
+        {selected: false},
+        {selected: false}
       ],
 
       skillsCommunication: [
@@ -332,6 +383,7 @@ var DataStore = React.createClass ({
     return (
       <Compiler
         referenceType={this.state.referenceType}
+        referenceOptions={this.state.referenceOptions}
         randomNos={this.state.randomNos}
         applicant={this.state.applicant}
         datePeriod={this.state.datePeriod}

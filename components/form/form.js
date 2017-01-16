@@ -71,7 +71,7 @@ var FormHeader = React.createClass ({
         <div className="type-button-container">
 
           <label>
-            <input type="radio" name="referenceType" value="academic" onChange={this.handleChange}/>
+            <input type="radio" name="referenceType" value="academic" onChange={this.handleChange} defaultChecked={true}/>
             <span>
               <AcademicSVG />
               academic
@@ -301,7 +301,6 @@ var Referee = React.createClass ({
 
     newObject.title = item
 
-    //Commit new value(s) to state
     var newState={}
     newState["referee"] = newObject
     this.props.changeValue(newState)
@@ -364,7 +363,7 @@ var RelationshipLength = React.createClass ({
     var relationshipLength = this.props.relationshipLength;
 
     if (relationshipLength == 0) {
-      var label = "I have known the applicant for (drag to select)";
+      var label = "I have known the " + this.props.placeholders.person + " for (drag to select)";
     } else if (relationshipLength == 1) {
       var label = relationshipLength + " year";
     } else {
@@ -386,14 +385,16 @@ var RelationshipCapacity = React.createClass ({
   modifyRelationship: function(name, value, key) {
 
     //Put the relevant information into a new array
+
+
     var initialArray = this.props[name]
     var newArray = copy(initialArray)
     var targetItem = initialArray[key]
 
     newArray.splice(key, 1, {
-      name: value.name, 
       selected: !value.selected
     })
+
 
     //Commit new value(s) to state
     var newState={}
@@ -902,13 +903,13 @@ var FormContent = React.createClass ({
 
       <div className="preview-page">
 
-        <h2>About the applicant</h2>
+        <h2>{this.props.formHeadings.aboutApplicant}</h2>
         <Applicant
           applicant={this.props.applicant}
           changeValue={this.props.changeValue}
         />       
 
-        <h2>The applicant's background</h2>
+        <h2>{this.props.formHeadings.applicantBackground}</h2>
         <div className="form-block">
           
           {this.props.referenceType.selected !== "tenancy" &&
@@ -929,7 +930,7 @@ var FormContent = React.createClass ({
           />
         </div>
 
-        <h2>About you</h2>
+        <h2>{this.props.formHeadings.aboutReferee}</h2>
         <Referee
           referenceType={this.props.referenceType}
           referee={this.props.referee}
@@ -937,10 +938,11 @@ var FormContent = React.createClass ({
           placeholders={this.props.placeholders}
         />
 
-        <h2>Your relationship with the applicant</h2>
+        <h2>{this.props.formHeadings.relationship}</h2>
         <div className="form-block">
           <RelationshipLength 
             relationshipLength={this.props.relationshipLength}
+            placeholders={this.props.placeholders}
             changeValue={this.props.changeValue}
           />
           <RelationshipCapacity 
@@ -950,7 +952,7 @@ var FormContent = React.createClass ({
         </div>
 
         {this.props.referenceType.selected == "academic" &&
-          <h2>The applicant's performance</h2>
+          <h2>{this.props.formHeadings.performance}</h2>
         }
         {this.props.referenceType.selected == "academic" &&
           <Work 
@@ -959,7 +961,7 @@ var FormContent = React.createClass ({
           />
         }
 
-        <h2>The applicant's competencies</h2>
+        <h2>{this.props.formHeadings.competencies}</h2>
         <Skills 
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
@@ -972,13 +974,13 @@ var FormContent = React.createClass ({
           changeValue={this.props.changeValue}
         />
 
-        <h2>About the addressee</h2>
+        <h2>{this.props.formHeadings.aboutAddressee}</h2>
         <Addressee 
           addressee={this.props.addressee}
           changeValue={this.props.changeValue}
         />
 
-        <h2>About the new Job</h2>
+        <h2>{this.props.formHeadings.aboutJob}</h2>
         <NewInfo 
           referenceType={this.props.referenceType}
           newInfo={this.props.newInfo}
@@ -1033,6 +1035,7 @@ var FormBox = React.createClass ({
         <FormContent
             referenceType={this.props.referenceType}
             currentTime={this.props.currentTime}
+            formHeadings={this.props.formHeadings}
             placeholders={this.props.placeholders}
             applicant={this.props.applicant}
             datePeriod={this.props.datePeriod}
