@@ -51,6 +51,8 @@ var DateStamp = React.createClass({
         <PreviewTextTools 
           randomNos={this.props.randomNos}
           name="date"
+          randomised="true"
+          editable="false"
           changeValue={this.props.changeValue}
         />
       </div>
@@ -91,6 +93,8 @@ var Greeting = React.createClass ({
         <PreviewTextTools 
           randomNos={this.props.randomNos}
           name="greeting"
+          randomised="false"
+          editable="false"
           changeValue={this.props.changeValue}
         />
       </div>
@@ -125,6 +129,8 @@ var SubjectHeading = React.createClass ({
         <PreviewTextTools 
           randomNos={this.props.randomNos}
           name="subject"
+          randomised="false"
+          editable="false"
           changeValue={this.props.changeValue}
         />
       </div>

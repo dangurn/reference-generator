@@ -331,6 +331,8 @@ var Paragraph4Compiler = React.createClass({
         </div>
         <PreviewTextTools
           name="paragraph4"
+          randomised="true"
+          editable="true"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />

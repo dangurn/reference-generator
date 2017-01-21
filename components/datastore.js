@@ -185,13 +185,21 @@ var Compiler = React.createClass ({
     var appNameLastLetter = appName.charAt(appName.length - 1)
 
     if (appName == "") {
-      var applicantName = ["the candidate", "the candidate's", "The candidate"]
+      
+      if (refTypeSelected == "tenancy") {
+        var applicantName = ["the tenant", "the tenant's", "The tenant"]
+      } else {
+        var applicantName = ["the candidate", "the candidate's", "The candidate"]
+      }
+      
     } else {
+
       if (appNameLastLetter == "s") {
         var applicantName = [appName, appName + "'", appName]
       } else {
         var applicantName = [appName, appName + "'s", appName]
       }
+
     }
 
     //Get the pronouns for the applicant:
@@ -230,6 +238,7 @@ var Compiler = React.createClass ({
 
         <PreviewBox
           randomNos={this.props.randomNos}
+          referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
           currentTime={currentTime}
           applicant={this.props.applicant}

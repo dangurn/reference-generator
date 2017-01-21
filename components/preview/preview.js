@@ -87,7 +87,8 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        <Paragraph1Compiler 
+        <Paragraph1Compiler
+          referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
           applicantPronouns={this.props.applicantPronouns}
           applicantName={this.props.applicantName}
@@ -171,6 +172,7 @@ var PreviewBox = React.createClass ({
           changeValue={this.props.changeValue}
         />
         <PreviewPage 
+          referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
           currentTime={this.props.currentTime}
           applicant={this.props.applicant}

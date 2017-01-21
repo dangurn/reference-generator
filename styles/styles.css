@@ -429,6 +429,11 @@ input[type=range]:focus::-ms-fill-upper {
     font-family: 'Times New Roman', Times, serif;   
 }
 
+    .editable-text {
+        background: white;
+        color: red;
+    }
+
 .preview-block:hover {
     border: 1px solid lightgray;
     background: rgba(0,0,0,0.02);
@@ -443,6 +448,7 @@ input[type=range]:focus::-ms-fill-upper {
     flex: 0 0 40px;
     justify-content: center;
     padding: 8px;
+    flex-flow: column;
 }
 
 .preview-tools svg {

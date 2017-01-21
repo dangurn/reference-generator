@@ -43,6 +43,8 @@ var Signature = React.createClass ({
         </div>
         <PreviewTextTools
           name="signature"
+          randomised="false"
+          editable="true"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />

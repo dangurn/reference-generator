@@ -59,7 +59,7 @@ var PreviewTextTools = React.createClass ({
     var newObject = copy(this.props.randomNos);
 
     //Generate a new random number
-    //And cycle through numbers, returning to 1 if needed:
+    //Cycle through numbers, returning to 1 if needed:
     var newNo = current + 1;
 
     if (newNo > max) {
@@ -73,15 +73,42 @@ var PreviewTextTools = React.createClass ({
     var newState={}
     newState["randomNos"] = newObject;
     this.props.changeValue(newState)
+
+  },
+
+  makeContentEditable(name) {
+
+    var textBox = document.getElementById('rendered-' + name);
+
+    //Toggle editable DIV
+    if (textBox.contentEditable == "inherit" || textBox.contentEditable == "false") {
+      textBox.contentEditable = true;
+      textBox.className = "preview-text editable-text";
+    } else {
+      textBox.contentEditable = false;
+      textBox.className = "preview-text";
+    }
+    
+
   },
 
   render: function() {
 
     return (
       <div className="preview-tools">
-        <div onClick={this.generateRandomNo.bind(this, this.props.name, this.props.randomNos)}>
-          <RefreshSVG/>
-        </div>
+
+        {this.props.randomised == "true" &&
+          <div onClick={this.generateRandomNo.bind(this, this.props.name, this.props.randomNos)}>
+            <RefreshSVG/>
+          </div>
+        }
+
+        {this.props.editable == "true" &&
+          <div onClick={this.makeContentEditable.bind(this, this.props.name)}>
+            <EditSVG /> 
+          </div>
+        }       
+        
       </div>
     )
   }

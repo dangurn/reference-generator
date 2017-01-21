@@ -24,6 +24,7 @@ var Paragraph1v1 = React.createClass ({
     var capacityPhrase = this.props.capacityPhrase;
     var duringThisTime = this.props.duringThisTime;
     var acrossTheseRoles = this.props.acrossTheseRoles;
+    var applicantStatus = this.props.applicantStatus;
 
     //Write the sentences:
     function writeSentence1() {
@@ -50,7 +51,7 @@ var Paragraph1v1 = React.createClass ({
 
     function writeSentence4() {
       return acrossTheseRoles + "I believe I have had a good opportunity to assess " + applicantName[1]
-      + " performance and their suitability " + newPosition + "at " + newPlace + ". "
+      + " performance and " +applicantPronouns[1] + " suitability " + newPosition + "at " + newPlace + ". "
     }
 
     function writeSentence5() {
@@ -86,11 +87,7 @@ var Paragraph1v2 = React.createClass ({
     var capacityPhrase = this.props.capacityPhrase;
     var duringThisTime = this.props.duringThisTime;
     var acrossTheseRoles = this.props.acrossTheseRoles;
-
-    //Write the 'position' phrase:
-    if (oldPosition == "my institution") {
-
-    }
+    var applicantStatus = this.props.applicantStatus;
 
 
     //Write the sentences:
@@ -101,7 +98,7 @@ var Paragraph1v2 = React.createClass ({
 
     function writeSentence2() {
       return "I have known " + applicantName[0] + yearsKnownPhrase + " while " + applicantPronouns[0] 
-      + " enrolled to study" + oldPosition + " at " + oldPlace + startPhrase + ". "
+      + applicantStatus + oldPosition + " at " + oldPlace + startPhrase + ". "
     }
 
     function writeSentence3(yearsKnownPhrase, rolesPhrase) {
@@ -160,6 +157,7 @@ var Paragraph1v3 = React.createClass ({
     var duringThisTime = this.props.duringThisTime;
     var acrossTheseRoles = this.props.acrossTheseRoles;
     var currentlyWorking = this.props.currentlyWorking;
+    var applicantStatus = this.props.applicantStatus;
 
     //get member text
     function getMemberPhrase (jobTitle) {
@@ -191,14 +189,14 @@ var Paragraph1v3 = React.createClass ({
     //Write the sentences:
     function writeSentence1() {
       return "As " + getMemberPhrase(referee.jobTitle) + oldPlace + ", I have known " + applicantName[0] 
-      + yearsKnownPhrase + rolesPhrase + " since " + applicantPronouns[0] + " enrolled to study here" 
+      + yearsKnownPhrase + rolesPhrase + " since " + applicantPronouns[0] + applicantStatus + "  here" 
       + startPhrase + ". "
     }
 
     function writeSentence2() {
       if (oldPosition !== "" || endPhrase !== "") {
-        return applicantName[2] + currentlyWorkingPhrase(currentlyWorking) + " enrolled to study" 
-      + oldPosition + endPhrase + ". "
+        return applicantName[2] + currentlyWorkingPhrase(currentlyWorking) + applicantStatus 
+        + oldPosition + endPhrase + ". "
       } else {
         return "";
       }
@@ -234,6 +232,7 @@ var Paragraph1Compiler = React.createClass ({
   render: function() {
 
     //Get information:
+    var referenceType=this.props.referenceType;
     var referenceOptions=this.props.referenceOptions
     var applicantPronouns=this.props.applicantPronouns
     var applicantName=this.props.applicantName
@@ -257,16 +256,22 @@ var Paragraph1Compiler = React.createClass ({
       var oldPlace = this.props.relationshipPlace
     }
 
-    //Add space to Relationship Position ready for rendering
+    //Add space to Relationship Position ready for rendering:
     if (relationshipPosition !== "") {
       var oldPosition = " " + relationshipPosition;
     } else {
       var oldPosition = relationshipPosition;
     }
 
-    //Name the new institution:
+    //Name the new place:
     if (this.props.newInfo.place == "" ) {
-      var newPlace = "your institution"
+
+      if (referenceType.selected == "tenancy") {
+        var newPlace = "your premises"
+      } else {
+        var newPlace = "your institution"
+      }
+      
     } else {
       var newPlace = this.props.newInfo.place
     }
@@ -293,7 +298,12 @@ var Paragraph1Compiler = React.createClass ({
       }
     }
 
-    var newPosition = getNewPosition(newInfo.position)
+    if (referenceType.selected == "tenancy") {
+      var newPosition = "for residency "
+    } else {
+      var newPosition = getNewPosition(newInfo.position)
+    }
+    
 
     //Write the 'Capacity' sentence
     function getCapacityPhrase(jobTitle) {
@@ -385,7 +395,7 @@ var Paragraph1Compiler = React.createClass ({
     var currentlyWorking = currentlyWorking(datePeriod.endMonth, datePeriod.endYear)
 
 
-    //Write the 'Years' phrase:
+    //Write the 'Years known' phrase:
     function getYearsKnown(numberYears) {
       
       var numberArray = ["","","two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
@@ -449,6 +459,7 @@ var Paragraph1Compiler = React.createClass ({
       var duringThisTime = "During " + applicantPronouns[1] + " time here, ";
     }
 
+
     //Write 'Across this/these roles phrase:
     if (rolesArray.length == 1) {
       var acrossTheseRoles = "Across this role, "
@@ -457,6 +468,19 @@ var Paragraph1Compiler = React.createClass ({
     } else {
       var acrossTheseRoles = "";
     }
+
+    //Write the 'status' phrase:
+    switch (referenceType.selected) {
+      case "academic":
+        var applicantStatus = " enrolled to study"
+        break;
+      case "tenancy":
+        var applicantStatus = " lived"
+        break;
+      default:
+        var applicantStatus = " were employed"
+    }
+
 
     //Now decide which paragraph will be written based on the random number selected:
 
@@ -479,6 +503,7 @@ var Paragraph1Compiler = React.createClass ({
             duringThisTime={duringThisTime}
             acrossTheseRoles={acrossTheseRoles}
             capacityPhrase={capacityPhrase}
+            applicantStatus={applicantStatus}
           />
         break;
       case 2:
@@ -499,6 +524,7 @@ var Paragraph1Compiler = React.createClass ({
             duringThisTime={duringThisTime}
             acrossTheseRoles={acrossTheseRoles}
             capacityPhrase={capacityPhrase}
+            applicantStatus={applicantStatus}
           />
         break;
       case 3:
@@ -519,6 +545,7 @@ var Paragraph1Compiler = React.createClass ({
             duringThisTime={duringThisTime}
             acrossTheseRoles={acrossTheseRoles}
             capacityPhrase={capacityPhrase}
+            applicantStatus={applicantStatus}
             currentlyWorking={currentlyWorking}
           />
         break;
@@ -532,6 +559,8 @@ var Paragraph1Compiler = React.createClass ({
         </div>
         <PreviewTextTools
           name="paragraph1"
+          randomised="true"
+          editable="true"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
