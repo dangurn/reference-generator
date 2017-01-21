@@ -204,13 +204,12 @@ var Compiler = React.createClass ({
 
     //Get the pronouns for the applicant:
     if (this.props.applicant.gender == "male") {
-      var applicantPronouns = ["he", "his", "him", "he is", "he has"]
+      var applicantPronouns = ["he", "his", "him", "he is", "he has", "he seems"]
     } else if (this.props.applicant.gender == "female") {
-      var applicantPronouns = ["she", "her", "her", "she is", "she has"]
+      var applicantPronouns = ["she", "her", "her", "she is", "she has", "she seems"]
     } else {
-      var applicantPronouns = ["they", "their", "them", "they are", "they have"]
+      var applicantPronouns = ["they", "their", "them", "they are", "they have", "they seem"]
     }
-
 
     return (
       <div className="main-container">

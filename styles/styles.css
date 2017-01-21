@@ -368,6 +368,7 @@ input[type=range]:focus::-ms-fill-upper {
             background: white;
             padding: 10px;
             border: 1px solid lightgray;
+            border-radius: 25px;
             transition: 0.2s all;
             user-select: none;
             -webkit-user-select: none;
@@ -390,10 +391,10 @@ input[type=range]:focus::-ms-fill-upper {
         }
 
         .type-button-container :checked + span {
-        color: white;
-        background:#43cbcb;
-        border: 1px solid #40bfbf;
-        fill: white;
+            color: white;
+            background:#43cbcb;
+            border: 1px solid #40bfbf;
+            fill: white;
         }
 
 .pane-container {
@@ -424,43 +425,59 @@ input[type=range]:focus::-ms-fill-upper {
 
 .preview-text {
     flex: 1 1 auto;
-    padding: 10px;
-    margin-left: 20px;
+    padding: 10px 20px;
     font-family: 'Times New Roman', Times, serif;   
 }
 
     .editable-text {
         background: white;
-        color: red;
+        color: indianred;
     }
+
+.preview-tools-button {
+    margin: 2px;
+    padding: 5px;
+    display: flex;
+    border-radius: 20px;
+    transition: 0.2s all;
+    cursor: pointer;
+}
+
+.preview-tools-button svg {
+    width: 15px;
+    height: 15px;
+    fill: transparent;
+}
 
 .preview-block:hover {
     border: 1px solid lightgray;
     background: rgba(0,0,0,0.02);
 }
 
+.preview-block:hover .preview-tools-button {
+    background: mediumseagreen;
+}
+
+.preview-block:hover .preview-tools-button:hover {
+    background: forestgreen;
+}
+
 .preview-block:hover svg {
-    fill: #CCC;
+    fill: white;
 }
 
 .preview-tools {
     display: flex;
-    flex: 0 0 40px;
-    justify-content: center;
+    flex: 0 0 auto;
+    justify-content: flex-start;
     padding: 8px;
     flex-flow: column;
 }
 
-.preview-tools svg {
-    width: 20px;
-    height: 20px;
-    fill: transparent;
-    transition: 0.2s all;
-    cursor: pointer;
-}
 
-.preview-tools svg:hover {
-    fill: slategray;
+
+.preview-tools-button:hover {
+    background: forestgreen;
 }
 
 .pane-toolbar {
@@ -483,6 +500,7 @@ input[type=range]:focus::-ms-fill-upper {
         align-items: center;
         justify-content: center;
         display: flex;
+        border-radius: 25px;
     }
 
     .toolbar-button:hover {

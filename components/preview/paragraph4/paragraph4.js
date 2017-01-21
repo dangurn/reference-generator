@@ -326,7 +326,7 @@ var Paragraph4Compiler = React.createClass({
 
     return (
       <div className="preview-block">
-        <div className="preview-text" id="rendered-paragraph4">
+        <div className="preview-text copy-body email-body" id="paragraph4">
           {writtenParagraph}
         </div>
         <PreviewTextTools

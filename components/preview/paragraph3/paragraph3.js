@@ -9,13 +9,13 @@ var PreviewTextTools = require('../resources.js').previewTextTools;
 var SkillsIntroduction = React.createClass ({
   render: function() {
 
+    var randomNos = this.props.randomNos;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
-    var referee = this.props.referee;
     var relationshipPlace = this.props.relationshipPlace;
     var skillsCount = this.props.skillsCount;
 
-    function getrefereeWorkPlace(workplace) {
+    function getOldWorkPlace(workplace) {
       if (workplace == "" ) {
         return "my institution"
       } else {
@@ -23,12 +23,38 @@ var SkillsIntroduction = React.createClass ({
       }
     }
 
+    
+    function writeSentence() {
+      switch (randomNos.paragraph3.current) {
+        case 1:
+          return "Studying at " + getOldWorkPlace(relationshipPlace) + " has required " + applicantName[0] 
+          + " to exercise a variety of skills" + getSkills(skillsCount) + ". "
+        case 2:
+          return applicantName[2] + " has been required to exercise a number of skills while studying at "
+          + getOldWorkPlace(relationshipPlace) + getSkills(skillsCount) + ". "
+        case 3:
+          return "As part of " + applicantPronouns[1] + " studies at " + getOldWorkPlace(relationshipPlace)
+          + ", " + applicantName[0] + " has been required to exercise a range of skills"
+          + getSkills(skillsCount) + ". "
+      }
+    }
+
     function getSkills(skillsCount) {
       if (skillsCount == 0) {
         return "";
       } else {
-        return ", and I have noticed that " + applicantPronouns[4] + " exhibited a " + skillsDescribe(skillsCount)
-          + " of these during " + applicantPronouns[1] + " time here."
+        switch (randomNos.paragraph3.current) {
+          case 1:
+            return " and I have noticed that " + applicantPronouns[4] + " exhibited a " 
+            + skillsDescribe(skillsCount) + " of these during " + applicantPronouns[1] + " time here"
+          case 2:
+            return " and it appears as though " + applicantPronouns[4] + " exhibited a "
+            + skillsDescribe(skillsCount) + " of these during " + applicantPronouns[1] + " time here"
+          case 3:
+            return " and it is clear through " + applicantPronouns[1] + " work here that "
+            + applicantPronouns[4] + " managed to exercise a " + skillsDescribe(skillsCount)
+            + " of these"  
+        }
       }
 
       function skillsDescribe(skillsCount) {
@@ -42,10 +68,6 @@ var SkillsIntroduction = React.createClass ({
       }
     }
 
-    function writeSentence() {
-      return "Studying at " + getrefereeWorkPlace(relationshipPlace) + " has required " + applicantName[0] 
-        + " to exercise a variety of skills" + getSkills(skillsCount)
-    }
 
     return (
       <span>
@@ -62,6 +84,22 @@ var SkillsCommunication = React.createClass ({
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var skillsCommunication = this.props.skillsCommunication;
+    var randomNo = this.props.randomNos.paragraph3.current;
+
+    //Write opening:
+    function writeOpening() {
+      switch (randomNo) {
+        case 1:
+          return " In terms of communication skills, it is clear that " + applicantName[0]
+        case 2:
+          return " Regarding " + applicantPronouns[1] + " communication skills, it is clear that "
+          + applicantName[0]
+        case 3:
+          return " With regard to communication skills, I have noticed that " + applicantName[0]
+      }
+    }
+
+
 
     //Write communication skills sentence:
     //0 = engages with others, 1 = works independently, 2 = works well in groups.
@@ -94,8 +132,7 @@ var SkillsCommunication = React.createClass ({
       skillsCommunication[0].selected == true || 
       skillsCommunication[1].selected == true || 
       skillsCommunication[2].selected == true) {
-        return " In terms of communication skills, it is clear that " 
-        + applicantName[0] 
+        return writeOpening()
         + writeSkillsCommunication1(skillsCommunication) 
         + writeSkillsCommunication2(skillsCommunication)
         + ".";
@@ -247,11 +284,19 @@ var SkillsCompetencies = React.createClass({
     var applicantName = this.props.applicantName;
     var competencies = this.props.competencies;
     var skillsCount = this.props.skillsCount;
+    var randomNo = this.props.randomNos.paragraph3.current;
 
     //Get the 'in addition' phrase if needed:
     function inAddition(skilldCount) {
       if (skillsCount !== 0) {
-        return " In addition, "
+        switch (randomNo) {
+          case 1:
+            return " In addition, "
+          case 2:
+            return " Additionally, "
+          case 3: 
+            return " Alongside these skills, "
+        }
       } else {
         return "";
       }
@@ -311,51 +356,48 @@ var SkillsCompetencies = React.createClass({
   }
 })
 
-//Paragaraph 3 (Skills)
-var Paragraph3 = React.createClass ({
+//Paragraph 3 Compiler
+//In this component, we take a load of information from state then
+//put it in a format such that it can be rendered by the Paragraph 3 components:
+
+var Paragraph3Compiler = React.createClass ({
   render: function() {
 
-    var skillsCommunication = this.props.skillsCommunication;
-    var skillsAttitude = this.props.skillsAttitude;
-    var skillsOther = this.props.skillsOther;
-
-    //Count how many skills they have in total:
-    var allSkills = skillsCommunication.concat(skillsAttitude, skillsOther)
-    var skillsCount = 0;
-    for (var i = 0; i < allSkills.length; i++) {
-      if (allSkills[i].selected == true) {
-        skillsCount++
-      }
-    } 
+    var skillsCount = this.props.skillsCount;
     
     return (
 
       <div className="preview-block">
-        <div className="preview-text" id="rendered-paragraph3">
-          <SkillsIntroduction 
-          applicantName={this.props.applicantName}
-          applicantPronouns={this.props.applicantPronouns}
-          relationshipPlace={this.props.relationshipPlace}
-          referee={this.props.referee}
-          skillsCount={skillsCount}
+        <div className="preview-text copy-body email-body" id="paragraph3">
+          <SkillsIntroduction
+            randomNos={this.props.randomNos}
+            applicantName={this.props.applicantName}
+            applicantPronouns={this.props.applicantPronouns}
+            relationshipPlace={this.props.relationshipPlace}
+            referee={this.props.referee}
+            skillsCount={skillsCount}
           />
           <SkillsCommunication
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             skillsCommunication={this.props.skillsCommunication}
           />
           <SkillsAttitude 
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             skillsCommunication={this.props.skillsCommunication}
             skillsAttitude={this.props.skillsAttitude}
           />
           <SkillsOther
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             skillsOther={this.props.skillsOther}
           />
           <SkillsCompetencies
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             competencies={this.props.competencies}
             skillsCount={this.props.skillsCount}
@@ -363,7 +405,7 @@ var Paragraph3 = React.createClass ({
         </div>
         <PreviewTextTools
           name="paragraph3"
-          randomised="false"
+          randomised="true"
           editable="true"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
@@ -374,7 +416,7 @@ var Paragraph3 = React.createClass ({
 
 })
 
-module.exports = Paragraph3;
+module.exports = Paragraph3Compiler;
 
 
 //Utiliies

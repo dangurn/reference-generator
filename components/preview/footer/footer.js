@@ -5,6 +5,26 @@ var React = require('react');
 var PreviewTextTools = require('../resources.js').previewTextTools;
 
 
+//Sign-off
+var SignOff = React.createClass ({
+  render: function() {
+    return (
+      <div className="preview-block">
+        <div className="preview-text copy-body email-body" id="signOff">
+          <span id="signaturePhrase">Yours sincerely,</span>
+        </div>
+        <PreviewTextTools
+          name="signOff"
+          randomised="false"
+          editable="true"
+        />
+      </div>
+    )
+  }
+})
+
+
+
 //Signature
 var Signature = React.createClass ({
   render: function() {
@@ -16,6 +36,8 @@ var Signature = React.createClass ({
         return "";
       } else if (title !== "" && firstName !== "" && lastName == "") {
         return firstName
+      } else if (title == "" && firstName !== "" && lastName !== "") {
+        return firstName + " " + lastName;
       } else {
         return title + " " + firstName + " " + lastName;
       }
@@ -25,26 +47,22 @@ var Signature = React.createClass ({
 
       <div className="preview-block">
         <div className="preview-text">
-          <span id="rendered-signature-phrase">Yours sincerely,</span>
-          <br />
-          <br />
-          <br />
-          <span id="rendered-signature-name">
+          <span id="signatureName">
             {getName(referee.title, referee.firstName, referee.lastName)}
           </span>
           <br />
-          <span id="rendered-signature-title">
+          <span id="signatureTitle">
             {referee.jobTitle}
           </span>
           <br />
-          <span id="rendered-signature-place">
+          <span id="signaturePlace">
             {referee.workPlace}
           </span>
         </div>
         <PreviewTextTools
           name="signature"
           randomised="false"
-          editable="true"
+          editable="false"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
@@ -53,7 +71,10 @@ var Signature = React.createClass ({
   }
 })
 
-module.exports = Signature;
+module.exports = {
+  signoff: SignOff,
+  signature: Signature
+}
 
 
 //Utiliies

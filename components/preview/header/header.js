@@ -45,7 +45,7 @@ var DateStamp = React.createClass({
     return (
 
       <div className="preview-block">
-        <div className="preview-text">
+        <div className="preview-text copy-body" id="date">
           {writeSentence(this.props.randomNos.date.current)}
         </div>
         <PreviewTextTools 
@@ -87,7 +87,7 @@ var Greeting = React.createClass ({
 
     return (
       <div className="preview-block">
-        <div className="preview-text" id="rendered-greeting">
+        <div className="preview-text copy-body email-body" id="greeting">
           {writeSentence()}
         </div>
         <PreviewTextTools 
@@ -123,7 +123,7 @@ var SubjectHeading = React.createClass ({
 
     return (
       <div className="preview-block">
-        <div className="preview-text" id="rendered-subject">
+        <div className="preview-text copy-body" id="subject">
           <b>{writeSentence()}</b>
         </div>
         <PreviewTextTools 

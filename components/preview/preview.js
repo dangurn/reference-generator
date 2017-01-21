@@ -21,11 +21,12 @@ var Greeting = require('./header/header.js').greeting;
 var SubjectHeading = require('./header/header.js').subjectheading;
 
 var Paragraph1Compiler = require('./paragraph1/paragraph1.js');
-var Paragraph2 = require('./paragraph2/paragraph2.js');
-var Paragraph3 = require('./paragraph3/paragraph3.js');
+var Paragraph2Compiler = require('./paragraph2/paragraph2.js');
+var Paragraph3Compiler = require('./paragraph3/paragraph3.js');
 var Paragraph4Compiler = require('./paragraph4/paragraph4.js');
 
-var Signature = require('./footer/footer.js');
+var SignOff = require('./footer/footer.js').signoff;
+var Signature = require('./footer/footer.js').signature;
 
 
 //Now let's compile everything in the Preview Container:
@@ -66,6 +67,20 @@ var PreviewOptions = React.createClass ({
 var PreviewPage = React.createClass ({
   render: function() {
 
+    //We need to count the number of skills the candidate has.
+    //This will determine whether we should render Paragraph 3 or not.
+    var skillsCommunication = this.props.skillsCommunication;
+    var skillsAttitude = this.props.skillsAttitude;
+    var skillsOther = this.props.skillsOther;
+
+    var allSkills = skillsCommunication.concat(skillsAttitude, skillsOther)
+    var skillsCount = 0;
+    for (var i = 0; i < allSkills.length; i++) {
+      if (allSkills[i].selected == true) {
+        skillsCount++
+      }
+    } 
+
     return (
 
       <div className="preview-page">
@@ -103,7 +118,9 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        <Paragraph2
+        {this.props.referenceType.selected == "academic" &&
+        <Paragraph2Compiler
+          referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
           work={this.props.work}
           applicantPronouns={this.props.applicantPronouns}
@@ -112,11 +129,14 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        <Paragraph3
+        }
+        {skillsCount !== 0 &&
+        <Paragraph3Compiler
           referenceOptions={this.props.referenceOptions}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
           skillsOther={this.props.skillsOther}
+          skillsCount={this.props.skillsCount}
           competencies={this.props.competencies}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
@@ -125,6 +145,7 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
+        }
         <Paragraph4Compiler 
           referenceOptions={this.props.referenceOptions}
           applicantName={this.props.applicantName}
@@ -138,6 +159,7 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
+        <SignOff />
         <Signature
           referenceOptions={this.props.referenceOptions}
           referee={this.props.referee}

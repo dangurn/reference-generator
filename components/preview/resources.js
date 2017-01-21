@@ -78,15 +78,15 @@ var PreviewTextTools = React.createClass ({
 
   makeContentEditable(name) {
 
-    var textBox = document.getElementById('rendered-' + name);
+    var textBox = document.getElementById(name);
 
     //Toggle editable DIV
     if (textBox.contentEditable == "inherit" || textBox.contentEditable == "false") {
       textBox.contentEditable = true;
-      textBox.className = "preview-text editable-text";
+      textBox.className = "preview-text copy-body email-body editable-text";
     } else {
       textBox.contentEditable = false;
-      textBox.className = "preview-text";
+      textBox.className = "preview-text copy-body email-body";
     }
     
 
@@ -98,13 +98,17 @@ var PreviewTextTools = React.createClass ({
       <div className="preview-tools">
 
         {this.props.randomised == "true" &&
-          <div onClick={this.generateRandomNo.bind(this, this.props.name, this.props.randomNos)}>
+          <div 
+          className="preview-tools-button" 
+          onClick={this.generateRandomNo.bind(this, this.props.name, this.props.randomNos)}>
             <RefreshSVG/>
           </div>
         }
 
         {this.props.editable == "true" &&
-          <div onClick={this.makeContentEditable.bind(this, this.props.name)}>
+          <div 
+          className="preview-tools-button" 
+          onClick={this.makeContentEditable.bind(this, this.props.name)}>
             <EditSVG /> 
           </div>
         }       
@@ -140,29 +144,34 @@ var EmailButton = React.createClass ({
 
   buildEmailLink() {
 
-    //Let's pull all the text we need from the elements in the Preview:
-    var subject = document.getElementById('rendered-subject').textContent;
-    var greeting = document.getElementById('rendered-greeting').textContent;
-    var paragraph1 = document.getElementById('rendered-paragraph1').textContent;
-    var paragraph2 = document.getElementById('rendered-paragraph2').textContent;
-    var paragraph3 = document.getElementById('rendered-paragraph3').textContent;
-    var paragraph4 = document.getElementById('rendered-paragraph4').textContent;
-    var signaturePhrase = document.getElementById('rendered-signature-phrase').textContent;
-    var signatureName = document.getElementById('rendered-signature-name').textContent;
-    var signatureTitle = document.getElementById('rendered-signature-title').textContent;
-    var signaturePlace = document.getElementById('rendered-signature-place').textContent;
+    //Let's get all of the elements we need:
+    var subject = document.getElementById('subject').textContent;
 
-    //And parse them into email (URI) format:
+    var bodyContent = document.getElementsByClassName('email-body');
+
+    var signatureName = document.getElementById('signatureName').textContent;
+    var signatureTitle = document.getElementById('signatureTitle').textContent;
+    var signaturePlace = document.getElementById('signaturePlace').textContent;
+
+    //Parse individual snippets into email (URI) format:
     var parsedSubject = encodeURIComponent(subject);
-    var parsedGreeting = encodeURIComponent(greeting);
-    var parsedParagraph1 = encodeURIComponent(paragraph1);
-    var parsedParagraph2 = encodeURIComponent(paragraph2);
-    var parsedParagraph3 = encodeURIComponent(paragraph3);
-    var parsedParagraph4 = encodeURIComponent(paragraph4);
-    var parsedSignaturePhrase = encodeURIComponent(signaturePhrase);
+
     var parsedSignatureName = encodeURIComponent(signatureName);
     var parsedSignatureTitle = encodeURIComponent(signatureTitle);
     var parsedSignaturePlace = encodeURIComponent(signaturePlace);
+
+    //And push the email body elements to an array:
+    var mainTextContent = [];
+
+    for (var i = 0; i < bodyContent.length; i++) {
+      var textContent = bodyContent[i].textContent
+      mainTextContent.push(encodeURIComponent(textContent))
+    }  
+
+    //Now bind everything together:   
+    var mainBodyText = mainTextContent.join("%0D%0A" + "%0D%0A");
+    var signatureCombined = [signatureName, signatureTitle, signaturePlace].join("%0D%0A");
+    var emailBodyText = [mainBodyText, signatureCombined].join("%0D%0A" + "%0D%0A");
 
     //Now we'll find the email button link:
     var emailButton = document.getElementById('email-button');
@@ -170,15 +179,7 @@ var EmailButton = React.createClass ({
     //And attach an href attribute to it with this information:
     emailButton.href = "mailto:someone@example.com"
       + "?Subject=" + parsedSubject
-      + "&body=" + parsedGreeting + "%0D%0A" + "%0D%0A" 
-        + parsedParagraph1 + "%0D%0A" + "%0D%0A"
-        + parsedParagraph2 + "%0D%0A" + "%0D%0A"
-        + parsedParagraph3 + "%0D%0A" + "%0D%0A"
-        + parsedParagraph4 + "%0D%0A" + "%0D%0A"
-        + parsedSignaturePhrase + "%0D%0A" + "%0D%0A"
-        + parsedSignatureName + "%0D%0A"
-        + parsedSignatureTitle + "%0D%0A" 
-        + parsedSignaturePlace + "%0D%0A" 
+      + "&body=" + emailBodyText
 
   },
 
@@ -209,23 +210,26 @@ var CopyButton = React.createClass ({
 
   copyToClipboard() {
 
-    //Let's pull all the text we need from the elements in the Preview:
-    var subject = document.getElementById('rendered-subject').textContent;
-    var greeting = document.getElementById('rendered-greeting').textContent;
-    var paragraph1 = document.getElementById('rendered-paragraph1').textContent;
-    var paragraph2 = document.getElementById('rendered-paragraph2').textContent;
-    var paragraph3 = document.getElementById('rendered-paragraph3').textContent;
-    var paragraph4 = document.getElementById('rendered-paragraph4').textContent;
-    var signaturePhrase = document.getElementById('rendered-signature-phrase').textContent;
-    var signatureName = document.getElementById('rendered-signature-name').textContent;
-    var signatureTitle = document.getElementById('rendered-signature-title').textContent;
-    var signaturePlace = document.getElementById('rendered-signature-place').textContent;
+    //Let's get all of the elements
+    var rawTextContent = document.getElementsByClassName('copy-body');
+    var signatureName = document.getElementById('signatureName').textContent;
+    var signatureTitle = document.getElementById('signatureTitle').textContent;
+    var signaturePlace = document.getElementById('signaturePlace').textContent;
 
+    //And push the raw content elements to an array:
+    var mainTextContent = [];
+
+    for (var i = 0; i < rawTextContent.length; i++) {
+      mainTextContent.push(rawTextContent[i].textContent)
+    }
+
+    //Now bind everything together:   
+    var finalTextContent = mainTextContent.join("\n\n");
     var signatureCombined = [signatureName, signatureTitle, signaturePlace].join("\n");
 
-    var finalText = [subject, greeting, paragraph1, paragraph2, paragraph3, paragraph4, signaturePhrase, signatureCombined].join("\n\n");
+    var clipboardText = [finalTextContent, signatureCombined].join("\n\n");
 
-    copyTextToClipboard(finalText);
+    copyTextToClipboard(clipboardText)
 
   },
 

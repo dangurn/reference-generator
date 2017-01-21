@@ -39,14 +39,23 @@ var WorkOverview = React.createClass ({
           } 
     }
 
-    function writeSentence() {
-      return "Throughout " + applicantPronouns[1] + " time here, " + applicantName[0] + " has completed "
-        + completedWorkText + " for me" + listWorkText + ". "
+    function writeSentence(randomNo) {
+      switch (randomNo) {
+        case 1:
+          return "Throughout " + applicantPronouns[1] + " time here, " + applicantName[0] + " has completed "
+          + completedWorkText + " for me" + listWorkText + ". "
+        case 2:
+          return applicantName[2] + " has completed " + completedWorkText + " for me during "
+          + applicantPronouns[1] + " time here" + listWorkText + ". " 
+        case 3:
+          return "I have seen " + completedWorkText + " completed by " + applicantName[0] + " during "
+          + applicantPronouns[1] + " time here" + listWorkText + ". "
+      }
     }
 
     return (
       <span>
-        {writeSentence()}
+        {writeSentence(this.props.randomNos.paragraph2.current)}
       </span>
     )
   }
@@ -58,6 +67,7 @@ var WorkDescribe = React.createClass ({
 
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
+    var randomNos = this.props.randomNos;
 
     //First up, we need to sort the work completed by how well they've done:
     var work = copy(this.props.work);
@@ -170,7 +180,7 @@ var WorkDescribe = React.createClass ({
           return "The " + getName(name, count) + " " + applicantName[0] 
             + " completed for me " + getTopic(topic) + wasWord + getPerformance(performance) + ". ";
         case 2:
-          return "Having seen " + applicantPronouns[1] + getName(name, count) + getTopic(topic)
+          return "Having seen " + applicantPronouns[1] + " " + getName(name, count) + getTopic(topic)
           + " too, I can confirm that " + thisWord + wasWord + getPerformance(performance)
           + ". ";
         case 3:
@@ -208,7 +218,7 @@ var WorkDescribe = React.createClass ({
             + getName(name, count) + getTopic(topic) + " which, again, " + wasWord 
             + getPerformance(performance) + ". "
         case 4:
-          return "Similarly, I believe " + applicantPronouns[1] + getName(name, count) + getTopic(topic) 
+          return "Similarly, I believe " + applicantPronouns[1] + " " + getName(name, count) + getTopic(topic) 
             + " matched this quality. ";
       }
     }
@@ -304,6 +314,7 @@ var WorkSummary = React.createClass ({
     var applicantPronouns = this.props.applicantPronouns;
     var work = this.props.work;
     var workArray = this.props.workArray;
+    var randomNos = this.props.randomNos;
 
     //We want out more about the candidate's range of scores:
     //Let's put the scores in an array
@@ -383,12 +394,29 @@ var WorkSummary = React.createClass ({
       return workStandard[meanPerformance]
     }
 
+    function getCapital(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
 
     function writeSentence() {
-      return "In general, it is clear that " + applicantName[0] + " is capable of producing work"
-        + getHighest(performanceHighest) + getConsistency(performanceRange, performanceLowest) + ". "
-        + overallPrefix + " I have found that the work " + applicantName[0] + " has produced has been"
-        + getOverallStandard(Math.floor(meanPerformance)) + ". "
+      switch(randomNos.paragraph2.current) {
+        case 1:
+          return "In general, it is clear that " + applicantName[0] + " is capable of producing work"
+          + getHighest(performanceHighest) + getConsistency(performanceRange, performanceLowest) + ". "
+          + overallPrefix + " I have found that the work " + applicantName[0] + " has produced has been"
+          + getOverallStandard(Math.floor(meanPerformance)) + ". "
+        case 2:
+          return "Overall, I believe the work that " + applicantName[0] + " has produced has been" 
+          + getOverallStandard(Math.floor(meanPerformance)) + ". "
+          + getCapital(applicantPronouns[5]) + " to be able to produce work"
+          + getHighest(performanceHighest) + getConsistency(performanceRange, performanceLowest) + ". " 
+        case 3:
+          return "It is clear to me that " + applicantName[0] + " can produce work"
+          + getHighest(performanceHighest) + getConsistency(performanceRange, performanceLowest) + ". "
+          + "Overall, I understand that " + applicantName[1] + " work has been "
+          + getOverallStandard(Math.floor(meanPerformance)) + ". "
+      } 
     }
 
     return (
@@ -399,13 +427,31 @@ var WorkSummary = React.createClass ({
   }
 })
 
-//Paragraph 2 (Work completed)
-var Paragraph2 = React.createClass ({
+//Paragraph 3 Compiler
+//In this component, we take a load of information from state then
+//put it in a format such that it can be rendered by the Paragraph 2 components:
+var Paragraph2Compiler = React.createClass ({
+
+
+  //We only want this component to update if the 'randomNos' or 'work' prop values change.
+  //(Otherwise this paragraph would change every time something in state changes!)
+  shouldComponentUpdate(nextProps) {
+    if (this.props.randomNos.paragraph2.current !== nextProps.randomNos.paragraph2.current) {
+      return true;
+    }
+    if (this.props.work !== nextProps.work) {
+      return true;
+    }
+    return false;
+  },
+
+
   render: function() {
 
     var work = this.props.work;
 
     //Now let's put the work done in a simple array:
+    //This will be needed for the components below:
     function getPhrase(name, count) {
       if (count == 1) {
         switch (name.charAt(0)) {
@@ -424,7 +470,6 @@ var Paragraph2 = React.createClass ({
       }
     }
 
-    //Now we can create the array:
     var workArray = [];
 
     for (var i = 0; i < work.length; i++) {
@@ -433,20 +478,24 @@ var Paragraph2 = React.createClass ({
       }
     }
 
-    return ( 
+
+    return (
       <div className="preview-block">
-        <div className="preview-text" id="rendered-paragraph2">
-          <WorkOverview 
-          applicantName={this.props.applicantName}
-          applicantPronouns={this.props.applicantPronouns}
-          workArray={workArray}
+        <div className="preview-text copy-body email-body" id="paragraph2">
+          <WorkOverview
+            randomNos={this.props.randomNos}
+            applicantName={this.props.applicantName}
+            applicantPronouns={this.props.applicantPronouns}
+            workArray={workArray}
           /> 
           <WorkDescribe
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             work={this.props.work}
           />
-          <WorkSummary 
+          <WorkSummary
+            randomNos={this.props.randomNos}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             work={this.props.work}
@@ -455,7 +504,7 @@ var Paragraph2 = React.createClass ({
         </div>
         <PreviewTextTools
           name="paragraph2"
-          randomised="false"
+          randomised="true"
           editable="true"
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
@@ -465,7 +514,7 @@ var Paragraph2 = React.createClass ({
   }
 })
 
-module.exports = Paragraph2;
+module.exports = Paragraph2Compiler;
 
 
 //Utiliies
