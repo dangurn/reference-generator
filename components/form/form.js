@@ -17,21 +17,20 @@ var StarSVG = require('./resources.js').starSVG;
 var RatingStars = React.createClass({
   render: function() {
 
-    function getClass(selected) {
-
-      if (selected == true) {
-        return "rating-star-container"
-      } else {
-        return "rating-star-container disabled"
-      }
+    if (this.props.selected == true) {
+      var classType = "rating-star-container enabled"
+      var enabled = true;
+    } else {
+      var classType = "rating-star-container disabled"
+      var enabled = false;
     }
 
     return (
-      <div className={getClass(this.props.selected)}>
-        <StarSVG number={4} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} />
-        <StarSVG number={3} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} />
-        <StarSVG number={2} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} />
-        <StarSVG number={1} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} />
+      <div className={classType}>
+        <StarSVG number={4} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} enabled={enabled}/>
+        <StarSVG number={3} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} enabled={enabled}/>
+        <StarSVG number={2} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} enabled={enabled}/>
+        <StarSVG number={1} index={this.props.index} performance={this.props.performance} work={this.props.work} changeValue={this.props.changeValue} enabled={enabled}/>
       </div>
     )
   }
@@ -384,19 +383,17 @@ var RelationshipCapacity = React.createClass ({
 
   modifyRelationship: function(name, value, key) {
 
-    //Put the relevant information into a new array
-
-
-    var initialArray = this.props[name]
+    //We want to take the 'relationshipCapacity' object
+    //(The one that doesn't have names attached to it)
+    var initialArray = this.props.relationshipCapacity
     var newArray = copy(initialArray)
-    var targetItem = initialArray[key]
 
+    //Modify the value selected in the object:
     newArray.splice(key, 1, {
       selected: !value.selected
     })
 
-
-    //Commit new value(s) to state
+    //Commit this new value to state
     var newState={}
     newState[name] = newArray
 
@@ -409,7 +406,7 @@ var RelationshipCapacity = React.createClass ({
     return (
       <div className="form-row">
         <div className="element-container">
-          {this.props.relationshipCapacity.map((item, index) => (
+          {this.props.relationshipCapacityFinal.map((item, index) => (
             <label key={index}>
               <input type="checkbox" value={item.name} onChange={this.modifyRelationship.bind(this, "relationshipCapacity", item, index)} checked={item.selected}/>
               <span>{item.name}</span>
@@ -865,6 +862,11 @@ var NewInfo = React.createClass ({
 
   render: function() {
 
+    var recommendBoxStyle = {
+      margin: '10px 50px',
+      textTransform: 'none',
+    };
+
     return (
       <div>
         <div className="form-block">
@@ -880,10 +882,12 @@ var NewInfo = React.createClass ({
           </div>
           <div className="form-row">
             <div className="radio-container">
-              Is the candidate suitable for this role?
               <label>
                 <input type="checkbox" onChange={this.handleCheckboxChange}/>
-                <span>Yes</span>
+                  <span style={recommendBoxStyle}>
+                    <div className="tick"></div>
+                    I would recommend the {this.props.placeholders.person}
+                  </span>
               </label>
             </div>
           </div>
@@ -945,8 +949,9 @@ var FormContent = React.createClass ({
             placeholders={this.props.placeholders}
             changeValue={this.props.changeValue}
           />
-          <RelationshipCapacity 
+          <RelationshipCapacity
             relationshipCapacity={this.props.relationshipCapacity}
+            relationshipCapacityFinal={this.props.relationshipCapacityFinal}
             changeValue={this.props.changeValue}
           />
         </div>
@@ -1042,6 +1047,7 @@ var FormBox = React.createClass ({
             referee={this.props.referee}
             relationshipLength={this.props.relationshipLength}
             relationshipCapacity={this.props.relationshipCapacity}
+            relationshipCapacityFinal={this.props.relationshipCapacityFinal}
             relationshipPosition={this.props.relationshipPosition}
             relationshipPlace={this.props.relationshipPlace}
             work={this.props.work}

@@ -5,31 +5,38 @@ var React = require('react');
 
 var StarSVG = React.createClass({
 
-  handleChange: function(index, number) {
+  handleChange: function(index, number, enabled) {
 
-    var initialArray = this.props.work;
-    var newObject = copy(initialArray);
-    var targetItem = initialArray[index];
+    if (enabled == true) {
 
-    newObject.splice(index, 1, {
-      name: targetItem.name,
-      count: targetItem.count,
-      topic: targetItem.topic,
-      performance: number,
-      selected: true
-    })
+      var initialArray = this.props.work;
+      var newObject = copy(initialArray);
+      var targetItem = initialArray[index];
 
-    var newState={}
-    newState.work = newObject
+      newObject.splice(index, 1, {
+        name: targetItem.name,
+        count: targetItem.count,
+        topic: targetItem.topic,
+        performance: number,
+        selected: true
+      })
 
-    this.props.changeValue(newState)
+      var newState={}
+      newState.work = newObject
+
+      this.props.changeValue(newState)
+    
+    }
+
   },
+
 
   render: function() {
 
     var number = this.props.number;
     var index = this.props.index;
     var performance = this.props.performance;
+    var enabled = this.props.enabled;
 
     if (number <= performance) {
       var type = "selected"
@@ -38,7 +45,7 @@ var StarSVG = React.createClass({
     }
 
     return (
-      <svg id={'work-' + index + '-' + number} className={type} onClick={this.handleChange.bind(this, index, number)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+      <svg id={'work-' + index + '-' + number} className={type} onClick={this.handleChange.bind(this, index, number, enabled)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
         <polygon points="11.17 1.13 14.29 7.45 21.26 8.46 16.21 13.38 17.4 20.33 11.17 17.05 4.93 20.33 6.12 13.38 1.07 8.46 8.05 7.45 11.17 1.13"/>
       </svg>
     )

@@ -42,7 +42,7 @@ var Paragraph4v1 = React.createClass({
     function writeSentence2(suitable) {
       if (suitable == true) {
       return "In light of the points above, I believe " + applicantName[0] + " posseses " 
-        + skillsPossessed(academicPerformance,professionalPerformance) + " " + positionText + "at " + newPlaceText 
+        + skillsPossessed(academicPerformance,professionalPerformance) + " " + positionText 
         + " and would therefore be suitable for this role. ";
       } else {
         return "";

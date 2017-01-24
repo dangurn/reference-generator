@@ -94,7 +94,7 @@ var Greeting = React.createClass ({
           randomNos={this.props.randomNos}
           name="greeting"
           randomised="false"
-          editable="false"
+          editable="true"
           changeValue={this.props.changeValue}
         />
       </div>
@@ -130,7 +130,7 @@ var SubjectHeading = React.createClass ({
           randomNos={this.props.randomNos}
           name="subject"
           randomised="false"
-          editable="false"
+          editable="true"
           changeValue={this.props.changeValue}
         />
       </div>

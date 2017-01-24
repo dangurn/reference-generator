@@ -10,6 +10,7 @@ var Paragraph1v1 = React.createClass ({
   render: function() {
 
     //Get the information:
+    var referenceType = this.props.referenceType;
     var applicantPronouns=this.props.applicantPronouns;
     var datePeriod = this.props.datePeriod;
     var applicantName = this.props.applicantName;
@@ -26,6 +27,36 @@ var Paragraph1v1 = React.createClass ({
     var acrossTheseRoles = this.props.acrossTheseRoles;
     var applicantStatus = this.props.applicantStatus;
 
+    //Function to get correct prefix:
+    function getPrefix (word) {
+      switch (word.charAt(1)) {
+        case "A":
+        case "E":
+        case "I":
+        case "O":
+        case "U":
+          return "an "
+        default:
+          return "a "
+      }
+    }
+
+    //Get some key phrases
+    switch (referenceType.selected) {
+      case "academic":
+        var workWord = " to study"
+        var enrolledWord = " enrolled at "
+        break;
+      case "professional":
+        var workWord = " to work as " + getPrefix(oldPosition)
+        var enrolledWord = " enrolled at "
+        break;
+      case "tenancy":
+        var workWord = ""
+        var enrolledWord = " lived at"
+        break;
+    }
+
     //Write the sentences:
     function writeSentence1() {
       return "I am writing to you today " + capacityPhrase + "to support "
@@ -34,7 +65,7 @@ var Paragraph1v1 = React.createClass ({
 
     function writeSentence2() {
       if (oldPosition !== "" || startPhrase !== "" || endPhrase !== "") {
-        return applicantName[2] + " enrolled at " + oldPlace + " to study" + oldPosition
+        return applicantName[2] + enrolledWord + oldPlace + workWord + oldPosition
       + startPhrase + endPhrase + ". ";
       } else {
         return "";
@@ -72,7 +103,9 @@ var Paragraph1v1 = React.createClass ({
 //Paragraph1 version 2
 var Paragraph1v2 = React.createClass ({
   render: function() {
+
     //Get the information:
+    var referenceType = this.props.referenceType;
     var applicantPronouns=this.props.applicantPronouns;
     var datePeriod = this.props.datePeriod;
     var applicantName = this.props.applicantName;
@@ -88,6 +121,22 @@ var Paragraph1v2 = React.createClass ({
     var duringThisTime = this.props.duringThisTime;
     var acrossTheseRoles = this.props.acrossTheseRoles;
     var applicantStatus = this.props.applicantStatus;
+
+    //Get key phrases:
+    switch (referenceType.selected) {
+      case "academic":
+        var doingWord = "studying "
+        var roleWord = "this role"
+        break;
+      case "professional":
+        var doingWord = "working "
+        var roleWord = "this role"
+        break;
+      case "tenancy":
+        var doingWord = "living "
+        var roleWord = "accomodation"
+        break;
+    }
 
 
     //Write the sentences:
@@ -111,7 +160,7 @@ var Paragraph1v2 = React.createClass ({
 
     function writeSentence4() {
       if (endPhrase !== "") {
-        return applicantName[2] + " has been studying here since then " + endPhrase + ". ";
+        return applicantName[2] + " has been " + doingWord + "here since then " + endPhrase + ". ";
       } else {
         return "";
       }
@@ -121,7 +170,7 @@ var Paragraph1v2 = React.createClass ({
     function writeSentence5() {
       return "In light of this, I believe I am well positioned to offer a reference for " 
       + applicantName[1] + " application " + newPosition + " and inform you of " + applicantPronouns[1] 
-      + " suitability for this role. This reference follows below. "
+      + " suitability for " + roleWord + ". This reference follows below. "
     }
 
     
@@ -249,16 +298,22 @@ var Paragraph1Compiler = React.createClass ({
 
     //And then transform this so it can be passed down to the Writing Components:
 
+    //Capitalise function:
+    function capitalise(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+
     //Name the referee's institution:
     if (this.props.relationshipPlace == "" ) {
       var oldPlace = "my institution"
     } else {
-      var oldPlace = this.props.relationshipPlace
+      var oldPlace = capitalise(this.props.relationshipPlace);
     }
 
     //Add space to Relationship Position ready for rendering:
     if (relationshipPosition !== "") {
-      var oldPosition = " " + relationshipPosition;
+      var oldPosition = " " + capitalise(relationshipPosition);
     } else {
       var oldPosition = relationshipPosition;
     }
@@ -273,7 +328,7 @@ var Paragraph1Compiler = React.createClass ({
       }
       
     } else {
-      var newPlace = this.props.newInfo.place
+      var newPlace = capitalise(this.props.newInfo.place);
     }
 
 
@@ -308,13 +363,25 @@ var Paragraph1Compiler = React.createClass ({
     //Write the 'Capacity' sentence
     function getCapacityPhrase(jobTitle) {
       if (jobTitle !== "") {
-        return "in my capacity as a " + jobTitle + " ";
+        return "in my capacity as a " + capitalise(jobTitle) + " ";
       } else {
         return "";
       }
     }
 
     var capacityPhrase = getCapacityPhrase(referee.jobTitle)
+
+    //Write workNature
+    function getWorkType() {
+      switch (referenceType.selected) {
+        case "academic":
+          return " course"
+        case "professional":
+          return " employment"
+        case "tenancy":
+          return "tenancy"
+      }
+    }
 
 
     //Write the 'start' phrase
@@ -350,23 +417,23 @@ var Paragraph1Compiler = React.createClass ({
     function getEndingWords(month, year) {
       if (year !== "" && month !== "") {
         if (year < currentTime.year) {
-          return " and completed " + applicantPronouns[1] + " course in " + currentTime.monthList[month - 1] + " " + year;
+          return " and completed " + applicantPronouns[1] + getWorkType() + " in " + currentTime.monthList[month - 1] + " " + year;
         } else if (year == currentTime.year && month < currentTime.month) {
-          return " and completed " + applicantPronouns[1] + " course in " + currentTime.monthList[month - 1] + " earlier this year";
+          return " and completed " + applicantPronouns[1] + getWorkType() + " in " + currentTime.monthList[month - 1] + " earlier this year";
         } else if (year == currentTime.year && month == currentTime.month) {
-          return " and is due to complete " + applicantPronouns[1] + " course this month";
+          return " and is due to complete " + applicantPronouns[1] + getWorkType() + " this month";
         } else if (year == currentTime.year && month > currentTime.month) {
-          return " and is due to complete " + applicantPronouns[1] + " course in " + currentTime.monthList[month - 1] + " later this year";
+          return " and is due to complete " + applicantPronouns[1] + getWorkType() + " in " + currentTime.monthList[month - 1] + " later this year";
         } else if (year > currentTime.year) {
-          return " and is due to complete " + applicantPronouns[1] + " course in " + currentTime.monthList[month - 1] + " " + year;
+          return " and is due to complete " + applicantPronouns[1] + getWorkType() + " in " + currentTime.monthList[month - 1] + " " + year;
         }
       } else if (year !== "" && month =="") {
         if (year < currentTime.year) {
-          return " and completed " + applicantPronouns[1] + " course in " + year;
+          return " and completed " + applicantPronouns[1] + getWorkType() + " in " + year;
         } else if (year == currentTime.year) {
-          return " and is due to complete " + applicantPronouns[1] + " course this year";
+          return " and is due to complete " + applicantPronouns[1] + getWorkType() + " this year";
         } else if (year > currentTime.year) {
-          return " and is due to complete " + applicantPronouns[1] + " course in " + year;
+          return " and is due to complete " + applicantPronouns[1] + getWorkType() + " in " + year;
         }
       } else {
           return ""
@@ -478,7 +545,7 @@ var Paragraph1Compiler = React.createClass ({
         var applicantStatus = " lived"
         break;
       default:
-        var applicantStatus = " were employed"
+        var applicantStatus = " enrolled to work"
     }
 
 
@@ -488,6 +555,7 @@ var Paragraph1Compiler = React.createClass ({
       case 1:
         var writtenParagraph = 
         <Paragraph1v1
+            referenceType={this.props.referenceType}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             datePeriod={this.props.datePeriod}
@@ -509,6 +577,7 @@ var Paragraph1Compiler = React.createClass ({
       case 2:
         var writtenParagraph = 
         <Paragraph1v2
+            referenceType={this.props.referenceType}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             datePeriod={this.props.datePeriod}
@@ -530,6 +599,7 @@ var Paragraph1Compiler = React.createClass ({
       case 3:
         var writtenParagraph = 
         <Paragraph1v3
+            referenceType={this.props.referenceType}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             datePeriod={this.props.datePeriod}

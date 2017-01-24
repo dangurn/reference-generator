@@ -78,7 +78,9 @@ var Compiler = React.createClass ({
           newInfoPosition: "Position applied for (E.g. Research Assistant)",
           newInfoPlace: "Institution applied for (E.g. the University of...)",
         }
-        
+
+        var relationshipCapacityNames = ["tutor", "lecturer", "module leader", "year leader", "programme leader"]
+
         break;
 
       case "professional":
@@ -98,11 +100,13 @@ var Compiler = React.createClass ({
           person: "applicant",
           relationshipPosition: "Position held (E.g. Office Assistant)",
           relationshipPlace: "Place of work (E.g. Company name)",
-          refereeWorkPlace: "Your current place of work (E.g. Company name)",
-          refereePosition: "Job Title (E.g. Manager)",
+          refereeWorkPlace: "Your current place of work (If different from above)",
+          refereePosition: "Job Title (E.g. Business Consultant)",
           newInfoPosition: "Position applied for (E.g. Team leader)",
           newInfoPlace: "Institution applied for (E.g. Company name)",
         }
+
+        var relationshipCapacityNames = ["manager", "supervisor", "team leader", "colleague"]
 
         break;
 
@@ -128,26 +132,14 @@ var Compiler = React.createClass ({
           newInfoPosition: "---",
           newInfoPlace: "The property the tenant wishes to reside in (E.g. 123 Fake Street)",
         }
-        break;
-    }
 
-    //Get the Relationship capacities:
-    switch(refTypeSelected) {
-      case "academic":
-        var relationshipCapacityNames = ["tutor", "lecturer", "module leader", "year leader", "programme leader"]
-        break;
-      case "professional":
-        var relationshipCapacityNames = ["manager", "supervisor", "team leader", "colleague"]
-        break;
-      case "tenancy":
         var relationshipCapacityNames = ["property owner", "letting agent", "house mate"]
+
         break;
     }
 
-    //And convert them into an array of objects (using information from state):
+    //Convert relationshipCapacityNames into an array of objects (using information from state):
     var relationshipCapacityFinal = [];
-
-    //If statement here. If 
 
     for (var i = 0; i < relationshipCapacityNames.length; i++) {
       relationshipCapacityFinal.push({
@@ -155,7 +147,6 @@ var Compiler = React.createClass ({
         selected: this.props.relationshipCapacity[i].selected
       }) 
     }
-
 
     //Get the type of Work completed:
     switch(refTypeSelected) {
@@ -211,6 +202,7 @@ var Compiler = React.createClass ({
       var applicantPronouns = ["they", "their", "them", "they are", "they have", "they seem"]
     }
 
+
     return (
       <div className="main-container">
         <FormBox
@@ -222,7 +214,8 @@ var Compiler = React.createClass ({
           datePeriod={this.props.datePeriod}
           referee={this.props.referee}
           relationshipLength={this.props.relationshipLength}
-          relationshipCapacity={relationshipCapacityFinal}
+          relationshipCapacity={this.props.relationshipCapacity}
+          relationshipCapacityFinal={relationshipCapacityFinal}
           relationshipPosition={this.props.relationshipPosition}
           relationshipPlace={this.props.relationshipPlace}
           work={workCompleted}

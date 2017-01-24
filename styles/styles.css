@@ -33,6 +33,7 @@ input[type=radio] {
 
 input[type=text] {
     font-size: 14px;
+    border-radius: 3px;
 }
 
 /*disabled input*/
@@ -368,7 +369,7 @@ input[type=range]:focus::-ms-fill-upper {
             background: white;
             padding: 10px;
             border: 1px solid lightgray;
-            border-radius: 25px;
+            border-radius: 3px;
             transition: 0.2s all;
             user-select: none;
             -webkit-user-select: none;
@@ -388,6 +389,10 @@ input[type=range]:focus::-ms-fill-upper {
             padding: 0px;
             margin-left: auto;
             display: flex;
+        }
+
+        .type-button-container :checked .button-icon {
+            fill: red;
         }
 
         .type-button-container :checked + span {
@@ -500,7 +505,7 @@ input[type=range]:focus::-ms-fill-upper {
         align-items: center;
         justify-content: center;
         display: flex;
-        border-radius: 25px;
+        border-radius: 3px;
     }
 
     .toolbar-button:hover {
@@ -551,13 +556,14 @@ input[type=range]:focus::-ms-fill-upper {
     align-items: center;
     cursor: pointer;
     background: white;
+    border-radius: 3px;
     padding: 10px;
     border: 1px solid lightgray;
-    transition: 0.2s all;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    transition: 0.2s all;
 }
 
 .radio-container label .delete-button {
@@ -583,13 +589,16 @@ input[type=range]:focus::-ms-fill-upper {
     margin-left: 0px;
 }
 
+
 .select-menu {
     flex: 1;
     margin-left: 10px;
     overflow: hidden;
     border: 1px solid lightgray;
+    border-radius: 3px;
     background: white;
     position: relative;
+    outline: none;
 }
 
 .select-menu:hover {
@@ -610,6 +619,7 @@ input[type=range]:focus::-ms-fill-upper {
     cursor: pointer;
     -webkit-appearance: none;
     color: darkslategray;
+    outline: none;
 }
 
 .select-menu option {
@@ -677,6 +687,7 @@ input[type=range]:focus::-ms-fill-upper {
     align-items: center;
     cursor: pointer;
     background: white;
+    border-radius: 3px;
     padding: 10px;
     border: 1px solid lightgray;
     transition: 0.2s all;
@@ -749,6 +760,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .count-button:disabled {
     opacity: 0.6;
+    cursor: default;
 }
 
 .count-button:disabled:hover {
@@ -778,16 +790,16 @@ input[type=range]:focus::-ms-fill-upper {
     width: 22px;
     stroke: lightgray;
     fill: transparent;
-    padding: 2px; 
-    cursor: pointer;
+    padding: 2px;
     transition: 0.05s all;
 }
 
-.rating-star-container svg:hover {
+.rating-star-container.enabled svg:hover {
     stroke: #40bfbf;
+    cursor: pointer;
 }
 
-.rating-star-container svg:hover ~ svg {
+.rating-star-container.enabled svg:hover ~ svg {
     stroke: #40bfbf;
 }
 
@@ -798,6 +810,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .rating-star-container.disabled {
     opacity: 0.4;
+    cursor: default;
 }
 
 #new-competency {
@@ -829,6 +842,23 @@ input[type=range]:focus::-ms-fill-upper {
 
 #add-competency:disabled {
     opacity: 0.6;
+}
+
+.radio-container span .tick {
+    height: 10px;
+    width: 20px;
+    border-left: 3px solid lightgray;
+    border-bottom: 3px solid lightgray;
+    transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Safari */
+    margin: 0px 10px 10px 0px;
+    transition: 0.2s all;
+}
+
+.radio-container :checked + span div.tick {
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
 }
 
 
@@ -868,5 +898,25 @@ input[type=range]:focus::-ms-fill-upper {
         order: 2;
         border: none;
     }
+}
 
+
+/* Printing stuff */
+
+@media print {
+    .preview-page {
+        padding-top: 100px;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        overflow: hidden;
+        color: black
+    }
+    .banner-container, 
+    .preview-tools {
+        display: none;
+    }
 }

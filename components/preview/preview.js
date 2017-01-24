@@ -14,6 +14,7 @@ var React = require('react');
 var EditButton = require('./resources.js').editButton;
 var EmailButton = require('./resources.js').emailButton;
 var CopyButton = require('./resources.js').copyButton;
+var PrintButton = require('./resources.js').printButton;
 
 //Get each part of the reference for the Preview Page:
 var DateStamp = require('./header/header.js').dateStamp;
@@ -79,7 +80,7 @@ var PreviewPage = React.createClass ({
       if (allSkills[i].selected == true) {
         skillsCount++
       }
-    } 
+    }
 
     return (
 
@@ -136,7 +137,7 @@ var PreviewPage = React.createClass ({
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
           skillsOther={this.props.skillsOther}
-          skillsCount={this.props.skillsCount}
+          skillsCount={skillsCount}
           competencies={this.props.competencies}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
@@ -173,12 +174,14 @@ var PreviewPage = React.createClass ({
 
 //The Preview Toolbar:
 var PreviewToolbar = React.createClass ({
+
   render: function() {
     return (
       <div className="pane-toolbar">
         <EditButton />
         <CopyButton />
         <EmailButton />
+        <PrintButton />
       </div>
     )
   }

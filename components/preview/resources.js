@@ -244,6 +244,21 @@ var CopyButton = React.createClass ({
   }
 })
 
+var PrintButton = React.createClass ({
+
+  printButton: function () {
+    window.print();
+  },
+
+  render: function() {
+    return (
+      <div className="toolbar-button" onClick={this.printButton}>
+        Print
+      </div>
+    )
+  }
+})
+
 module.exports = {
   editSVG: EditSVG,
   copySVG: CopySVG,
@@ -252,7 +267,8 @@ module.exports = {
   previewTextTools: PreviewTextTools,
   editButton: EditButton,
   emailButton: EmailButton,
-  copyButton: CopyButton
+  copyButton: CopyButton,
+  printButton: PrintButton,
 }
 
 //Utiliies
