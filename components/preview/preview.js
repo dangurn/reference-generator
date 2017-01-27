@@ -68,6 +68,17 @@ var PreviewOptions = React.createClass ({
 var PreviewPage = React.createClass ({
   render: function() {
 
+    //We need to count the number of work pieces the candidate has.
+    //This will determine whether we should render Paragraph 2 or not.
+    var work = this.props.work;
+    var workCount = 0;
+
+    for (var i = 0; i < work.length; i++) {
+      if (work[i].selected == true) {
+        workCount++
+      }
+    }
+
     //We need to count the number of skills the candidate has.
     //This will determine whether we should render Paragraph 3 or not.
     var skillsCommunication = this.props.skillsCommunication;
@@ -119,7 +130,7 @@ var PreviewPage = React.createClass ({
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
-        {this.props.referenceType.selected == "academic" &&
+        {this.props.referenceType.selected == "academic" && workCount !== 0 &&
         <Paragraph2Compiler
           referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
@@ -129,10 +140,13 @@ var PreviewPage = React.createClass ({
           referee={this.props.referee}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
+          capitalise={this.capitalise}
+          getPrefix={this.getPrefix}
         />
         }
-        {skillsCount !== 0 &&
+        {this.props.referenceType.selected !== "tenancy" && skillsCount !== 0 &&
         <Paragraph3Compiler
+          referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}
           skillsCommunication={this.props.skillsCommunication}
           skillsAttitude={this.props.skillsAttitude}
@@ -149,6 +163,7 @@ var PreviewPage = React.createClass ({
         }
         <Paragraph4Compiler 
           referenceOptions={this.props.referenceOptions}
+          referenceType={this.props.referenceType}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           relationshipPlace={this.props.relationshipPlace}
@@ -159,6 +174,8 @@ var PreviewPage = React.createClass ({
           work={this.props.work}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
+          capitalise={this.capitalise}
+          getPrefix={this.getPrefix}
         />
         <SignOff />
         <Signature
@@ -192,10 +209,7 @@ var PreviewBox = React.createClass ({
   render: function() {
     return (
       <div id="preview-container" className="pane-container">
-        <PreviewOptions
-          referenceOptions={this.props.referenceOptions}
-          changeValue={this.props.changeValue}
-        />
+
         <PreviewPage 
           referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}

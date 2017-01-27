@@ -7,6 +7,8 @@
 var React = require('react');
 
 //Get both the Form and Preview components:
+var Banner = require('./banner.js');
+
 var FormBox = require('./form/form.js');
 var PreviewBox = require('./preview/preview.js');
 
@@ -342,7 +344,7 @@ var DataStore = React.createClass ({
       skillsOther: [
         {name: "time management", selected: false},
         {name: "presentation skills", selected: false},
-        {name: "academic writing", selected: false}
+        {name: "literacy skills", selected: false}
       ],
       
       competencies: [
@@ -370,6 +372,8 @@ var DataStore = React.createClass ({
         place: "",
         suitable: false
       },
+
+      popUp: false,
      
     }
   },
@@ -382,26 +386,32 @@ var DataStore = React.createClass ({
   render: function() {
 
     return (
-      <Compiler
-        referenceType={this.state.referenceType}
-        referenceOptions={this.state.referenceOptions}
-        randomNos={this.state.randomNos}
-        applicant={this.state.applicant}
-        datePeriod={this.state.datePeriod}
-        referee={this.state.referee}
-        relationshipLength={this.state.relationshipLength}
-        relationshipCapacity={this.state.relationshipCapacity}
-        relationshipPosition={this.state.relationshipPosition}
-        relationshipPlace={this.state.relationshipPlace}
-        work={this.state.work}
-        skillsCommunication={this.state.skillsCommunication}
-        skillsAttitude={this.state.skillsAttitude}
-        skillsOther={this.state.skillsOther}
-        competencies={this.state.competencies}
-        newInfo={this.state.newInfo}
-        addressee={this.state.addressee}
-        changeValue={this.changeValue}
-      />
+      <div className="app-container">
+        <Banner 
+          popUp={this.state.popUp}
+          changeValue={this.changeValue}
+        />
+        <Compiler
+          referenceType={this.state.referenceType}
+          referenceOptions={this.state.referenceOptions}
+          randomNos={this.state.randomNos}
+          applicant={this.state.applicant}
+          datePeriod={this.state.datePeriod}
+          referee={this.state.referee}
+          relationshipLength={this.state.relationshipLength}
+          relationshipCapacity={this.state.relationshipCapacity}
+          relationshipPosition={this.state.relationshipPosition}
+          relationshipPlace={this.state.relationshipPlace}
+          work={this.state.work}
+          skillsCommunication={this.state.skillsCommunication}
+          skillsAttitude={this.state.skillsAttitude}
+          skillsOther={this.state.skillsOther}
+          competencies={this.state.competencies}
+          newInfo={this.state.newInfo}
+          addressee={this.state.addressee}
+          changeValue={this.changeValue}
+        />
+      </div>
     )
   }
 })

@@ -9,11 +9,13 @@ var PreviewTextTools = require('../resources.js').previewTextTools;
 var Paragraph4v1 = React.createClass({
   render: function() {
 
+    var referenceType = this.props.referenceType;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var newInfo = this.props.newInfo;
     var positionText = this.props.positionText;
     var newPlaceText = this.props.newPlaceText;
+    var roleWord = this.props.roleWord;
     var academicPerformance = this.props.academicPerformance;
     var professionalPerformance = this.props.professionalPerformance;
     var randomNos= this.props.randomNos;
@@ -21,15 +23,24 @@ var Paragraph4v1 = React.createClass({
 
     //We need to know what sort of endorsement to give them:
     function skillsPossessed(academic, professional) {
-      if (academic !== 0 && professional !== 0) {
-        return "both the academic and professional skills required";
-      } else if (academic !== 0 && professional == 0) {
-        return "the academic skills required";
-      } else if (academic == 0 && professional !== 0) {
-        return "the professional skills required";
+
+      if (referenceType.selected == "academic") {
+
+        if (academic !== 0 && professional !== 0) {
+          return "both the academic and professional skills required";
+        } else if (academic !== 0 && professional == 0) {
+          return "the academic skills required";
+        } else if (academic == 0 && professional !== 0) {
+          return "the professional skills required";
+        } else {
+          return "the skills required";
+        }
+      
       } else {
-        return "the skills required";
+        return "the qualities desired"
       }
+
+
     }
 
     //Write the sentences:
@@ -43,7 +54,7 @@ var Paragraph4v1 = React.createClass({
       if (suitable == true) {
       return "In light of the points above, I believe " + applicantName[0] + " posseses " 
         + skillsPossessed(academicPerformance,professionalPerformance) + " " + positionText 
-        + " and would therefore be suitable for this role. ";
+        + " and would therefore be suitable for " + roleWord + ". ";
       } else {
         return "";
       }
@@ -66,11 +77,14 @@ var Paragraph4v1 = React.createClass({
 var Paragraph4v2 = React.createClass({
   render: function() {
 
+    var referenceType = this.props.referenceType;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var relationshipPlace = this.props.relationshipPlace;
     var newInfo = this.props.newInfo;
     var positionText = this.props.positionText;
+    var roleWord = this.props.roleWord;
+    var oldPlaceText = this.props.oldPlaceText;
     var newPlaceText = this.props.newPlaceText;
     var academicPerformance = this.props.academicPerformance;
     var professionalPerformance = this.props.professionalPerformance;
@@ -87,13 +101,6 @@ var Paragraph4v2 = React.createClass({
       }
     }
 
-    function getPlace(place) {
-      if (place == "") {
-        return "my institution"
-      } else {
-        return place;
-      }
-    }
 
     function getQualities(academic, professional) {
       if (academic !== 0 && professional !== 0) {
@@ -110,7 +117,7 @@ var Paragraph4v2 = React.createClass({
     //Write the sentences:
 
     function writeSentence1() {
-      return "As " + applicantName[0] + " leaves " + getPlace(relationshipPlace) +  
+      return "As " + applicantName[0] + " leaves " + oldPlaceText +  
       ", I hope you will be able to provide " + applicantPronouns[2] + " with the opportunity " 
       + positionText + seekSuffixText(applicantPronouns[0]) + ". ";
     }
@@ -128,7 +135,7 @@ var Paragraph4v2 = React.createClass({
 
     function writeSentence3() {
       return "If you have any further questions, please feel free to contact me. " +
-      "Thank you for considering " + applicantName[0] + " for this role. ";
+      "Thank you for considering " + applicantName[0] + " for " + roleWord + ". ";
     }
 
     var finalParagraph = writeSentence1() + writeSentence2(newInfo.suitable) + writeSentence3();
@@ -145,10 +152,12 @@ var Paragraph4v2 = React.createClass({
 var Paragraph4v3 = React.createClass({
   render: function() {
 
+    var referenceType = this.props.referenceType;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var newInfo = this.props.newInfo;
     var positionText = this.props.positionText;
+    var roleWord = this.props.roleWord;
     var newPlaceText = this.props.newPlaceText;
     var academicPerformance = this.props.academicPerformance;
     var professionalPerformance = this.props.professionalPerformance;
@@ -156,6 +165,11 @@ var Paragraph4v3 = React.createClass({
     var changeValue = this.props.changeValue;
 
     //Get info:
+    if (referenceType.selected == "tenancy") {
+      var performanceWord = " conduct"
+    } else {
+      var performanceWord = " performance"
+    }
 
     function getQualities(academic, professional) {
       if (academic !== 0 && professional !== 0) {
@@ -171,15 +185,23 @@ var Paragraph4v3 = React.createClass({
 
     //Write the sentences:
 
+    function getEndorsement() {
+      if (referenceType.selected == "tenancy") {
+        return applicantPronouns[1] + " would be a very respectful occupant of "
+      } else {
+        return applicantPronouns[4] + " the potential to excel in a " + newInfo.position + " position at "
+      }
+    }
+
     function writeSentence1(suitable) {
       if (suitable == true) {
-        return "Based on the observations I have made about " + applicantName[1] + " performance, I believe " 
-        + applicantPronouns[4] + " the potential to excel in a " + newInfo.position + " position at " + newPlaceText 
+        return "Based on the observations I have made about " + applicantName[1] + performanceWord + ", I believe " 
+        + getEndorsement() + newPlaceText 
           + getQualities(academicPerformance, professionalPerformance) + " and I would therefore like to recommend " 
-          + applicantPronouns[2] + " for this role. ";
+          + applicantPronouns[2] + " for " + roleWord + ". ";
       } else {
         return "Based on the observations I have made about " + applicantName[1] 
-        + " performance in this reference, I hope you have all the information you require to make a judgement about "
+        + performanceWord + " in this reference, I hope you have all the information you require to make a judgement about "
         + applicantPronouns[1] + " suitability " + positionText + " at " + newPlaceText + ". ";
       }
       
@@ -210,7 +232,9 @@ var Paragraph4Compiler = React.createClass({
   render: function() {
 
     //Get Information:
+    var referenceType = this.props.referenceType;
     var applicantName = this.props.applicantName;
+    var relationshipPlace = this.props.relationshipPlace;
     var newInfo = this.props.newInfo;
     var work = this.props.work;
     var skillsCommunication = this.props.skillsCommunication;
@@ -221,11 +245,42 @@ var Paragraph4Compiler = React.createClass({
 
     //And then transform this so it can be passed down to the Writing Components:
 
+    //Capitalise function:
+    function capitalise(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    //Get Prefix prefix:
+    function getPrefix (word) {
+      switch (word.charAt(0)) {
+        case "A":
+        case "E":
+        case "I":
+        case "O":
+        case "U":
+          return "an "
+        default:
+          return "a "
+      }
+    }
+
+    //Get some key words:
+    if (referenceType.selected == "tenancy") {
+      var roleWord = "accomodation";
+    } else {
+      var roleWord = "this role"
+    }
+
+
     //Write the position sentence:
     function getPosition(position) {
 
       if (position == "") {
-        return "for a position ";
+        if (referenceType.selected == "tenancy") {
+          return "for residency "
+        } else {
+          return "for a position ";
+        }
 
       } else {
 
@@ -235,9 +290,9 @@ var Paragraph4Compiler = React.createClass({
           case "i":
           case "o":
           case "u":
-            return "for an " + position + " position ";
+            return "for an " + capitalise(position) + " position ";
           default:
-            return "for a " + position + " position ";
+            return "for a " + capitalise(position) + " position ";
         }
       }
     }
@@ -245,12 +300,38 @@ var Paragraph4Compiler = React.createClass({
     var positionText = getPosition(newInfo.position);
 
 
+    //Get the name of the old place:
+    function getOldPlace(place) {
+
+      if (place == "") {
+
+        if (referenceType.selected == "tenancy") {
+          return "the fomer premises"
+        } else {
+          return "my institution"
+        }
+
+      } else {
+        return capitalise(place);
+      }
+    }
+
+    var oldPlaceText = getOldPlace(relationshipPlace)
+
+
     //Get the name of the new place:
     function getNewPlace(newPlace) {
+
       if (newPlace == "" ) {
-        return "your institution";
+
+        if (referenceType.selected == "tenancy") {
+          return "your premises"
+        } else {
+          return "your institution";
+        }
+
       } else {
-        return newPlace;
+        return capitalise(newPlace);
       }
     }
 
@@ -281,12 +362,14 @@ var Paragraph4Compiler = React.createClass({
       case 1:
         var writtenParagraph = 
         <Paragraph4v1 
+          referenceType={this.props.referenceType}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           relationshipPlace={this.props.relationshipPlace}
           newInfo={this.props.newInfo}
           positionText={positionText}
           newPlaceText={newPlaceText}
+          roleWord={roleWord}
           academicPerformance={academicPerformance}
           professionalPerformance={professionalPerformance}
           randomNos={this.props.randomNos}
@@ -296,12 +379,15 @@ var Paragraph4Compiler = React.createClass({
       case 2:
         var writtenParagraph = 
         <Paragraph4v2 
+          referenceType={this.props.referenceType}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           relationshipPlace={this.props.relationshipPlace}
           newInfo={this.props.newInfo}
           positionText={positionText}
+          oldPlaceText={oldPlaceText}
           newPlaceText={newPlaceText}
+          roleWord={roleWord}
           academicPerformance={academicPerformance}
           professionalPerformance={professionalPerformance}
           randomNos={this.props.randomNos}
@@ -311,12 +397,14 @@ var Paragraph4Compiler = React.createClass({
       case 3:
         var writtenParagraph = 
         <Paragraph4v3 
+          referenceType={this.props.referenceType}
           applicantName={this.props.applicantName}
           applicantPronouns={this.props.applicantPronouns}
           relationshipPlace={this.props.relationshipPlace}
           newInfo={this.props.newInfo}
           positionText={positionText}
           newPlaceText={newPlaceText}
+          roleWord={roleWord}
           academicPerformance={academicPerformance}
           professionalPerformance={professionalPerformance}
           randomNos={this.props.randomNos}

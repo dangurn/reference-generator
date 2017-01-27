@@ -34,6 +34,17 @@ var EmailSVG = React.createClass ({
   }
 })
 
+var PrintSVG = React.createClass ({
+  render: function() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.25 14.69">
+        <path d="M15.17,7.26V2.34H4.83V7.26H0.38V15H4.83v2H15.17V15h4.45V7.26H15.17ZM14.08,16H5.92V12.24h8.16V16Zm0-8.74H5.92V3.31h8.16V7.26Zm3.46,3.08a1,1,0,1,1,1-1A1,1,0,0,1,17.54,10.33Z" transform="translate(-0.38 -2.34)"/>
+      </svg>
+    )
+  }
+})
+
+
 var RefreshSVG = React.createClass ({
   render: function() {
     return (
@@ -253,6 +264,7 @@ var PrintButton = React.createClass ({
   render: function() {
     return (
       <div className="toolbar-button" onClick={this.printButton}>
+        <PrintSVG />
         Print
       </div>
     )

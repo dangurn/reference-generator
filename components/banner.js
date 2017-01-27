@@ -1,5 +1,8 @@
 var React = require('react');
 
+//Steal the Delete SVG button from the Form resources.
+var DeleteSVG = require('./form/resources.js').deleteSVG;
+
 //The main banner components:
 
 //SVG Files:
@@ -48,15 +51,100 @@ var FacebookSVG = React.createClass ({
   }
 })
 
-var WhoMadeThis = React.createClass ({
+
+var CloseSVG = React.createClass ({
   render: function() {
     return (
-      <footer>
-        Who made this?
-      </footer>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.26 14.26">
+        <polygon points="13.55 10.59 10.09 7.13 13.55 3.67 10.59 0.71 7.13 4.17 3.67 0.71 0.71 3.67 4.17 7.13 0.71 10.59 3.67 13.55 7.13 10.09 10.59 13.55 13.55 10.59"/>
+      </svg>
     )
   }
 })
+
+
+var PopUpBox = React.createClass ({
+
+  closePopUp: function(e) {
+
+    var popUpBox = this.props.popUp;
+
+    popUpBox = !popUpBox
+
+    var newState={};
+    newState['popUp'] = popUpBox;
+    this.props.changeValue(newState)
+
+  },
+
+  render: function() {
+
+    if (this.props.popUp == true) {
+      var popUpClass = "visible"
+    } else {
+      var popUpClass = "hidden"
+    }
+
+    return (
+      <div id="popup-backdrop" className={popUpClass}>
+        <div id="popup-content">
+
+          <div className="close-button" onClick={this.closePopUp}>
+            <CloseSVG />
+          </div>
+
+          <h2>Hello, my name's Daniel</h2>
+          <p>Thanks for trying out my reference generator!</p>
+
+          <p>I've written dozens of job references for people in the past
+          and I found that the whole process can be pretty repetitive and time-consuming.
+          Not only that, but there is some real pressure to be careful with your words and not land yourself in legal trouble. 
+          Because of this, I wanted to create something to make the whole process a bit easier;
+          something that will find the right words for you, no matter the situation. 
+          As I'm just getting into web-app development, this seemed like a good idea for a first project too.
+          </p>
+
+          <p>I hope you find this useful. 
+          If you'd like to find out more about what I'm up to, 
+          check me out at <a href="http://danielgurney.net">danielgurney.net</a>.
+          If you're feeling generous, a nice 'coffee' would be greatly appreciated ;-)</p>
+
+          <p>Happy referencing!</p>
+
+        </div>
+      </div>
+    )
+  }
+})
+
+
+var WhoMadeThis = React.createClass ({
+
+  openPopUp: function(e) {
+
+    var popUpBox = this.props.popUp;
+    popUpBox = !popUpBox
+
+    var newState={};
+    newState['popUp'] = popUpBox;
+    this.props.changeValue(newState)
+
+  },
+
+  render: function() {
+    return (
+      <span onClick={this.openPopUp}>
+        Who made this?
+        <PopUpBox 
+          popUp={this.props.popUp}
+          changeValue={this.props.changeValue}
+        />
+      </span>
+    )
+  }
+})
+
+
 
 //The main banner
 var Banner = React.createClass({
@@ -75,7 +163,10 @@ var Banner = React.createClass({
             <GitHubSVG />
           </a>
         </div>
-        <WhoMadeThis />
+        <WhoMadeThis 
+          popUp={this.props.popUp}
+          changeValue={this.props.changeValue}
+        />
       </div>
     )
   }

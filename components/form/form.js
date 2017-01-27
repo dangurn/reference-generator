@@ -966,19 +966,24 @@ var FormContent = React.createClass ({
           />
         }
 
-        <h2>{this.props.formHeadings.competencies}</h2>
-        <Skills 
-          skillsCommunication={this.props.skillsCommunication}
-          skillsAttitude={this.props.skillsAttitude}
-          skillsOther={this.props.skillsOther}
-          changeValue={this.props.changeValue}
-        />
-
+        {this.props.referenceType.selected !== "tenancy" &&
+          <h2>{this.props.formHeadings.competencies}</h2>
+        }
+        {this.props.referenceType.selected !== "tenancy" &&
+          <Skills 
+            skillsCommunication={this.props.skillsCommunication}
+            skillsAttitude={this.props.skillsAttitude}
+            skillsOther={this.props.skillsOther}
+            changeValue={this.props.changeValue}
+          />
+        }
+        {this.props.referenceType.selected !== "tenancy" &&
         <Competencies 
           competencies={this.props.competencies}
           changeValue={this.props.changeValue}
         />
-
+        }
+        
         <h2>{this.props.formHeadings.aboutAddressee}</h2>
         <Addressee 
           addressee={this.props.addressee}

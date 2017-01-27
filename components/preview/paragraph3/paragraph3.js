@@ -9,12 +9,15 @@ var PreviewTextTools = require('../resources.js').previewTextTools;
 var SkillsIntroduction = React.createClass ({
   render: function() {
 
+    var referenceType = this.props.referenceType;
     var randomNos = this.props.randomNos;
+    var workWords = this.props.workWords;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var relationshipPlace = this.props.relationshipPlace;
     var skillsCount = this.props.skillsCount;
 
+    //Get the old place name:
     function getOldWorkPlace(workplace) {
       if (workplace == "" ) {
         return "my institution"
@@ -27,13 +30,13 @@ var SkillsIntroduction = React.createClass ({
     function writeSentence() {
       switch (randomNos.paragraph3.current) {
         case 1:
-          return "Studying at " + getOldWorkPlace(relationshipPlace) + " has required " + applicantName[0] 
+          return workWords[0] + " at " + getOldWorkPlace(relationshipPlace) + " has required " + applicantName[0] 
           + " to exercise a variety of skills" + getSkills(skillsCount) + ". "
         case 2:
-          return applicantName[2] + " has been required to exercise a number of skills while studying at "
-          + getOldWorkPlace(relationshipPlace) + getSkills(skillsCount) + ". "
+          return applicantName[2] + " has been required to exercise a number of skills while " + workWords[1] 
+          + " at " + getOldWorkPlace(relationshipPlace) + getSkills(skillsCount) + ". "
         case 3:
-          return "As part of " + applicantPronouns[1] + " studies at " + getOldWorkPlace(relationshipPlace)
+          return "As part of " + applicantPronouns[1] + " " + workWords[2] + " at " + getOldWorkPlace(relationshipPlace)
           + ", " + applicantName[0] + " has been required to exercise a range of skills"
           + getSkills(skillsCount) + ". "
       }
@@ -153,6 +156,7 @@ var SkillsCommunication = React.createClass ({
 var SkillsAttitude = React.createClass ({
   render: function() {
 
+    var workWords = this.props.workWords;
     var applicantName = this.props.applicantName;
     var applicantPronouns = this.props.applicantPronouns;
     var skillsAttitude = this.props.skillsAttitude;
@@ -187,7 +191,8 @@ var SkillsAttitude = React.createClass ({
       }
 
       if (skillsAttitude[1].selected == true) {
-        skillsAttitudeArray.push("demonstrated that " + applicantPronouns[0] + " can use initiative to tackle problems")
+        skillsAttitudeArray.push("demonstrated that " + applicantPronouns[0] 
+        + " can use initiative to tackle problems")
       }
 
       if (skillsAttitude[2].selected == true) {
@@ -198,7 +203,8 @@ var SkillsAttitude = React.createClass ({
         case 0:
           return "";
         default:
-          var attitudeSentence = " Throughout " + applicantPronouns[1] + " studies, " + applicantPronouns[4] + getAlsoWord(skillsCommunication) + " ";
+          var attitudeSentence = " Throughout " + applicantPronouns[1] + " " + workWords[2] + ", " 
+          + applicantPronouns[4] + getAlsoWord(skillsCommunication) + " ";
 
             for (var i = 0; i < skillsAttitudeArray.length; i++) {
               if (i + 1 == skillsAttitudeArray.length) {
@@ -231,7 +237,7 @@ var SkillsOther = React.createClass ({
     var skillsOther = this.props.skillsOther;
     
     //Write Other Skills sentence:
-    //0 = time management, 1 = presentation, 2 = academic writing.
+    //0 = time management, 1 = presentation, 2 = literacy.
     //Let's put the sentences in an array first:
     function writeSentence(skillsOther) {
 
@@ -246,7 +252,7 @@ var SkillsOther = React.createClass ({
       }
 
       if (skillsOther[2].selected == true) {
-        skillsOtherArray.push("that " + applicantPronouns[1] + " academic writing skills are excellent")
+        skillsOtherArray.push("that " + applicantPronouns[1] + " literacy skills are excellent")
       }
 
       switch (skillsOtherArray.length) {
@@ -363,14 +369,24 @@ var SkillsCompetencies = React.createClass({
 var Paragraph3Compiler = React.createClass ({
   render: function() {
 
+    var referenceType = this.props.referenceType;
     var skillsCount = this.props.skillsCount;
+
+    //Get some work words:
+    if (referenceType.selected == "academic") {
+      var workWords = ["Studying", "studying", "studies"]
+    } else {
+      var workWords = ["Working", "working", "work"]
+    }
     
     return (
 
       <div className="preview-block">
         <div className="preview-text copy-body email-body" id="paragraph3">
           <SkillsIntroduction
+            referenceType={this.props.referenceType}
             randomNos={this.props.randomNos}
+            workWords={workWords}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             relationshipPlace={this.props.relationshipPlace}
@@ -385,6 +401,7 @@ var Paragraph3Compiler = React.createClass ({
           />
           <SkillsAttitude 
             randomNos={this.props.randomNos}
+            workWords={workWords}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}
             skillsCommunication={this.props.skillsCommunication}

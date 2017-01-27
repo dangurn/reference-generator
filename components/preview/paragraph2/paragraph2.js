@@ -360,7 +360,7 @@ var WorkSummary = React.createClass ({
     //Now let's generate some words and sentences:
     function getHighest(performanceHighest) {
       var workHighest = [
-        " as expected",
+        " as instructed",
         " as expected",
         " to an acceptable standard",
         " to a good standard",
@@ -385,7 +385,7 @@ var WorkSummary = React.createClass ({
 
     function getOverallStandard(meanPerformance) {
       var workStandard = [
-        " completed as expected", 
+        " completed as requested", 
         " completed as expected",
         " satisfactory", 
         " very good",
@@ -431,7 +431,6 @@ var WorkSummary = React.createClass ({
 //In this component, we take a load of information from state then
 //put it in a format such that it can be rendered by the Paragraph 2 components:
 var Paragraph2Compiler = React.createClass ({
-
 
   //We only want this component to update if the 'randomNos' or 'work' prop values change.
   //(Otherwise this paragraph would change every time something in state changes!)

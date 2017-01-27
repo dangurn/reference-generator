@@ -25,35 +25,23 @@ var Paragraph1v1 = React.createClass ({
     var capacityPhrase = this.props.capacityPhrase;
     var duringThisTime = this.props.duringThisTime;
     var acrossTheseRoles = this.props.acrossTheseRoles;
-    var applicantStatus = this.props.applicantStatus;
-
-    //Function to get correct prefix:
-    function getPrefix (word) {
-      switch (word.charAt(1)) {
-        case "A":
-        case "E":
-        case "I":
-        case "O":
-        case "U":
-          return "an "
-        default:
-          return "a "
-      }
-    }
 
     //Get some key phrases
     switch (referenceType.selected) {
       case "academic":
         var workWord = " to study"
         var enrolledWord = " enrolled at "
+        var performanceWord = " performance"
         break;
       case "professional":
-        var workWord = " to work as " + getPrefix(oldPosition)
+        var workWord = " to work"
         var enrolledWord = " enrolled at "
+        var performanceWord = " performance"
         break;
       case "tenancy":
         var workWord = ""
-        var enrolledWord = " lived at"
+        var enrolledWord = " lived at "
+        var performanceWord = " conduct"
         break;
     }
 
@@ -82,7 +70,7 @@ var Paragraph1v1 = React.createClass ({
 
     function writeSentence4() {
       return acrossTheseRoles + "I believe I have had a good opportunity to assess " + applicantName[1]
-      + " performance and " +applicantPronouns[1] + " suitability " + newPosition + "at " + newPlace + ". "
+      + performanceWord + " and " +applicantPronouns[1] + " suitability " + newPosition + "at " + newPlace + ". "
     }
 
     function writeSentence5() {
@@ -147,7 +135,7 @@ var Paragraph1v2 = React.createClass ({
 
     function writeSentence2() {
       return "I have known " + applicantName[0] + yearsKnownPhrase + " while " + applicantPronouns[0] 
-      + applicantStatus + oldPosition + " at " + oldPlace + startPhrase + ". "
+      + applicantStatus[0] + oldPosition + " at " + oldPlace + startPhrase + ". "
     }
 
     function writeSentence3(yearsKnownPhrase, rolesPhrase) {
@@ -190,6 +178,7 @@ var Paragraph1v2 = React.createClass ({
 var Paragraph1v3 = React.createClass ({
   render: function() {
     //Get the information:
+    var referenceType = this.props.referenceType;
     var applicantPronouns=this.props.applicantPronouns;
     var datePeriod = this.props.datePeriod;
     var applicantName = this.props.applicantName;
@@ -210,7 +199,9 @@ var Paragraph1v3 = React.createClass ({
 
     //get member text
     function getMemberPhrase (jobTitle) {
+
       if (jobTitle !== "") {
+
         switch (jobTitle.charAt(0)) {
           case "A":
           case "E":
@@ -221,8 +212,14 @@ var Paragraph1v3 = React.createClass ({
           default:
             return "a " + jobTitle + " at ";
         }
+
       } else {
-        return "a member of "
+
+        if (referenceType.selected == "tenancy") {
+          return "an affiliate of "
+        } else {
+          return "a member of "
+        }
       }
     }
 
@@ -238,13 +235,13 @@ var Paragraph1v3 = React.createClass ({
     //Write the sentences:
     function writeSentence1() {
       return "As " + getMemberPhrase(referee.jobTitle) + oldPlace + ", I have known " + applicantName[0] 
-      + yearsKnownPhrase + rolesPhrase + " since " + applicantPronouns[0] + applicantStatus + "  here" 
+      + yearsKnownPhrase + rolesPhrase + " since " + applicantPronouns[0] + applicantStatus[0] + " here" 
       + startPhrase + ". "
     }
 
     function writeSentence2() {
       if (oldPosition !== "" || endPhrase !== "") {
-        return applicantName[2] + currentlyWorkingPhrase(currentlyWorking) + applicantStatus 
+        return applicantName[2] + currentlyWorkingPhrase(currentlyWorking) + applicantStatus[1] 
         + oldPosition + endPhrase + ". "
       } else {
         return "";
@@ -303,17 +300,44 @@ var Paragraph1Compiler = React.createClass ({
       return word.charAt(0).toUpperCase() + word.slice(1);
     }
 
+    //Get Prefix prefix:
+    function getPrefix (word) {
+      switch (word.charAt(0)) {
+        case "A":
+        case "E":
+        case "I":
+        case "O":
+        case "U":
+          return "an "
+        default:
+          return "a "
+      }
+    }
 
-    //Name the referee's institution:
+    //Name the old institution:
     if (this.props.relationshipPlace == "" ) {
-      var oldPlace = "my institution"
+      if (referenceType.selected == "tenancy") {
+        var oldPlace = "the former premises"
+      } else {
+        var oldPlace = "my institution"
+      }
     } else {
       var oldPlace = capitalise(this.props.relationshipPlace);
     }
 
     //Add space to Relationship Position ready for rendering:
     if (relationshipPosition !== "") {
-      var oldPosition = " " + capitalise(relationshipPosition);
+      switch (referenceType.selected) {
+        case "academic":
+          var oldPosition = " " + capitalise(relationshipPosition);
+          break;
+        case "professional":
+          var oldPosition = " as " + getPrefix(capitalise(relationshipPosition)) + capitalise(relationshipPosition);
+          break;
+        default:
+          var oldPosition = "";
+
+      }
     } else {
       var oldPosition = relationshipPosition;
     }
@@ -362,11 +386,19 @@ var Paragraph1Compiler = React.createClass ({
 
     //Write the 'Capacity' sentence
     function getCapacityPhrase(jobTitle) {
-      if (jobTitle !== "") {
-        return "in my capacity as a " + capitalise(jobTitle) + " ";
+
+      if (referenceType.selected !== "tenancy") {
+
+        if (jobTitle !== "") {
+          return "in my capacity as a " + capitalise(jobTitle) + " ";
+        } else {
+          return "";
+        }
+
       } else {
         return "";
       }
+        
     }
 
     var capacityPhrase = getCapacityPhrase(referee.jobTitle)
@@ -379,7 +411,7 @@ var Paragraph1Compiler = React.createClass ({
         case "professional":
           return " employment"
         case "tenancy":
-          return "tenancy"
+          return " tenancy"
       }
     }
 
@@ -539,13 +571,13 @@ var Paragraph1Compiler = React.createClass ({
     //Write the 'status' phrase:
     switch (referenceType.selected) {
       case "academic":
-        var applicantStatus = " enrolled to study"
+        var applicantStatus = [" enrolled to study", " enrolled to study"]
         break;
       case "tenancy":
-        var applicantStatus = " lived"
+        var applicantStatus = [" lived", " under contract to live at these premises"]
         break;
       default:
-        var applicantStatus = " enrolled to work"
+        var applicantStatus = [" enrolled to work", " enrolled to work"]
     }
 
 
