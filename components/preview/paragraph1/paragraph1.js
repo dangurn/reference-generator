@@ -177,6 +177,7 @@ var Paragraph1v2 = React.createClass ({
 //Paragraph1 version 3
 var Paragraph1v3 = React.createClass ({
   render: function() {
+
     //Get the information:
     var referenceType = this.props.referenceType;
     var applicantPronouns=this.props.applicantPronouns;
@@ -257,6 +258,69 @@ var Paragraph1v3 = React.createClass ({
 
     function writeSentence4() {
       return "I am happy to do so and have provided this reference for you below. "
+    }
+
+    var finalParagraph = 
+      writeSentence1() + writeSentence2() + writeSentence3() + writeSentence4()
+
+    return (
+      <span>{finalParagraph}</span>
+    )
+  }
+})
+
+
+//Paragraph1 version 4
+var Paragraph1v4 = React.createClass ({
+  render: function() {
+
+    //Get the information:
+    var referenceType = this.props.referenceType;
+    var applicantPronouns=this.props.applicantPronouns;
+    var datePeriod = this.props.datePeriod;
+    var applicantName = this.props.applicantName;
+    var referee = this.props.referee;
+    var oldPlace = this.props.oldPlace;
+    var oldPosition = this.props.oldPosition;
+    var newPosition = this.props.newPosition;
+    var newPlace = this.props.newPlace;
+    var startPhrase = this.props.startPhrase;
+    var endPhrase = this.props.endPhrase;
+    var yearsKnownPhrase = this.props.yearsKnownPhrase;
+    var rolesPhrase = this.props.rolesPhrase;
+    var capacityPhrase = this.props.capacityPhrase;
+    var duringThisTime = this.props.duringThisTime;
+    var acrossTheseRoles = this.props.acrossTheseRoles;
+    var currentlyWorking = this.props.currentlyWorking;
+    var applicantStatus = this.props.applicantStatus;
+
+    //Get currently working text:
+    function currentlyWorkingPhrase (currentlyWorking) {
+      if (currentlyWorking == false) {
+        return " has been";
+      } else {
+        return " is";
+      }
+    }
+
+    //Compile it:
+    function writeSentence1() {
+      return "I have been requested by " + applicantName[0] + " to provide a reference to support "
+      + applicantPronouns[1] + " application " + newPosition + " at " + newPlace + ". ";
+    }
+
+    function writeSentence2() {
+      return "I can confirm that " + applicantName[0] + applicantStatus[0] + " at " 
+      + oldPlace + startPhrase + endPhrase + ". ";
+    }
+
+    function writeSentence3() {
+      return duringThisTime + "I have known " + applicantName[0] + yearsKnownPhrase + rolesPhrase 
+      + " and am happy to produce this reference to support " + applicantPronouns[1] + " application. " 
+    }
+
+    function writeSentence4() {
+      return "I have attached this below for you. "
     }
 
     var finalParagraph = 
@@ -571,13 +635,13 @@ var Paragraph1Compiler = React.createClass ({
     //Write the 'status' phrase:
     switch (referenceType.selected) {
       case "academic":
-        var applicantStatus = [" enrolled to study", " enrolled to study"]
+        var applicantStatus = [" enrolled to study", " enrolled to study", " enrolled to study"]
         break;
       case "tenancy":
-        var applicantStatus = [" lived", " under contract to live at these premises"]
+        var applicantStatus = [" lived", " under contract to live at these premises", " under contract to live"]
         break;
       default:
-        var applicantStatus = [" enrolled to work", " enrolled to work"]
+        var applicantStatus = [" enrolled to work", " enrolled to work", " enrolled to work"]
     }
 
 
@@ -631,6 +695,29 @@ var Paragraph1Compiler = React.createClass ({
       case 3:
         var writtenParagraph = 
         <Paragraph1v3
+            referenceType={this.props.referenceType}
+            applicantName={this.props.applicantName}
+            applicantPronouns={this.props.applicantPronouns}
+            datePeriod={this.props.datePeriod}
+            referee={this.props.referee}
+            oldPosition={oldPosition}
+            oldPlace={oldPlace}
+            newPlace={newPlace}
+            newPosition={newPosition}
+            startPhrase={startPhrase}
+            endPhrase={endPhrase}
+            yearsKnownPhrase={yearsKnownPhrase}
+            rolesPhrase={rolesPhrase}
+            duringThisTime={duringThisTime}
+            acrossTheseRoles={acrossTheseRoles}
+            capacityPhrase={capacityPhrase}
+            applicantStatus={applicantStatus}
+            currentlyWorking={currentlyWorking}
+          />
+        break;
+        case 4:
+        var writtenParagraph = 
+        <Paragraph1v4
             referenceType={this.props.referenceType}
             applicantName={this.props.applicantName}
             applicantPronouns={this.props.applicantPronouns}

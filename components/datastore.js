@@ -274,7 +274,7 @@ var DataStore = React.createClass ({
         date: {current: this.generateRandomNo(3), max: 3},
         greeting: {current: this.generateRandomNo(3), max: 3},
         subject: {current: this.generateRandomNo(1), max: 1},
-        paragraph1: {current: this.generateRandomNo(3), max: 3},
+        paragraph1: {current: this.generateRandomNo(4), max: 4},
         paragraph2: {current: this.generateRandomNo(3), max: 3},
         paragraph3: {current: this.generateRandomNo(3), max: 3},
         paragraph4: {current: this.generateRandomNo(3), max: 3},

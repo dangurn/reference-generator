@@ -42,6 +42,7 @@ var TwitterSVG = React.createClass ({
 })
 
 var FacebookSVG = React.createClass ({
+
   render: function() {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35">
@@ -100,14 +101,14 @@ var PopUpBox = React.createClass ({
           and I found that the whole process can be pretty repetitive and time-consuming.
           Not only that, but there is some real pressure to be careful with your words and not land yourself in legal trouble. 
           Because of this, I wanted to create something to make the whole process a bit easier;
-          something that will find the right words for you, no matter the situation. 
-          As I'm just getting into web-app development, this seemed like a good idea for a first project too.
+          something that will find the right words for you no matter the situation. 
+          As I'm just getting into web-app development, this seemed like a good idea for a first project too!
           </p>
 
           <p>I hope you find this useful. 
           If you'd like to find out more about what I'm up to, 
           check me out at <a href="http://danielgurney.net">danielgurney.net</a>.
-          If you're feeling generous, a nice 'coffee' would be greatly appreciated ;-)</p>
+          </p>
 
           <p>Happy referencing!</p>
 
@@ -144,29 +145,61 @@ var WhoMadeThis = React.createClass ({
   }
 })
 
+//Ko-fi button
+var KoFiButton = React.createClass({
+
+  render: function() {
+    return (
+      <a href='https://ko-fi.com/A446JU6' target='_blank'>
+        <img id='ko-fi-button' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+      </a>
+    )
+  }
+})
 
 
 //The main banner
 var Banner = React.createClass({
+
+  openTwitter: function() {
+
+    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+
+  },
+
+  openFacebook: function() {
+
+    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+
+  },
+
   render: function() {
     return (
       <div className="banner-container">
         <div className="title-container">
           <h1>Reference Generator</h1>
-          <span>v 1.0</span>
           <MainLogo />
         </div>
         <div className="social-media-container">
-          <TwitterSVG />
-          <FacebookSVG />
+
+          <div onClick={this.openTwitter}>
+            <TwitterSVG />
+          </div>
+
+          <div onClick={this.openFacebook}>
+            <FacebookSVG />
+          </div>
+
           <a href="https://github.com/dangurn/reference-generator">
             <GitHubSVG />
           </a>
+
         </div>
         <WhoMadeThis 
           popUp={this.props.popUp}
           changeValue={this.props.changeValue}
         />
+        <KoFiButton /> 
       </div>
     )
   }

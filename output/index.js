@@ -21740,7 +21740,7 @@
 	        date: { current: this.generateRandomNo(3), max: 3 },
 	        greeting: { current: this.generateRandomNo(3), max: 3 },
 	        subject: { current: this.generateRandomNo(1), max: 1 },
-	        paragraph1: { current: this.generateRandomNo(3), max: 3 },
+	        paragraph1: { current: this.generateRandomNo(4), max: 4 },
 	        paragraph2: { current: this.generateRandomNo(3), max: 3 },
 	        paragraph3: { current: this.generateRandomNo(3), max: 3 },
 	        paragraph4: { current: this.generateRandomNo(3), max: 3 },
@@ -21942,6 +21942,7 @@
 	var FacebookSVG = React.createClass({
 	  displayName: 'FacebookSVG',
 
+
 	  render: function render() {
 	    return React.createElement(
 	      'svg',
@@ -22010,7 +22011,7 @@
 	        React.createElement(
 	          'p',
 	          null,
-	          'I\'ve written dozens of job references for people in the past and I found that the whole process can be pretty repetitive and time-consuming. Not only that, but there is some real pressure to be careful with your words and not land yourself in legal trouble. Because of this, I wanted to create something to make the whole process a bit easier; something that will find the right words for you, no matter the situation. As I\'m just getting into web-app development, this seemed like a good idea for a first project too.'
+	          'I\'ve written dozens of job references for people in the past and I found that the whole process can be pretty repetitive and time-consuming. Not only that, but there is some real pressure to be careful with your words and not land yourself in legal trouble. Because of this, I wanted to create something to make the whole process a bit easier; something that will find the right words for you no matter the situation. As I\'m just getting into web-app development, this seemed like a good idea for a first project too!'
 	        ),
 	        React.createElement(
 	          'p',
@@ -22021,7 +22022,7 @@
 	            { href: 'http://danielgurney.net' },
 	            'danielgurney.net'
 	          ),
-	          '. If you\'re feeling generous, a nice \'coffee\' would be greatly appreciated ;-)'
+	          '.'
 	        ),
 	        React.createElement(
 	          'p',
@@ -22060,9 +22061,34 @@
 	  }
 	});
 
+	//Ko-fi button
+	var KoFiButton = React.createClass({
+	  displayName: 'KoFiButton',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'a',
+	      { href: 'https://ko-fi.com/A446JU6', target: '_blank' },
+	      React.createElement('img', { id: 'ko-fi-button', src: 'https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f', border: '0', alt: 'Buy Me a Coffee at ko-fi.com' })
+	    );
+	  }
+	});
+
 	//The main banner
 	var Banner = React.createClass({
 	  displayName: 'Banner',
+
+
+	  openTwitter: function openTwitter() {
+
+	    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	  },
+
+	  openFacebook: function openFacebook() {
+
+	    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	  },
 
 	  render: function render() {
 	    return React.createElement(
@@ -22076,18 +22102,21 @@
 	          null,
 	          'Reference Generator'
 	        ),
-	        React.createElement(
-	          'span',
-	          null,
-	          'v 1.0'
-	        ),
 	        React.createElement(MainLogo, null)
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'social-media-container' },
-	        React.createElement(TwitterSVG, null),
-	        React.createElement(FacebookSVG, null),
+	        React.createElement(
+	          'div',
+	          { onClick: this.openTwitter },
+	          React.createElement(TwitterSVG, null)
+	        ),
+	        React.createElement(
+	          'div',
+	          { onClick: this.openFacebook },
+	          React.createElement(FacebookSVG, null)
+	        ),
 	        React.createElement(
 	          'a',
 	          { href: 'https://github.com/dangurn/reference-generator' },
@@ -22097,7 +22126,8 @@
 	      React.createElement(WhoMadeThis, {
 	        popUp: this.props.popUp,
 	        changeValue: this.props.changeValue
-	      })
+	      }),
+	      React.createElement(KoFiButton, null)
 	    );
 	  }
 	});
@@ -24595,6 +24625,7 @@
 	  displayName: 'Paragraph1v3',
 
 	  render: function render() {
+
 	    //Get the information:
 	    var referenceType = this.props.referenceType;
 	    var applicantPronouns = this.props.applicantPronouns;
@@ -24668,6 +24699,68 @@
 
 	    function writeSentence4() {
 	      return "I am happy to do so and have provided this reference for you below. ";
+	    }
+
+	    var finalParagraph = writeSentence1() + writeSentence2() + writeSentence3() + writeSentence4();
+
+	    return React.createElement(
+	      'span',
+	      null,
+	      finalParagraph
+	    );
+	  }
+	});
+
+	//Paragraph1 version 4
+	var Paragraph1v4 = React.createClass({
+	  displayName: 'Paragraph1v4',
+
+	  render: function render() {
+
+	    //Get the information:
+	    var referenceType = this.props.referenceType;
+	    var applicantPronouns = this.props.applicantPronouns;
+	    var datePeriod = this.props.datePeriod;
+	    var applicantName = this.props.applicantName;
+	    var referee = this.props.referee;
+	    var oldPlace = this.props.oldPlace;
+	    var oldPosition = this.props.oldPosition;
+	    var newPosition = this.props.newPosition;
+	    var newPlace = this.props.newPlace;
+	    var startPhrase = this.props.startPhrase;
+	    var endPhrase = this.props.endPhrase;
+	    var yearsKnownPhrase = this.props.yearsKnownPhrase;
+	    var rolesPhrase = this.props.rolesPhrase;
+	    var capacityPhrase = this.props.capacityPhrase;
+	    var duringThisTime = this.props.duringThisTime;
+	    var acrossTheseRoles = this.props.acrossTheseRoles;
+	    var currentlyWorking = this.props.currentlyWorking;
+	    var applicantStatus = this.props.applicantStatus;
+
+	    //Get currently working text:
+	    function currentlyWorkingPhrase(currentlyWorking) {
+	      if (currentlyWorking == false) {
+	        return " has been";
+	      } else {
+	        return " is";
+	      }
+	    }
+
+	    //Compile it:
+	    function writeSentence1() {
+	      return "I have been requested by " + applicantName[0] + " to provide a reference to support " + applicantPronouns[1] + " application " + newPosition + " at " + newPlace + ". ";
+	    }
+
+	    function writeSentence2() {
+	      return "I can confirm that " + applicantName[0] + applicantStatus[0] + " at " + oldPlace + startPhrase + endPhrase + ". ";
+	    }
+
+	    function writeSentence3() {
+	      return duringThisTime + "I have known " + applicantName[0] + yearsKnownPhrase + rolesPhrase + " and am happy to produce this reference to support " + applicantPronouns[1] + " application. ";
+	    }
+
+	    function writeSentence4() {
+	      return "I have attached this below for you. ";
 	    }
 
 	    var finalParagraph = writeSentence1() + writeSentence2() + writeSentence3() + writeSentence4();
@@ -24967,13 +25060,13 @@
 	    //Write the 'status' phrase:
 	    switch (referenceType.selected) {
 	      case "academic":
-	        var applicantStatus = [" enrolled to study", " enrolled to study"];
+	        var applicantStatus = [" enrolled to study", " enrolled to study", " enrolled to study"];
 	        break;
 	      case "tenancy":
-	        var applicantStatus = [" lived", " under contract to live at these premises"];
+	        var applicantStatus = [" lived", " under contract to live at these premises", " under contract to live"];
 	        break;
 	      default:
-	        var applicantStatus = [" enrolled to work", " enrolled to work"];
+	        var applicantStatus = [" enrolled to work", " enrolled to work", " enrolled to work"];
 	    }
 
 	    //Now decide which paragraph will be written based on the random number selected:
@@ -25023,6 +25116,28 @@
 	        break;
 	      case 3:
 	        var writtenParagraph = React.createElement(Paragraph1v3, {
+	          referenceType: this.props.referenceType,
+	          applicantName: this.props.applicantName,
+	          applicantPronouns: this.props.applicantPronouns,
+	          datePeriod: this.props.datePeriod,
+	          referee: this.props.referee,
+	          oldPosition: oldPosition,
+	          oldPlace: oldPlace,
+	          newPlace: newPlace,
+	          newPosition: newPosition,
+	          startPhrase: startPhrase,
+	          endPhrase: endPhrase,
+	          yearsKnownPhrase: yearsKnownPhrase,
+	          rolesPhrase: rolesPhrase,
+	          duringThisTime: duringThisTime,
+	          acrossTheseRoles: acrossTheseRoles,
+	          capacityPhrase: capacityPhrase,
+	          applicantStatus: applicantStatus,
+	          currentlyWorking: currentlyWorking
+	        });
+	        break;
+	      case 4:
+	        var writtenParagraph = React.createElement(Paragraph1v4, {
 	          referenceType: this.props.referenceType,
 	          applicantName: this.props.applicantName,
 	          applicantPronouns: this.props.applicantPronouns,
