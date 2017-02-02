@@ -63,9 +63,9 @@ var FormHeader = React.createClass ({
     return (
       <div className="pane-header">
 
-        <span>
+        <div className="collapsable-text">
           Reference Type:
-        </span>
+        </div>
 
         <div className="type-button-container">
 
@@ -73,7 +73,7 @@ var FormHeader = React.createClass ({
             <input type="radio" name="referenceType" value="academic" onChange={this.handleChange} defaultChecked={true}/>
             <span>
               <AcademicSVG />
-              academic
+              <div className="collapsable-text">academic</div>
             </span>
           </label>
 
@@ -81,7 +81,7 @@ var FormHeader = React.createClass ({
             <input type="radio" name="referenceType" value="professional" onChange={this.handleChange}/>
             <span>
               <ProfessionalSVG />
-              professional
+              <div className="collapsable-text">professional</div>
             </span>
           </label>
 
@@ -89,7 +89,7 @@ var FormHeader = React.createClass ({
             <input type="radio" name="referenceType" value="tenancy" onChange={this.handleChange}/>
             <span>
               <TenancySVG />
-              tenancy
+              <div className="collapsable-text">tenancy</div>
             </span>
           </label>
 
@@ -884,7 +884,7 @@ var NewInfo = React.createClass ({
             <div className="radio-container">
               <label>
                 <input type="checkbox" onChange={this.handleCheckboxChange}/>
-                  <span style={recommendBoxStyle}>
+                  <span id="recommend-button">
                     <div className="tick"></div>
                     I would recommend the {this.props.placeholders.person}
                   </span>

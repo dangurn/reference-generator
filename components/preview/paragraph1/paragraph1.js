@@ -386,7 +386,7 @@ var Paragraph1Compiler = React.createClass ({
         var oldPlace = "my institution"
       }
     } else {
-      var oldPlace = capitalise(this.props.relationshipPlace);
+      var oldPlace = this.props.relationshipPlace;
     }
 
     //Add space to Relationship Position ready for rendering:
@@ -428,15 +428,17 @@ var Paragraph1Compiler = React.createClass ({
 
       } else {
 
-        switch (position.charAt(0)) {
-          case "a":
-          case "e":
-          case "i":
-          case "o":
-          case "u":
-            return "for an " + position + " position ";
+        var capitalisedPosition = position.charAt(0).toUpperCase() + position.slice(1)
+
+        switch (capitalisedPosition.charAt(0)) {
+          case "A":
+          case "E":
+          case "I":
+          case "O":
+          case "U":
+            return "for an " + capitalisedPosition + " position ";
           default:
-            return "for a " + position + " position ";
+            return "for a " + capitalisedPosition + " position ";
         }
       }
     }

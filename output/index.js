@@ -21942,12 +21942,26 @@
 	var FacebookSVG = React.createClass({
 	  displayName: 'FacebookSVG',
 
-
 	  render: function render() {
 	    return React.createElement(
 	      'svg',
 	      { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 35 35' },
 	      React.createElement('path', { d: 'M17.5,0A17.49,17.49,0,1,0,35,17.5,17.49,17.49,0,0,0,17.5,0Zm6.13,9.61H21.4c-1.74,0-2.08.83-2.08,2v2.68h4.15l-0.54,4.19H19.33V29.29H15V18.53H11.38V14.34H15V11.25c0-3.59,2.19-5.54,5.39-5.54a29.69,29.69,0,0,1,3.24.17V9.62Z' })
+	    );
+	  }
+	});
+
+	var ShareSVG = React.createClass({
+	  displayName: 'ShareSVG',
+
+	  render: function render() {
+	    return React.createElement(
+	      'svg',
+	      { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 35 35' },
+	      React.createElement('path', { d: 'M25.1,9.5l-15.2,8.4l15.2,7.6' }),
+	      React.createElement('circle', { cx: '25.1', cy: '9.9', r: '4.4' }),
+	      React.createElement('circle', { cx: '25.1', cy: '25.1', r: '4.4' }),
+	      React.createElement('circle', { cx: '9.9', cy: '17.9', r: '4.4' })
 	    );
 	  }
 	});
@@ -22061,6 +22075,33 @@
 	  }
 	});
 
+	//Social media container
+	var SocialMediaContainer = React.createClass({
+	  displayName: 'SocialMediaContainer',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'social-media-container collapsable-text' },
+	      React.createElement(
+	        'div',
+	        { onClick: this.openTwitter },
+	        React.createElement(TwitterSVG, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { onClick: this.openFacebook },
+	        React.createElement(FacebookSVG, null)
+	      ),
+	      React.createElement(
+	        'a',
+	        { href: 'https://github.com/dangurn/reference-generator' },
+	        React.createElement(GitHubSVG, null)
+	      )
+	    );
+	  }
+	});
+
 	//Ko-fi button
 	var KoFiButton = React.createClass({
 	  displayName: 'KoFiButton',
@@ -22069,7 +22110,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'a',
-	      { href: 'https://ko-fi.com/A446JU6', target: '_blank' },
+	      { href: 'https://ko-fi.com/A446JU6', target: '_blank', className: 'collapsable-text' },
 	      React.createElement('img', { id: 'ko-fi-button', src: 'https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f', border: '0', alt: 'Buy Me a Coffee at ko-fi.com' })
 	    );
 	  }
@@ -22106,23 +22147,15 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'social-media-container' },
+	        { className: 'share-button' },
+	        React.createElement(ShareSVG, null),
 	        React.createElement(
-	          'div',
-	          { onClick: this.openTwitter },
-	          React.createElement(TwitterSVG, null)
-	        ),
-	        React.createElement(
-	          'div',
-	          { onClick: this.openFacebook },
-	          React.createElement(FacebookSVG, null)
-	        ),
-	        React.createElement(
-	          'a',
-	          { href: 'https://github.com/dangurn/reference-generator' },
-	          React.createElement(GitHubSVG, null)
+	          'p',
+	          { className: 'collapsable-text' },
+	          'Share'
 	        )
 	      ),
+	      React.createElement(SocialMediaContainer, null),
 	      React.createElement(WhoMadeThis, {
 	        popUp: this.props.popUp,
 	        changeValue: this.props.changeValue
@@ -22387,8 +22420,8 @@
 	      'div',
 	      { className: 'pane-header' },
 	      React.createElement(
-	        'span',
-	        null,
+	        'div',
+	        { className: 'collapsable-text' },
 	        'Reference Type:'
 	      ),
 	      React.createElement(
@@ -22402,7 +22435,11 @@
 	            'span',
 	            null,
 	            React.createElement(AcademicSVG, null),
-	            'academic'
+	            React.createElement(
+	              'div',
+	              { className: 'collapsable-text' },
+	              'academic'
+	            )
 	          )
 	        ),
 	        React.createElement(
@@ -22413,7 +22450,11 @@
 	            'span',
 	            null,
 	            React.createElement(ProfessionalSVG, null),
-	            'professional'
+	            React.createElement(
+	              'div',
+	              { className: 'collapsable-text' },
+	              'professional'
+	            )
 	          )
 	        ),
 	        React.createElement(
@@ -22424,7 +22465,11 @@
 	            'span',
 	            null,
 	            React.createElement(TenancySVG, null),
-	            'tenancy'
+	            React.createElement(
+	              'div',
+	              { className: 'collapsable-text' },
+	              'tenancy'
+	            )
 	          )
 	        )
 	      )
@@ -23382,7 +23427,7 @@
 	              React.createElement('input', { type: 'checkbox', onChange: this.handleCheckboxChange }),
 	              React.createElement(
 	                'span',
-	                { style: recommendBoxStyle },
+	                { id: 'recommend-button' },
 	                React.createElement('div', { className: 'tick' }),
 	                'I would recommend the ',
 	                this.props.placeholders.person
@@ -23629,6 +23674,7 @@
 	//Now we'll get some resources:
 
 	//Get Buttons for the Preview Toolbar:
+	var RefreshButton = __webpack_require__(183).refreshButton;
 	var EditButton = __webpack_require__(183).editButton;
 	var EmailButton = __webpack_require__(183).emailButton;
 	var CopyButton = __webpack_require__(183).copyButton;
@@ -23648,6 +23694,22 @@
 	var Signature = __webpack_require__(189).signature;
 
 	//Now let's compile everything in the Preview Container:
+
+	var PreviewInstructions = React.createClass({
+	  displayName: 'PreviewInstructions',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'pane-header' },
+	      React.createElement(
+	        'p',
+	        null,
+	        'Hover / click each section for more options. Generate a new version of a paragraph or Edit the text in a paragraph. When you\'re ready, you can copy, email or print your reference.'
+	      )
+	    );
+	  }
+	});
 
 	//Options to allow users to select how formal and concise they want the reference to be:
 	var PreviewOptions = React.createClass({
@@ -23804,6 +23866,7 @@
 	      React.createElement(Signature, {
 	        referenceOptions: this.props.referenceOptions,
 	        referee: this.props.referee,
+	        relationshipPlace: this.props.relationshipPlace,
 	        randomNos: this.props.randomNos,
 	        changeValue: this.props.changeValue
 	      })
@@ -24050,7 +24113,11 @@
 	      "div",
 	      { className: "toolbar-button", onClick: this.changePane },
 	      React.createElement(EditSVG, null),
-	      "Edit details"
+	      React.createElement(
+	        "span",
+	        { className: "collapsable-text" },
+	        "Edit details"
+	      )
 	    );
 	  }
 	});
@@ -24116,7 +24183,11 @@
 	        "div",
 	        { className: "toolbar-button" },
 	        React.createElement(EmailSVG, null),
-	        "Email"
+	        React.createElement(
+	          "span",
+	          { className: "collapsable-text" },
+	          "Email"
+	        )
 	      )
 	    );
 	  }
@@ -24155,7 +24226,11 @@
 	      "div",
 	      { className: "toolbar-button", onClick: this.copyToClipboard },
 	      React.createElement(CopySVG, null),
-	      "Copy"
+	      React.createElement(
+	        "span",
+	        { className: "collapsable-text" },
+	        "Copy"
+	      )
 	    );
 	  }
 	});
@@ -24173,7 +24248,11 @@
 	      "div",
 	      { className: "toolbar-button", onClick: this.printButton },
 	      React.createElement(PrintSVG, null),
-	      "Print"
+	      React.createElement(
+	        "span",
+	        { className: "collapsable-text" },
+	        "Print"
+	      )
 	    );
 	  }
 	});
@@ -24827,7 +24906,7 @@
 	        var oldPlace = "my institution";
 	      }
 	    } else {
-	      var oldPlace = capitalise(this.props.relationshipPlace);
+	      var oldPlace = this.props.relationshipPlace;
 	    }
 
 	    //Add space to Relationship Position ready for rendering:
@@ -24866,15 +24945,17 @@
 	        return "for a position ";
 	      } else {
 
-	        switch (position.charAt(0)) {
-	          case "a":
-	          case "e":
-	          case "i":
-	          case "o":
-	          case "u":
-	            return "for an " + position + " position ";
+	        var capitalisedPosition = position.charAt(0).toUpperCase() + position.slice(1);
+
+	        switch (capitalisedPosition.charAt(0)) {
+	          case "A":
+	          case "E":
+	          case "I":
+	          case "O":
+	          case "U":
+	            return "for an " + capitalisedPosition + " position ";
 	          default:
-	            return "for a " + position + " position ";
+	            return "for a " + capitalisedPosition + " position ";
 	        }
 	      }
 	    }
@@ -26394,15 +26475,17 @@
 	        }
 	      } else {
 
-	        switch (position.charAt(0)) {
-	          case "a":
-	          case "e":
-	          case "i":
-	          case "o":
-	          case "u":
-	            return "for an " + capitalise(position) + " position ";
+	        var capitalisedPosition = position.charAt(0).toUpperCase() + position.slice(1);
+
+	        switch (capitalisedPosition.charAt(0)) {
+	          case "A":
+	          case "E":
+	          case "I":
+	          case "O":
+	          case "U":
+	            return "for an " + capitalise(capitalisedPosition) + " position ";
 	          default:
-	            return "for a " + capitalise(position) + " position ";
+	            return "for a " + capitalise(capitalisedPosition) + " position ";
 	        }
 	      }
 	    }
@@ -26607,7 +26690,9 @@
 
 	  render: function render() {
 
+	    //Get info:
 	    var referee = this.props.referee;
+	    var relationshipPlace = this.props.relationshipPlace;
 
 	    function getName(title, firstName, lastName) {
 	      if (title !== "" && firstName == "" && lastName == "") {
@@ -26620,6 +26705,15 @@
 	        return title + " " + firstName + " " + lastName;
 	      }
 	    }
+
+	    //Get workplace text
+	    if (referee.workPlace == "") {
+	      var workPlace = relationshipPlace;
+	    } else {
+	      var workPlace = referee.workPlace;
+	    }
+
+	    var finalWorkPlace = workPlace.charAt(0).toUpperCase() + workPlace.slice(1);
 
 	    return React.createElement(
 	      'div',
@@ -26642,7 +26736,7 @@
 	        React.createElement(
 	          'span',
 	          { id: 'signaturePlace' },
-	          referee.workPlace
+	          finalWorkPlace
 	        )
 	      ),
 	      React.createElement(PreviewTextTools, {

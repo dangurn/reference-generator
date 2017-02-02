@@ -284,15 +284,17 @@ var Paragraph4Compiler = React.createClass({
 
       } else {
 
-        switch (position.charAt(0)) {
-          case "a":
-          case "e":
-          case "i":
-          case "o":
-          case "u":
-            return "for an " + capitalise(position) + " position ";
+        var capitalisedPosition = position.charAt(0).toUpperCase() + position.slice(1)
+
+        switch (capitalisedPosition.charAt(0)) {
+          case "A":
+          case "E":
+          case "I":
+          case "O":
+          case "U":
+            return "for an " + capitalise(capitalisedPosition) + " position ";
           default:
-            return "for a " + capitalise(position) + " position ";
+            return "for a " + capitalise(capitalisedPosition) + " position ";
         }
       }
     }

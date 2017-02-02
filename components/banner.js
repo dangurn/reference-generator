@@ -42,11 +42,24 @@ var TwitterSVG = React.createClass ({
 })
 
 var FacebookSVG = React.createClass ({
-
   render: function() {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35">
         <path d="M17.5,0A17.49,17.49,0,1,0,35,17.5,17.49,17.49,0,0,0,17.5,0Zm6.13,9.61H21.4c-1.74,0-2.08.83-2.08,2v2.68h4.15l-0.54,4.19H19.33V29.29H15V18.53H11.38V14.34H15V11.25c0-3.59,2.19-5.54,5.39-5.54a29.69,29.69,0,0,1,3.24.17V9.62Z"/>
+      </svg>
+    )
+  }
+})
+
+
+var ShareSVG = React.createClass ({
+  render: function() {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35">
+        <path d="M25.1,9.5l-15.2,8.4l15.2,7.6"/>
+        <circle cx="25.1" cy="9.9" r="4.4"/>
+        <circle cx="25.1" cy="25.1" r="4.4"/>
+        <circle cx="9.9" cy="17.9" r="4.4"/>
       </svg>
     )
   }
@@ -145,12 +158,35 @@ var WhoMadeThis = React.createClass ({
   }
 })
 
+//Social media container
+var SocialMediaContainer = React.createClass ({
+  render: function() {
+    return (
+      <div className="social-media-container collapsable-text">
+
+          <div onClick={this.openTwitter}>
+            <TwitterSVG />
+          </div>
+
+          <div onClick={this.openFacebook}>
+            <FacebookSVG />
+          </div>
+
+          <a href="https://github.com/dangurn/reference-generator">
+            <GitHubSVG />
+          </a>
+
+        </div>
+    )
+  }
+})
+
 //Ko-fi button
 var KoFiButton = React.createClass({
 
   render: function() {
     return (
-      <a href='https://ko-fi.com/A446JU6' target='_blank'>
+      <a href='https://ko-fi.com/A446JU6' target='_blank' className="collapsable-text">
         <img id='ko-fi-button' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' />
       </a>
     )
@@ -180,21 +216,14 @@ var Banner = React.createClass({
           <h1>Reference Generator</h1>
           <MainLogo />
         </div>
-        <div className="social-media-container">
 
-          <div onClick={this.openTwitter}>
-            <TwitterSVG />
-          </div>
-
-          <div onClick={this.openFacebook}>
-            <FacebookSVG />
-          </div>
-
-          <a href="https://github.com/dangurn/reference-generator">
-            <GitHubSVG />
-          </a>
-
+        <div className="share-button">
+          <ShareSVG />
+          <p className="collapsable-text">Share</p>
         </div>
+
+        <SocialMediaContainer />        
+
         <WhoMadeThis 
           popUp={this.props.popUp}
           changeValue={this.props.changeValue}

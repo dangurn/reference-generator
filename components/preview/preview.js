@@ -11,6 +11,7 @@ var React = require('react');
 //Now we'll get some resources:
 
 //Get Buttons for the Preview Toolbar:
+var RefreshButton = require('./resources.js').refreshButton; 
 var EditButton = require('./resources.js').editButton;
 var EmailButton = require('./resources.js').emailButton;
 var CopyButton = require('./resources.js').copyButton;
@@ -31,6 +32,23 @@ var Signature = require('./footer/footer.js').signature;
 
 
 //Now let's compile everything in the Preview Container:
+
+var PreviewInstructions = React.createClass ({
+  render: function() {
+    return (
+      <div className="pane-header">
+        <p>
+          Hover / click each section for more options.
+          Generate a new version of a paragraph
+          or Edit the text in a paragraph.
+          When you're ready, you can copy, email or print your reference.
+        </p>
+      </div>
+    )
+  }
+})
+
+
 
 //Options to allow users to select how formal and concise they want the reference to be:
 var PreviewOptions = React.createClass ({
@@ -181,6 +199,7 @@ var PreviewPage = React.createClass ({
         <Signature
           referenceOptions={this.props.referenceOptions}
           referee={this.props.referee}
+          relationshipPlace={this.props.relationshipPlace}
           randomNos={this.props.randomNos}
           changeValue={this.props.changeValue}
         />
@@ -209,7 +228,6 @@ var PreviewBox = React.createClass ({
   render: function() {
     return (
       <div id="preview-container" className="pane-container">
-
         <PreviewPage 
           referenceType={this.props.referenceType}
           referenceOptions={this.props.referenceOptions}

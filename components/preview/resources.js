@@ -145,7 +145,7 @@ var EditButton = React.createClass ({
     return (
       <div className="toolbar-button" onClick={this.changePane}>
         <EditSVG />
-        Edit details
+        <span className="collapsable-text">Edit details</span>
       </div>
     )
   }
@@ -209,7 +209,7 @@ var EmailButton = React.createClass ({
       <a id="email-button">
         <div className="toolbar-button">
           <EmailSVG />
-          Email
+          <span className="collapsable-text">Email</span>
         </div>
       </a>
     )
@@ -249,7 +249,7 @@ var CopyButton = React.createClass ({
     return (
       <div className="toolbar-button" onClick={this.copyToClipboard}>
         <CopySVG />
-        Copy
+        <span className="collapsable-text">Copy</span>
       </div>
     )
   }
@@ -265,7 +265,7 @@ var PrintButton = React.createClass ({
     return (
       <div className="toolbar-button" onClick={this.printButton}>
         <PrintSVG />
-        Print
+        <span className="collapsable-text">Print</span>
       </div>
     )
   }

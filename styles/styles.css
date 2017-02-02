@@ -136,6 +136,13 @@ input[type=range]:focus::-ms-fill-upper {
   background: lightgray;
 }
 
+.collapsable-text {
+    margin-left: 8px;
+}
+
+
+/*Now some more serious stuff*/
+
 
 .app-container {
     display: flex;
@@ -230,6 +237,22 @@ input[type=range]:focus::-ms-fill-upper {
         text-decoration: underline
     }
 
+    .share-button {
+        display: none;
+    }
+
+    .share-button svg {
+        height: 35px;
+        width: 35px;
+        fill: none;
+        stroke: #BBB;
+    }
+
+    .share-button svg circle {
+        fill: #BBB;
+        stroke: none;
+    }
+
 #ko-fi-button {
     height: 36px;
     margin: 15px;
@@ -264,9 +287,7 @@ input[type=range]:focus::-ms-fill-upper {
         padding: 15px 20px;
         font-size: 18px;
         margin: 0px;
-        color: #999;
-        background: rgba(0,0,0,0.01);
-        border-bottom: 1px solid lightgray;
+        color: slategray;
         border-top: 1px solid lightgray;
         font-weight: 400;
     }
@@ -308,6 +329,11 @@ input[type=range]:focus::-ms-fill-upper {
     stroke: white;
 }
 
+#recommend-button {
+    margin: 10px 50px;
+    text-transform: none;
+}
+
 
 /*Preview container styles*/
 
@@ -333,6 +359,10 @@ input[type=range]:focus::-ms-fill-upper {
 
     .pane-header span {
         padding: 0px 20px 0px 0px;
+    }
+
+    .pane-header p {
+        font-size: 11px;
     }
 
     .pane-header input[type=range] {
@@ -379,7 +409,6 @@ input[type=range]:focus::-ms-fill-upper {
             .type-button-container span svg {
                 height: 18px;
                 width: auto;
-                margin-right: 8px;
                 fill: inherit;
             }
 
@@ -518,7 +547,6 @@ input[type=range]:focus::-ms-fill-upper {
         height: 20px;
         width: 20px;
         fill: white;
-        padding-right: 8px;
     }
 
 
@@ -944,7 +972,7 @@ input[type=range]:focus::-ms-fill-upper {
         flex: 1 0 auto;
         justify-content: flex-start;
     }
-        .title-container h1 {font-size: 20px; order: 2; margin: 5px; width: 100px}
+        .title-container h1 {font-size: 20px; order: 2; margin: 5px;}
         .title-container span {display: none}
         .logo-area {width: 45px; height: 45px; order: 1;}
         #ko-fi-button {margin: 10px;}
@@ -965,7 +993,74 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 @media (max-width: 650px) {
+
     .banner-container span {display: none}
+
+    .logo-area svg {
+        height:35px;
+        width:35px;
+    }
+
+    .share-button {
+        display: none; /*Edit when ready*/
+        font-size: 12px;
+        align-items: center;
+        margin: 10px;
+    }
+    
+    .pane-container {
+        flex: 1;
+    }
+
+    .form-row {
+        flex-flow: column;
+    }
+
+    .form-row input {
+        width: calc(100% - 20px);
+    }
+
+    .form-row input[type=text] {
+        margin-left: 0px;
+    }
+
+    .radio-container {
+        width: 100%;
+        flex-flow: column;
+    }
+
+    .radio-container label {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+
+    .element-container label {
+        flex: 1 1 100%;
+        margin-left: 0px;
+    }
+
+    .list-container {
+        flex-flow: column;
+        width: 100%
+    }
+
+    .select-menu {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+
+    .select-menu:first-child {
+        margin-top: 0px;
+    }
+
+    .collapsable-text {
+        display: none;
+    }
+
+    #recommend-button {
+        margin: 0px;
+    }
+
 }
 
 

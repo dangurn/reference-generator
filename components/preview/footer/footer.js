@@ -29,7 +29,9 @@ var SignOff = React.createClass ({
 var Signature = React.createClass ({
   render: function() {
 
+    //Get info:
     var referee = this.props.referee;
+    var relationshipPlace = this.props.relationshipPlace;
 
     function getName(title, firstName, lastName) {
       if (title !== "" && firstName == "" && lastName == "") {
@@ -42,6 +44,16 @@ var Signature = React.createClass ({
         return title + " " + firstName + " " + lastName;
       }
     }
+
+    //Get workplace text
+    if (referee.workPlace == "") {
+      var workPlace = relationshipPlace;
+    } else {
+      var workPlace = referee.workPlace;
+    }
+
+    var finalWorkPlace = workPlace.charAt(0).toUpperCase() + workPlace.slice(1);
+
 
     return (
 
@@ -56,7 +68,7 @@ var Signature = React.createClass ({
           </span>
           <br />
           <span id="signaturePlace">
-            {referee.workPlace}
+            {finalWorkPlace}
           </span>
         </div>
         <PreviewTextTools
