@@ -67,6 +67,7 @@ var Compiler = React.createClass ({
             relationship: "Your relationship with the applicant",
             performance: "The applicant's performance",
             competencies: "The applicant's competencies",
+            addCompetencies: "The applicant's additional qualities",
             aboutAddressee: "About the addressee",
             aboutJob: "About the new job"
           }
@@ -94,6 +95,7 @@ var Compiler = React.createClass ({
           relationship: "Your relationship with the applicant",
           performance: "The applicant's performance",
           competencies: "The applicant's competencies",
+          addCompetencies: "The applicant's additional qualities",
           aboutAddressee: "About the addressee",
           aboutJob: "About the new job"
         }
@@ -121,6 +123,7 @@ var Compiler = React.createClass ({
           relationship: "Your relationship with the tenant",
           performance: "The applicant's performance",
           competencies: "The tenant's competencies",
+          addCompetencies: "The tenant's additional qualities",
           aboutAddressee: "About the addressee",
           aboutJob: "About the new tenency"
         }

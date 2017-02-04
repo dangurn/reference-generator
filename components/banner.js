@@ -149,10 +149,6 @@ var WhoMadeThis = React.createClass ({
     return (
       <span onClick={this.openPopUp}>
         Who made this?
-        <PopUpBox 
-          popUp={this.props.popUp}
-          changeValue={this.props.changeValue}
-        />
       </span>
     )
   }
@@ -160,9 +156,18 @@ var WhoMadeThis = React.createClass ({
 
 //Social media container
 var SocialMediaContainer = React.createClass ({
+
+  openTwitter: function() {
+    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+  },
+
+  openFacebook: function() {
+    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+  },
+  
   render: function() {
     return (
-      <div className="social-media-container collapsable-text">
+      <div className="social-media-container">
 
           <div onClick={this.openTwitter}>
             <TwitterSVG />
@@ -186,9 +191,30 @@ var KoFiButton = React.createClass({
 
   render: function() {
     return (
-      <a href='https://ko-fi.com/A446JU6' target='_blank' className="collapsable-text">
+      <a href='https://ko-fi.com/A446JU6' target='_blank'>
         <img id='ko-fi-button' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' />
       </a>
+    )
+  }
+})
+
+
+//All interactive media
+var InteractiveMedia = React.createClass ({
+  render: function() {
+    return (
+      <div id="interactive-media" className="hidden-media">
+
+        <SocialMediaContainer />
+
+        <WhoMadeThis 
+          popUp={this.props.popUp}
+          changeValue={this.props.changeValue}
+        />
+
+        <KoFiButton />
+        
+      </div>
     )
   }
 })
@@ -197,38 +223,44 @@ var KoFiButton = React.createClass({
 //The main banner
 var Banner = React.createClass({
 
-  openTwitter: function() {
+  toggleMedia: function() {
+    
+    var mediaContainer = document.getElementById('interactive-media')
 
-    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
-
-  },
-
-  openFacebook: function() {
-
-    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output",'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+    if (mediaContainer.className == "visible-media") {
+      mediaContainer.className = "hidden-media"
+    } else {
+      mediaContainer.className = "visible-media"
+    }
 
   },
 
   render: function() {
     return (
       <div className="banner-container">
+
         <div className="title-container">
           <h1>Reference Generator</h1>
           <MainLogo />
         </div>
 
         <div className="share-button">
-          <ShareSVG />
-          <p className="collapsable-text">Share</p>
+          <div onClick={this.toggleMedia}>
+            <ShareSVG/>
+            <p className="collapsable-text">Share</p>
+          </div>
         </div>
 
-        <SocialMediaContainer />        
-
-        <WhoMadeThis 
+        <InteractiveMedia 
           popUp={this.props.popUp}
           changeValue={this.props.changeValue}
         />
-        <KoFiButton /> 
+
+        <PopUpBox 
+          popUp={this.props.popUp}
+          changeValue={this.props.changeValue}
+        />
+
       </div>
     )
   }

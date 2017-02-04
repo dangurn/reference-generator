@@ -21,6 +21,8 @@ body {
 
 a {
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 input[type=checkbox] {
@@ -58,7 +60,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type=range]:focus {
-  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  outline: none;
 }
 
 
@@ -202,13 +204,23 @@ input[type=range]:focus::-ms-fill-upper {
         width: auto;
     }
 
+
+    #interactive-media {
+        display: flex;
+        flex-flow: column;
+        flex: 1;
+        transition: 0.5s all;
+    }
+
     .social-media-container {
         display: flex;
         flex: 1;
         flex-basis: row;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
     }
+
+    .social-media-container div {display: flex}
 
     .social-media-container svg {
         height: 40px;
@@ -274,7 +286,7 @@ input[type=range]:focus::-ms-fill-upper {
 .main-container {
     display: flex;
     flex-flow: row;
-    flex: 1;
+    flex: 1 0 auto;
     background: #43cbcb;
     background: -webkit-linear-gradient(#43cbcb, mediumseagreen);
     background: -o-linear-gradient(#43cbcb, mediumseagreen);
@@ -284,7 +296,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
     #form-container h2 {
-        padding: 15px 20px;
+        padding: 15px 20px 0px 20px;
         font-size: 18px;
         margin: 0px;
         color: slategray;
@@ -331,6 +343,10 @@ input[type=range]:focus::-ms-fill-upper {
 
 #recommend-button {
     margin: 10px 50px;
+    flex: 1;
+}
+
+#recommend-button span {
     text-transform: none;
 }
 
@@ -510,8 +526,6 @@ input[type=range]:focus::-ms-fill-upper {
     flex-flow: column;
 }
 
-
-
 .preview-tools-button:hover {
     background: forestgreen;
 }
@@ -519,7 +533,6 @@ input[type=range]:focus::-ms-fill-upper {
 .pane-toolbar {
     display: flex;
     background: white;
-    flex: 0 0 80px;
     border-top: 1px solid lightgray;
     align-items: center;
     justify-content: center;
@@ -555,6 +568,7 @@ input[type=range]:focus::-ms-fill-upper {
 .radio-container {
     display: flex;
     flex-flow: row;
+    flex-wrap: wrap;
     flex: 1 1 50%;
     margin-left: 10px;
 }
@@ -563,21 +577,46 @@ input[type=range]:focus::-ms-fill-upper {
     margin-left: 0px;
 }
 
-.radio-container label {
-    display: flex;
-    flex: 1;
-    margin-left: 10px;
-}
+.radio-container label {display: flex;}
+
 
 .radio-container label:first-child {
     margin-left: 0px;
 }
 
-.radio-container span:hover {
-    background: #EEE;
+.gender-option {flex: 1}
+.gender-option:nth-child(2) {margin-left: 10px}
+
+.title-option {flex: 1}
+.title-option:nth-child(n+1) {margin-left: 10px}
+
+.relationship-option {flex: 0 0 32%;}
+.relationship-option:nth-child(3n+2) {margin-left: 10px}
+.relationship-option:nth-child(3n+3) {margin-left: 10px}
+.relationship-option:nth-child(n+4) {margin-top: 10px}
+
+.work-option {flex: 1 1 30%}
+
+.skill-option {flex: 0 0 32%;}
+.skill-option:nth-child(3n+2) {margin-left: 10px}
+.skill-option:nth-child(3n+3) {margin-left: 10px}
+.skill-option:nth-child(n+4) {margin-top: 10px}
+
+.competency-option {flex: 0 0 32%;}
+.competency-option:nth-child(3n+2) {margin-left: 10px}
+.competency-option:nth-child(3n+3) {margin-left: 10px}
+.competency-option:nth-child(n+4) {margin-top: 10px}
+
+.work-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 }
 
-.radio-container span {
+
+
+label span {
     display: flex;
     flex: 1;
     font-size: 14px;
@@ -596,17 +635,24 @@ input[type=range]:focus::-ms-fill-upper {
     transition: 0.2s all;
 }
 
-.radio-container label .delete-button {
+label span:hover {
+    background: #EEE;
+}
+
+label .delete-button {
     padding: 0px;
     margin-left: auto;
     display: flex;
 }
 
-.radio-container :checked + span {
+label :checked + span {
   color: white;
   background:#43cbcb;
   border: 1px solid #40bfbf;
 }
+
+
+
 
 .list-container {
     display: flex;
@@ -665,8 +711,8 @@ input[type=range]:focus::-ms-fill-upper {
         position: absolute;
         top: 25%;
         right: 10px;
-        -ms-transform: rotate(45deg); /* IE 9 */
-        -webkit-transform: rotate(45deg); /* Safari */
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         pointer-events: none;
     }
@@ -685,63 +731,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 
-.element-container {
-    display: flex;
-    flex-flow: row;
-    flex: 1;
-    flex-wrap: wrap;
-}
 
-.element-container label {
-    display: flex;
-    flex: 0 0 32%;
-    margin-left: 2%; 
-    margin-bottom: 10px;
-}
-
-.element-container label:nth-child(3n-2) {
-    margin-left: 0px;
-}
-
-
-.element-container span:hover {
-    background: #EEE;
-}
-
-.element-container span {
-    display: flex;
-    flex: 1 0 32%;
-    font-size: 14px;
-    text-transform: capitalize;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background: white;
-    border-radius: 3px;
-    padding: 10px;
-    border: 1px solid lightgray;
-    transition: 0.2s all;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-.element-container label .delete-button {
-    padding: 0px;
-    margin-left: auto;
-    display: flex;
-}
-
-.element-container :checked + span {
-  color: white;
-  background:#43cbcb;
-  border: 1px solid #40bfbf;
-}
-
-.element-container:checked svg {
-    fill: white;
-}
 
 .delete-button svg {
     stroke: white;
@@ -798,7 +788,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .count-display {
-    width: 20px;
+    width: 15px;
     text-align: center;
 }
 
@@ -880,8 +870,8 @@ input[type=range]:focus::-ms-fill-upper {
     border-left: 3px solid lightgray;
     border-bottom: 3px solid lightgray;
     transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg); /* IE 9 */
-    -webkit-transform: rotate(-45deg); /* Safari */
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
     margin: 0px 10px 10px 0px;
     transition: 0.2s all;
 }
@@ -963,8 +953,11 @@ input[type=range]:focus::-ms-fill-upper {
 
     .banner-container {
         flex-flow: row;
+        flex: 1 0 auto;
         width: 100%;
     }
+
+    .banner-container span {display: none}
 
     .title-container {
         flex-flow: row; 
@@ -975,8 +968,13 @@ input[type=range]:focus::-ms-fill-upper {
         .title-container h1 {font-size: 20px; order: 2; margin: 5px;}
         .title-container span {display: none}
         .logo-area {width: 45px; height: 45px; order: 1;}
+        .logo-area svg {width: 35px; height: 35px}
         #ko-fi-button {margin: 10px;}
         
+    #interactive-media {
+        flex-flow: row;
+        flex: 1;
+    }
     
     .social-media-container {
         justify-content: flex-end;
@@ -985,31 +983,57 @@ input[type=range]:focus::-ms-fill-upper {
         margin: 5px;
     }
 
-    .banner-container footer {
-        width: 100px;
-        order: 2;
-        border: none;
-    }
 }
 
 @media (max-width: 650px) {
 
-    .banner-container span {display: none}
+    .banner-container {position: relative}
 
-    .logo-area svg {
-        height:35px;
-        width:35px;
+    #interactive-media {
+        display: flex;
+        flex-flow: row;
+        position: absolute;
+        top: 0px;
+        height: 100%;
+        width: calc(100% - 65px);
+        background: white;
+    }
+
+    .visible-media {left: 0px}
+    .hidden-media {left: -100%}
+
+    .social-media-container {
+        order: initial;
+    }
+
+    .preview-page {
+        overflow-y: initial;
     }
 
     .share-button {
-        display: none; /*Edit when ready*/
+        display: flex;
         font-size: 12px;
         align-items: center;
-        margin: 10px;
+        height: 65px;
+        width: 65px;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .share-button:hover {
+        background: ghostwhite
     }
     
     .pane-container {
         flex: 1;
+    }
+
+    .type-button-container {
+        margin: 5px;
+    }
+
+    .form-block {
+        margin-bottom: 0px;
     }
 
     .form-row {
@@ -1018,6 +1042,11 @@ input[type=range]:focus::-ms-fill-upper {
 
     .form-row input {
         width: calc(100% - 20px);
+        margin-top: 15px;
+    }
+
+    .form-row input:first-child {
+        margin-top: 0px;
     }
 
     .form-row input[type=text] {
@@ -1026,31 +1055,57 @@ input[type=range]:focus::-ms-fill-upper {
 
     .radio-container {
         width: 100%;
-        flex-flow: column;
+        flex-wrap: wrap;
     }
 
-    .radio-container label {
-        margin-left: 0px;
-        margin-top: 10px;
-    }
+    .gender-option:nth-child(even) {margin-left: 10px}
 
-    .element-container label {
-        flex: 1 1 100%;
-        margin-left: 0px;
-    }
+    .relationship-option {flex: 0 0 48%}
+    .relationship-option:nth-child(3n+2) {margin-left: 0px} /*remove old formatting*/
+    .relationship-option:nth-child(3n+3) {margin-left: 0px} /*remove old formatting*/
+    .relationship-option:nth-child(n+4) {margin-top: 0px} /*remove old formatting*/
+    .relationship-option:nth-child(2n+2) {margin-left: 10px}
+    .relationship-option:nth-child(n+3) {margin-top: 10px}
+
+    .work-container {flex-wrap: wrap}
+    .work-container .work-topic {order: 4}
+    .count-container {flex: 0 0 40px; padding: 5px}
+    .rating-star-container {flex: 0 1 auto}
+
+
+    .skill-option {flex: 0 0 98%}
+    .skill-option:nth-child(3n+2) {margin-left: 0px} /*remove old formatting*/
+    .skill-option:nth-child(3n+3) {margin-left: 0px} /*remove old formatting*/
+    .skill-option:nth-child(n+4) {margin-top: 0px} /*remove old formatting*/
+    .skill-option:nth-child(n+2) {margin-top: 10px}
+
+    .competency-option {flex: 0 0 48%}
+    .competency-option:nth-child(3n+2) {margin-left: 0px} /*remove old formatting*/
+    .competency-option:nth-child(3n+3) {margin-left: 0px} /*remove old formatting*/
+    .competency-option:nth-child(n+4) {margin-top: 0px} /*remove old formatting*/
+    .competency-option:nth-child(2n+2) {margin-left: 10px}
+    .competency-option:nth-child(n+3) {margin-top: 10px}
+
+    .years-length-box {margin-top: 10px}
+
 
     .list-container {
-        flex-flow: column;
+        flex-flow: row;
+        flex-wrap: wrap;
         width: 100%
+    }
+
+    .list-container div:nth-child(even) {
+        margin-left: 10px;
     }
 
     .select-menu {
         margin-left: 0px;
-        margin-top: 10px;
+        flex: 1 1 40%;
     }
 
-    .select-menu:first-child {
-        margin-top: 0px;
+    .select-menu:nth-child(n+3) {
+        margin-top: 10px;
     }
 
     .collapsable-text {
@@ -1061,6 +1116,15 @@ input[type=range]:focus::-ms-fill-upper {
         margin: 0px;
     }
 
+/*Some phones don't have screens wide enough to show all title options*/
+/*So, for those we'll put these options on two rows*/
+@media (max-width:400px) {
+
+    .title-option {flex: 0 0 30%}
+    .title-option:nth-child(n+1) {margin-left: 0px}
+    .title-option:nth-child(3n+2) {margin-left: 10px;}
+    .title-option:nth-child(3n+3) {margin-left: 10px;}
+    .title-option:nth-child(n+4) {margin-top: 10px;}
 }
 
 

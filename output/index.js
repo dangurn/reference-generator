@@ -21536,6 +21536,7 @@
 	          relationship: "Your relationship with the applicant",
 	          performance: "The applicant's performance",
 	          competencies: "The applicant's competencies",
+	          addCompetencies: "The applicant's additional qualities",
 	          aboutAddressee: "About the addressee",
 	          aboutJob: "About the new job"
 	        };
@@ -21563,6 +21564,7 @@
 	          relationship: "Your relationship with the applicant",
 	          performance: "The applicant's performance",
 	          competencies: "The applicant's competencies",
+	          addCompetencies: "The applicant's additional qualities",
 	          aboutAddressee: "About the addressee",
 	          aboutJob: "About the new job"
 	        };
@@ -21590,6 +21592,7 @@
 	          relationship: "Your relationship with the tenant",
 	          performance: "The applicant's performance",
 	          competencies: "The tenant's competencies",
+	          addCompetencies: "The tenant's additional qualities",
 	          aboutAddressee: "About the addressee",
 	          aboutJob: "About the new tenency"
 	        };
@@ -22066,11 +22069,7 @@
 	    return React.createElement(
 	      'span',
 	      { onClick: this.openPopUp },
-	      'Who made this?',
-	      React.createElement(PopUpBox, {
-	        popUp: this.props.popUp,
-	        changeValue: this.props.changeValue
-	      })
+	      'Who made this?'
 	    );
 	  }
 	});
@@ -22079,10 +22078,19 @@
 	var SocialMediaContainer = React.createClass({
 	  displayName: 'SocialMediaContainer',
 
+
+	  openTwitter: function openTwitter() {
+	    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	  },
+
+	  openFacebook: function openFacebook() {
+	    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'social-media-container collapsable-text' },
+	      { className: 'social-media-container' },
 	      React.createElement(
 	        'div',
 	        { onClick: this.openTwitter },
@@ -22110,8 +22118,26 @@
 	  render: function render() {
 	    return React.createElement(
 	      'a',
-	      { href: 'https://ko-fi.com/A446JU6', target: '_blank', className: 'collapsable-text' },
+	      { href: 'https://ko-fi.com/A446JU6', target: '_blank' },
 	      React.createElement('img', { id: 'ko-fi-button', src: 'https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f', border: '0', alt: 'Buy Me a Coffee at ko-fi.com' })
+	    );
+	  }
+	});
+
+	//All interactive media
+	var InteractiveMedia = React.createClass({
+	  displayName: 'InteractiveMedia',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { id: 'interactive-media', className: 'hidden-media' },
+	      React.createElement(SocialMediaContainer, null),
+	      React.createElement(WhoMadeThis, {
+	        popUp: this.props.popUp,
+	        changeValue: this.props.changeValue
+	      }),
+	      React.createElement(KoFiButton, null)
 	    );
 	  }
 	});
@@ -22121,14 +22147,15 @@
 	  displayName: 'Banner',
 
 
-	  openTwitter: function openTwitter() {
+	  toggleMedia: function toggleMedia() {
 
-	    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
-	  },
+	    var mediaContainer = document.getElementById('interactive-media');
 
-	  openFacebook: function openFacebook() {
-
-	    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	    if (mediaContainer.className == "visible-media") {
+	      mediaContainer.className = "hidden-media";
+	    } else {
+	      mediaContainer.className = "visible-media";
+	    }
 	  },
 
 	  render: function render() {
@@ -22148,19 +22175,25 @@
 	      React.createElement(
 	        'div',
 	        { className: 'share-button' },
-	        React.createElement(ShareSVG, null),
 	        React.createElement(
-	          'p',
-	          { className: 'collapsable-text' },
-	          'Share'
+	          'div',
+	          { onClick: this.toggleMedia },
+	          React.createElement(ShareSVG, null),
+	          React.createElement(
+	            'p',
+	            { className: 'collapsable-text' },
+	            'Share'
+	          )
 	        )
 	      ),
-	      React.createElement(SocialMediaContainer, null),
-	      React.createElement(WhoMadeThis, {
+	      React.createElement(InteractiveMedia, {
 	        popUp: this.props.popUp,
 	        changeValue: this.props.changeValue
 	      }),
-	      React.createElement(KoFiButton, null)
+	      React.createElement(PopUpBox, {
+	        popUp: this.props.popUp,
+	        changeValue: this.props.changeValue
+	      })
 	    );
 	  }
 	});
@@ -22513,7 +22546,7 @@
 	          { className: 'radio-container' },
 	          React.createElement(
 	            'label',
-	            null,
+	            { className: 'gender-option' },
 	            React.createElement('input', { type: 'radio', name: 'gender', value: 'male', onChange: this.handleChange }),
 	            React.createElement(
 	              'span',
@@ -22523,7 +22556,7 @@
 	          ),
 	          React.createElement(
 	            'label',
-	            null,
+	            { className: 'gender-option' },
 	            React.createElement('input', { type: 'radio', name: 'gender', value: 'female', onChange: this.handleChange }),
 	            React.createElement(
 	              'span',
@@ -22758,7 +22791,7 @@
 	          this.props.referee.titleList.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index, className: 'radio-option' },
+	              { key: index, className: 'radio-option title-option' },
 	              React.createElement('input', { name: 'title', type: 'radio', value: item, onChange: _this.handleTitleChange.bind(_this, item, index) }),
 	              React.createElement(
 	                'span',
@@ -22861,11 +22894,11 @@
 	      { className: 'form-row' },
 	      React.createElement(
 	        'div',
-	        { className: 'element-container' },
+	        { className: 'radio-container' },
 	        this.props.relationshipCapacityFinal.map(function (item, index) {
 	          return React.createElement(
 	            'label',
-	            { key: index },
+	            { key: index, className: 'relationship-option' },
 	            React.createElement('input', { type: 'checkbox', value: item.name, onChange: _this2.modifyRelationship.bind(_this2, "relationshipCapacity", item, index), checked: item.selected }),
 	            React.createElement(
 	              'span',
@@ -23037,40 +23070,67 @@
 	          { key: index, className: 'form-row' },
 	          React.createElement(
 	            'div',
-	            { className: 'radio-container' },
+	            { className: 'work-container' },
 	            React.createElement(
 	              'label',
-	              { id: 'work-button-' + index },
-	              React.createElement('input', { type: 'checkbox', id: 'work-name-' + index, value: item.name, onChange: _this3.modifyWorkName.bind(_this3, item, index) }),
+	              { id: 'work-button-' + index, className: 'work-option' },
+	              React.createElement('input', {
+	                type: 'checkbox',
+	                id: 'work-name-' + index,
+	                value: item.name,
+	                onChange: _this3.modifyWorkName.bind(_this3, item, index) }),
 	              React.createElement(
 	                'span',
 	                null,
 	                item.name
 	              )
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'count-container' },
-	            React.createElement(
-	              'button',
-	              { id: 'subtract-count-' + index, className: 'count-button', disabled: !item.selected, onClick: _this3.subtractCount.bind(_this3, index) },
-	              '-'
 	            ),
-	            React.createElement('input', { id: 'show-count-' + index, className: 'count-display', disabled: !item.selected, type: 'text', value: item.count, readyonly: true }),
 	            React.createElement(
-	              'button',
-	              { id: 'add-count-' + index, className: 'count-button', disabled: !item.selected, onClick: _this3.addCount.bind(_this3, index) },
-	              '+'
-	            )
-	          ),
-	          React.createElement('input', { type: 'text', id: 'work-topic-' + index, placeholder: 'Topic (Optional)', value: _this3.topic, disabled: !item.selected, onBlur: _this3.modifyWorkStuff.bind(_this3, index) }),
-	          React.createElement(RatingStars, {
-	            index: index,
-	            performance: item.performance,
-	            selected: item.selected,
-	            work: _this3.props.work,
-	            changeValue: _this3.props.changeValue })
+	              'div',
+	              { className: 'count-container' },
+	              React.createElement(
+	                'button',
+	                {
+	                  id: 'subtract-count-' + index,
+	                  className: 'count-button',
+	                  disabled: !item.selected,
+	                  onClick: _this3.subtractCount.bind(_this3, index) },
+	                '-'
+	              ),
+	              React.createElement('input', {
+	                id: 'show-count-' + index,
+	                className: 'count-display',
+	                disabled: !item.selected,
+	                type: 'text',
+	                value: item.count,
+	                readyonly: true }),
+	              React.createElement(
+	                'button',
+	                {
+	                  id: 'add-count-' + index,
+	                  className: 'count-button',
+	                  disabled: !item.selected,
+	                  onClick: _this3.addCount.bind(_this3, index) },
+	                '+'
+	              )
+	            ),
+	            React.createElement(RatingStars, {
+	              index: index,
+	              performance: item.performance,
+	              selected: item.selected,
+	              work: _this3.props.work,
+	              changeValue: _this3.props.changeValue
+	            }),
+	            React.createElement('input', {
+	              id: 'work-topic-' + index,
+	              className: 'work-topic',
+	              placeholder: 'Topic (Optional)',
+	              type: 'text',
+	              value: _this3.topic,
+	              disabled: !item.selected,
+	              onBlur: _this3.modifyWorkStuff.bind(_this3, index)
+	            })
+	          )
 	        );
 	      })
 	    );
@@ -23115,7 +23175,7 @@
 	          this.props.skillsCommunication.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index },
+	              { key: index, className: 'skill-option' },
 	              React.createElement('input', { type: 'checkbox', value: item.name, onChange: _this4.handleChange.bind(_this4, "skillsCommunication", item, index), className: item.selected }),
 	              React.createElement(
 	                'span',
@@ -23135,7 +23195,7 @@
 	          this.props.skillsAttitude.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index },
+	              { key: index, className: 'skill-option' },
 	              React.createElement('input', { type: 'checkbox', value: item.name, onChange: _this4.handleChange.bind(_this4, "skillsAttitude", item, index), className: item.selected }),
 	              React.createElement(
 	                'span',
@@ -23155,7 +23215,7 @@
 	          this.props.skillsOther.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index },
+	              { key: index, className: 'skill-option' },
 	              React.createElement('input', { type: 'checkbox', value: item.name, onChange: _this4.handleChange.bind(_this4, "skillsOther", item, index), className: item.selected }),
 	              React.createElement(
 	                'span',
@@ -23264,11 +23324,11 @@
 	        { className: 'form-row' },
 	        React.createElement(
 	          'div',
-	          { className: 'element-container' },
+	          { className: 'radio-container' },
 	          this.props.competencies.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index },
+	              { key: index, className: 'competency-option' },
 	              React.createElement('input', { type: 'checkbox', value: item.name, onChange: _this5.modifyCompetency.bind(_this5, "competencies", item, index), checked: item.selected }),
 	              React.createElement(
 	                'span',
@@ -23284,7 +23344,7 @@
 	          }),
 	          React.createElement(
 	            'label',
-	            null,
+	            { className: 'competency-option' },
 	            React.createElement('input', { type: 'text', id: 'new-competency', placeholder: 'Add another...' }),
 	            React.createElement(
 	              'button',
@@ -23343,7 +23403,7 @@
 	          this.props.addressee.titleList.map(function (item, index) {
 	            return React.createElement(
 	              'label',
-	              { key: index, className: 'radio-option' },
+	              { key: index, className: 'radio-option title-option' },
 	              React.createElement('input', { name: 'title', type: 'radio', value: item, onChange: _this6.handleTitleChange.bind(_this6, item, index) }),
 	              React.createElement(
 	                'span',
@@ -23423,11 +23483,11 @@
 	            { className: 'radio-container' },
 	            React.createElement(
 	              'label',
-	              null,
+	              { id: 'recommend-button' },
 	              React.createElement('input', { type: 'checkbox', onChange: this.handleCheckboxChange }),
 	              React.createElement(
 	                'span',
-	                { id: 'recommend-button' },
+	                null,
 	                React.createElement('div', { className: 'tick' }),
 	                'I would recommend the ',
 	                this.props.placeholders.person
@@ -23531,6 +23591,11 @@
 	        skillsOther: this.props.skillsOther,
 	        changeValue: this.props.changeValue
 	      }),
+	      this.props.referenceType.selected !== "tenancy" && React.createElement(
+	        'h2',
+	        null,
+	        this.props.formHeadings.addCompetencies
+	      ),
 	      this.props.referenceType.selected !== "tenancy" && React.createElement(Competencies, {
 	        competencies: this.props.competencies,
 	        changeValue: this.props.changeValue

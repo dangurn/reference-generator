@@ -129,11 +129,11 @@ var Applicant = React.createClass ({
         
         <div className="form-row">
           <div className="radio-container">
-            <label>
+            <label className="gender-option">
               <input type="radio" name="gender" value="male" onChange={this.handleChange}/>
               <span>Male</span>
             </label>
-            <label>
+            <label className="gender-option">
               <input type="radio" name="gender" value="female" onChange={this.handleChange}/>
               <span>Female</span>
             </label>
@@ -313,7 +313,7 @@ var Referee = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
             {this.props.referee.titleList.map((item, index) => (
-              <label key={index} className="radio-option">
+              <label key={index} className="radio-option title-option">
                 <input name="title" type="radio" value={item} onChange={this.handleTitleChange.bind(this, item, index)}/>
                 <span>{item}</span>
               </label>
@@ -405,9 +405,9 @@ var RelationshipCapacity = React.createClass ({
 
     return (
       <div className="form-row">
-        <div className="element-container">
+        <div className="radio-container">
           {this.props.relationshipCapacityFinal.map((item, index) => (
-            <label key={index}>
+            <label key={index} className="relationship-option">
               <input type="checkbox" value={item.name} onChange={this.modifyRelationship.bind(this, "relationshipCapacity", item, index)} checked={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -571,24 +571,58 @@ var Work = React.createClass ({
       <div className="form-block">
         {this.props.work.map((item, index) => (
           <div key={index} className="form-row">
-            <div className="radio-container">
-              <label id={'work-button-' + index}>
-                <input type="checkbox" id={'work-name-' + index} value={item.name} onChange={this.modifyWorkName.bind(this, item, index)}/>
+            <div className="work-container">
+
+              <label id={'work-button-' + index} className="work-option">
+                <input 
+                  type="checkbox" 
+                  id={'work-name-' + index} 
+                  value={item.name} 
+                  onChange={this.modifyWorkName.bind(this, item, index)}/>
                 <span>{item.name}</span>
               </label>
-            </div>
-            <div className="count-container">
-              <button id={'subtract-count-' + index} className="count-button" disabled={!item.selected} onClick={this.subtractCount.bind(this, index)}>-</button>
-              <input id={'show-count-' + index} className="count-display" disabled={!item.selected} type="text" value={item.count} readyonly />
-              <button id={'add-count-' + index} className="count-button" disabled={!item.selected} onClick={this.addCount.bind(this, index)}>+</button>
-            </div>
-              <input type="text" id={'work-topic-' + index} placeholder="Topic (Optional)" value={this.topic} disabled={!item.selected} onBlur={this.modifyWorkStuff.bind(this, index)}/>
+
+              <div className="count-container">
+                <button 
+                  id={'subtract-count-' + index} 
+                  className="count-button" 
+                  disabled={!item.selected} 
+                  onClick={this.subtractCount.bind(this, index)}>-
+                </button>
+                <input 
+                  id={'show-count-' + index} 
+                  className="count-display" 
+                  disabled={!item.selected} 
+                  type="text" 
+                  value={item.count} 
+                  readyonly />
+                <button 
+                  id={'add-count-' + index} 
+                  className="count-button" 
+                  disabled={!item.selected} 
+                  onClick={this.addCount.bind(this, index)}>+
+                </button>
+              </div>
+              
               <RatingStars 
                 index={index} 
                 performance={item.performance}
                 selected={item.selected}
                 work={this.props.work} 
-                changeValue={this.props.changeValue} />
+                changeValue={this.props.changeValue} 
+              />
+              
+              <input 
+                id={'work-topic-' + index}
+                className="work-topic"
+                placeholder="Topic (Optional)"
+                type="text"  
+                value={this.topic} 
+                disabled={!item.selected} 
+                onBlur={this.modifyWorkStuff.bind(this, index)}
+              />
+
+            </div>
           </div>
         ))}
       </div>
@@ -626,7 +660,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsCommunication.map((item, index) => (
-            <label key={index}>
+            <label key={index} className="skill-option">
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsCommunication", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -637,7 +671,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsAttitude.map((item, index) => (
-            <label key={index}>
+            <label key={index} className="skill-option">
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsAttitude", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -648,7 +682,7 @@ var Skills = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
           {this.props.skillsOther.map((item, index) => (
-            <label key={index}>
+            <label key={index} className="skill-option">
               <input type="checkbox" value={item.name} onChange={this.handleChange.bind(this, "skillsOther", item, index)} className={item.selected}/>
               <span>{item.name}</span>
             </label>
@@ -751,9 +785,9 @@ var Competencies = React.createClass ({
     return (
       <div className="form-block">
         <div className="form-row">
-          <div className="element-container">
+          <div className="radio-container">
             {this.props.competencies.map((item, index) => (
-              <label key={index}>
+              <label key={index} className="competency-option">
                 <input type="checkbox" value={item.name} onChange={this.modifyCompetency.bind(this, "competencies", item, index)} checked={item.selected}/>
                 <span>
                   {item.name}
@@ -763,7 +797,7 @@ var Competencies = React.createClass ({
                 </span>
               </label>
             ))}
-            <label>
+            <label className="competency-option">
               <input type="text" id="new-competency" placeholder="Add another..." />
               <button type="button" id="add-competency" onClick={this.addCompetency}>
                 <AddSVG />
@@ -814,7 +848,7 @@ var Addressee = React.createClass ({
         <div className="form-row">
           <div className="radio-container">
             {this.props.addressee.titleList.map((item, index) => (
-              <label key={index} className="radio-option">
+              <label key={index} className="radio-option title-option">
                 <input name="title" type="radio" value={item} onChange={this.handleTitleChange.bind(this, item, index)}/>
                 <span>{item}</span>
               </label>
@@ -882,9 +916,9 @@ var NewInfo = React.createClass ({
           </div>
           <div className="form-row">
             <div className="radio-container">
-              <label>
+              <label id="recommend-button">
                 <input type="checkbox" onChange={this.handleCheckboxChange}/>
-                  <span id="recommend-button">
+                  <span>
                     <div className="tick"></div>
                     I would recommend the {this.props.placeholders.person}
                   </span>
@@ -976,6 +1010,9 @@ var FormContent = React.createClass ({
             skillsOther={this.props.skillsOther}
             changeValue={this.props.changeValue}
           />
+        }
+        {this.props.referenceType.selected !== "tenancy" &&
+          <h2>{this.props.formHeadings.addCompetencies}</h2>
         }
         {this.props.referenceType.selected !== "tenancy" &&
         <Competencies 
