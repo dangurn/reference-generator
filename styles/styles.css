@@ -21,8 +21,6 @@ body {
 
 a {
     text-decoration: none;
-    display: flex;
-    align-items: center;
 }
 
 input[type=checkbox] {
@@ -220,7 +218,7 @@ input[type=range]:focus::-ms-fill-upper {
         justify-content: center;
     }
 
-    .social-media-container div {display: flex}
+    .social-media-container div {display: flex; align-items: center}
 
     .social-media-container svg {
         height: 40px;
@@ -651,13 +649,9 @@ label :checked + span {
   border: 1px solid #40bfbf;
 }
 
-
-
-
 .list-container {
     display: flex;
     flex: 1;
-    flex-basis: 50%;
     margin-left: 10px;
 }
 
@@ -729,10 +723,6 @@ label :checked + span {
     margin-left: 8px;
 }
 
-
-
-
-
 .delete-button svg {
     stroke: white;
     transition: 0.1s all;
@@ -741,6 +731,7 @@ label :checked + span {
 .delete-button:hover svg {
     fill: white;
 }
+
 
 /* Specific stuff */
 
@@ -987,7 +978,7 @@ label :checked + span {
 
 @media (max-width: 650px) {
 
-    .banner-container {position: relative}
+    .banner-container {position: relative; flex: 0 0 auto}
 
     #interactive-media {
         display: flex;
@@ -998,6 +989,8 @@ label :checked + span {
         width: calc(100% - 65px);
         background: white;
     }
+
+    #interactive-media a {display: flex; align-items: center;}
 
     .visible-media {left: 0px}
     .hidden-media {left: -100%}
@@ -1056,6 +1049,7 @@ label :checked + span {
     .radio-container {
         width: 100%;
         flex-wrap: wrap;
+        flex: 1 1 auto;
     }
 
     .gender-option:nth-child(even) {margin-left: 10px}
