@@ -23,6 +23,7 @@ a {
     text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 input[type=checkbox] {
@@ -138,10 +139,6 @@ input[type=range]:focus::-ms-fill-upper {
   background: lightgray;
 }
 
-.collapsable-text {
-    margin-left: 8px;
-}
-
 
 /*Now some more serious stuff*/
 
@@ -220,7 +217,7 @@ input[type=range]:focus::-ms-fill-upper {
         justify-content: center;
     }
 
-    .social-media-container div {display: flex}
+    .social-media-container div {display: flex; align-items: center}
 
     .social-media-container svg {
         height: 40px;
@@ -428,15 +425,9 @@ input[type=range]:focus::-ms-fill-upper {
                 fill: inherit;
             }
 
-        .type-button-container label .delete-button {
-            padding: 0px;
-            margin-left: auto;
-            display: flex;
-        }
-
-        .type-button-container :checked .button-icon {
-            fill: red;
-        }
+            .type-button-container span div {
+                margin-left: 8px;
+            }
 
         .type-button-container :checked + span {
             color: white;
@@ -547,13 +538,17 @@ input[type=range]:focus::-ms-fill-upper {
         cursor: pointer;
         margin: 8px;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         display: flex;
         border-radius: 3px;
     }
 
     .toolbar-button:hover {
         background: forestgreen
+    }
+
+    .toolbar-button span {
+        padding-left: 8px;
     }
 
     .toolbar-button svg {
@@ -651,13 +646,9 @@ label :checked + span {
   border: 1px solid #40bfbf;
 }
 
-
-
-
 .list-container {
     display: flex;
     flex: 1;
-    flex-basis: 50%;
     margin-left: 10px;
 }
 
@@ -729,10 +720,6 @@ label :checked + span {
     margin-left: 8px;
 }
 
-
-
-
-
 .delete-button svg {
     stroke: white;
     transition: 0.1s all;
@@ -741,6 +728,7 @@ label :checked + span {
 .delete-button:hover svg {
     fill: white;
 }
+
 
 /* Specific stuff */
 
@@ -939,7 +927,8 @@ label :checked + span {
 }
 
 #popup-content a {
-    color: forestgreen
+    color: forestgreen;
+    display: initial;
 }
 
 
@@ -987,7 +976,7 @@ label :checked + span {
 
 @media (max-width: 650px) {
 
-    .banner-container {position: relative}
+    .banner-container {position: relative; flex: 0 0 auto}
 
     #interactive-media {
         display: flex;
@@ -998,6 +987,8 @@ label :checked + span {
         width: calc(100% - 65px);
         background: white;
     }
+
+    #interactive-media a {display: flex; align-items: center;}
 
     .visible-media {left: 0px}
     .hidden-media {left: -100%}
@@ -1056,6 +1047,7 @@ label :checked + span {
     .radio-container {
         width: 100%;
         flex-wrap: wrap;
+        flex: 1 1 auto;
     }
 
     .gender-option:nth-child(even) {margin-left: 10px}

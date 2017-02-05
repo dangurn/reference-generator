@@ -137,6 +137,7 @@ var EditButton = React.createClass ({
     var previewPane = document.getElementById('preview-container')
 
     formPane.style.display = "flex";
+    window.scrollTo(0, 0);
     previewPane.style.display = "none";
 
   },

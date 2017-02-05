@@ -1051,6 +1051,7 @@ var FormToolbar = React.createClass ({
     var previewPane = document.getElementById('preview-container')
 
     formPane.style.display = "none";
+    window.scrollTo(0, 0);
     previewPane.style.display = "flex";
 
   },
@@ -1062,7 +1063,7 @@ var FormToolbar = React.createClass ({
       <div className="pane-toolbar">
         <div className="toolbar-button" onClick={this.changePane}>
           <GenerateSVG />
-          Generate Reference
+          <span>Generate Reference</span>
         </div>
       </div>
     )

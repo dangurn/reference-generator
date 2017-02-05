@@ -21954,6 +21954,18 @@
 	  }
 	});
 
+	var LinkedInSVG = React.createClass({
+	  displayName: 'LinkedInSVG',
+
+	  render: function render() {
+	    return React.createElement(
+	      'svg',
+	      { xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 34.82 34.82' },
+	      React.createElement('path', { d: 'M17.59,0.16A17.41,17.41,0,1,0,35,17.57,17.41,17.41,0,0,0,17.59.16ZM12.87,26.87H8.49V13.7h4.38V26.87Zm-2.19-15h0a2.28,2.28,0,1,1,.06-4.55A2.28,2.28,0,1,1,10.68,11.9Zm18,15H24.29v-7c0-1.77-.63-3-2.22-3a2.4,2.4,0,0,0-2.25,1.6,3,3,0,0,0-.14,1.07v7.36H15.3s0.06-11.94,0-13.18h4.38v1.87a4.34,4.34,0,0,1,3.95-2.18c2.88,0,5,1.88,5,5.93v7.55Z', transform: 'translate(-0.18 -0.16)' })
+	    );
+	  }
+	});
+
 	var ShareSVG = React.createClass({
 	  displayName: 'ShareSVG',
 
@@ -22080,11 +22092,15 @@
 
 
 	  openTwitter: function openTwitter() {
-	    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator/output&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	    window.open("http://twitter.com/share?url=https://dangurn.github.io/reference-generator&text=Try this 'Reference Generator' for writing job references / letters of recommendation quickly:", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
 	  },
 
 	  openFacebook: function openFacebook() {
-	    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator/output", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	    window.open("http://www.facebook.com/sharer/sharer.php?u=https://dangurn.github.io/reference-generator", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;
+	  },
+
+	  openLinkedIn: function openLinkedIn() {
+	    window.open("http://www.linkedin.com/shareArticle?mini=true&url=https://dangurn.github.io/reference-generator&title=Reference%20Generator&summary=Try%20this%20'Reference%20Generator'%20for%20writing%20job%20references%20/%20letters%20of%20recommendation%20quickly&source=dangurn.github.io/reference-generator", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=475');return false;
 	  },
 
 	  render: function render() {
@@ -22102,8 +22118,13 @@
 	        React.createElement(FacebookSVG, null)
 	      ),
 	      React.createElement(
+	        'div',
+	        { onClick: this.openLinkedIn },
+	        React.createElement(LinkedInSVG, null)
+	      ),
+	      React.createElement(
 	        'a',
-	        { href: 'https://github.com/dangurn/reference-generator' },
+	        { href: 'https://github.com/dangurn/reference-generator', className: 'collapsable-text' },
 	        React.createElement(GitHubSVG, null)
 	      )
 	    );
@@ -23635,6 +23656,7 @@
 	    var previewPane = document.getElementById('preview-container');
 
 	    formPane.style.display = "none";
+	    window.scrollTo(0, 0);
 	    previewPane.style.display = "flex";
 	  },
 
@@ -23647,7 +23669,11 @@
 	        'div',
 	        { className: 'toolbar-button', onClick: this.changePane },
 	        React.createElement(GenerateSVG, null),
-	        'Generate Reference'
+	        React.createElement(
+	          'span',
+	          null,
+	          'Generate Reference'
+	        )
 	      )
 	    );
 	  }
@@ -24170,6 +24196,7 @@
 	    var previewPane = document.getElementById('preview-container');
 
 	    formPane.style.display = "flex";
+	    window.scrollTo(0, 0);
 	    previewPane.style.display = "none";
 	  },
 
