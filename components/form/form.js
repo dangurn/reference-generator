@@ -371,7 +371,7 @@ var RelationshipLength = React.createClass ({
 
     return (
       <div className="form-row">
-        <input name="relationshipLength" type="range" value={relationshipLength} min="0" max="15" onChange={this.handleChange} />
+        <input name="relationshipLength" type="range" value={relationshipLength} min="0" max="15" onChange={this.handleChange} onMouseUp={this.handleChange}/>
         <div className="years-length-box">{label}</div>
       </div>
   )

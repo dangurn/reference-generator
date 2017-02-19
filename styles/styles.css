@@ -172,6 +172,7 @@ input[type=range]:focus::-ms-fill-upper {
         font-weight: 400;
         text-align: center;
         margin: 10px;
+        width: 250px;
     }
 
     .title-container span {
@@ -449,6 +450,7 @@ input[type=range]:focus::-ms-fill-upper {
     background: #f2fcfc;
     color: darkslategray;
     overflow-y: scroll;
+    overflow-x: hidden;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -942,7 +944,7 @@ label :checked + span {
 
     .banner-container {
         flex-flow: row;
-        flex: 1 0 auto;
+        flex: 0 0 auto;
         width: 100%;
     }
 
@@ -954,7 +956,7 @@ label :checked + span {
         flex: 1 0 auto;
         justify-content: flex-start;
     }
-        .title-container h1 {font-size: 20px; order: 2; margin: 5px;}
+        .title-container h1 {font-size: 20px; order: 2; margin: 5px; width: 200px;}
         .title-container span {display: none}
         .logo-area {width: 45px; height: 45px; order: 1;}
         .logo-area svg {width: 35px; height: 35px}
