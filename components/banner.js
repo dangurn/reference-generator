@@ -130,7 +130,7 @@ var PopUpBox = React.createClass ({
 
           <p>I hope you find this useful. 
           If you'd like to find out more about what I'm up to, 
-          check me out at <a href="http://danielgurney.net">danielgurney.net</a>.
+          check me out at <a href="http://dan.media">dan.media</a>.
           </p>
 
           <p>Happy referencing!</p>
@@ -210,7 +210,7 @@ var KoFiButton = React.createClass({
   render: function() {
     return (
       <a href='https://ko-fi.com/A446JU6' target='_blank'>
-        <img id='ko-fi-button' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+        <img id='ko-fi-button' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' alt='Buy Me a Coffee at ko-fi.com' />
       </a>
     )
   }

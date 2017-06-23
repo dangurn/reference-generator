@@ -234,7 +234,7 @@ var DatePeriod = React.createClass ({
             <select id="startMonth" value={datePeriod.startMonth} onChange={this.handleDateChange.bind(this, "startMonth")}>
               <option value="0">Start Month</option>
               {startMonthArray.map((item, index) => (
-                <option value={item}>{currentTime.monthList[item - 1]}</option>
+                <option key={index} value={item}>{currentTime.monthList[item - 1]}</option>
               ))}
             </select>
             <div className="down-arrow"></div>
@@ -244,7 +244,7 @@ var DatePeriod = React.createClass ({
             <select id="startYear" value={datePeriod.startYear} onChange={this.handleDateChange.bind(this, "startYear")}>
               <option value="0">Start Year</option>
               {startYearArray.map((item, index) => (
-                <option value={startYearArray[index]}>{startYearArray[index]}</option>
+                <option key={index} value={startYearArray[index]}>{startYearArray[index]}</option>
               ))}
             </select>
             <div className="down-arrow"></div>
@@ -254,7 +254,7 @@ var DatePeriod = React.createClass ({
             <select id="endMonth" value={datePeriod.endMonth} onChange={this.handleDateChange.bind(this, "endMonth")}>
               <option value="0">End Month</option>
               {endMonthArray.map((item, index) => (
-                <option value={item}>{currentTime.monthList[item - 1]}</option>
+                <option key={index} value={item}>{currentTime.monthList[item - 1]}</option>
               ))}
             </select>
             <div className="down-arrow"></div>
@@ -264,7 +264,7 @@ var DatePeriod = React.createClass ({
             <select id="endYear" value={datePeriod.endYear} onChange={this.handleDateChange.bind(this, "endYear")}>
               <option value="0">End Year</option>
               {endYearArray.map((item, index) => (
-                <option value={endYearArray[index]}>{endYearArray[index]}</option>
+                <option key={index} value={endYearArray[index]}>{endYearArray[index]}</option>
               ))}
             </select>
             <div className="down-arrow"></div>
@@ -595,7 +595,7 @@ var Work = React.createClass ({
                   disabled={!item.selected} 
                   type="text" 
                   value={item.count} 
-                  readyonly />
+                  readOnly />
                 <button 
                   id={'add-count-' + index} 
                   className="count-button" 
